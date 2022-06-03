@@ -13,6 +13,19 @@ Git Repo for our WebPy Semmesterproject
 | **Michael** | s????? |
 | **Eric** | s????? |
 
+### Status updates
+To organize our work better we should try to claim tasks and write status updates:
+- When implementing features please add the following to the line: `ToDo` `Name` `LastChange`
+    - If a view is done mark with [x] so we don't do the same work twice ;)
+- I would recommend using the following keywords as status:
+    - `ToDo` not yet claimed / not yet started
+    - `WIP` currently work in progress
+    - `OnHold` work in progress but currently no active development
+    - `Testing` work is basically done, currently testing the features before migrating
+    - `Done` done and pushed to repository
+
+Since not every code change will be pushed immideately this would make it easier for us to keep track of tasks. Discord is a good tool for communication but the chat can end up quite chaotic quickly as we know lol. Oh, and feel free to edit this readme.
+
 ## General overview
 
 - Django Webpage for an Online Shop
@@ -32,6 +45,8 @@ Git Repo for our WebPy Semmesterproject
 
 Product information should be dynamically generated from the given data
 
+> `ToDo` `Name` `03.06.2022`
+
 ### Users
 - UserID
 - Name, given name
@@ -41,10 +56,14 @@ Product information should be dynamically generated from the given data
 - Role
 - Picture
 
+> `ToDo` `Name` `03.06.2022`
+
 ### Roles
 - RoleID
 - RoleName
 - Description
+
+> `ToDo` `Name` `03.06.2022`
 
 ### Product Reviews
 - ReviewID
@@ -53,15 +72,21 @@ Product information should be dynamically generated from the given data
 - Rating (1 to 5 stars)
 - ReviewText
 
+> `ToDo` `Name` `03.06.2022`
+
 ### ReviewRating
 - UserID
 - ReviewID
 - Rating (true = useful, false = not useful)
 
+> `ToDo` `Name` `03.06.2022`
+
 ### Complaints
 - UserID
 - ReviewID
 - Text (why review is inappropriate)
+
+> `ToDo` `Name` `03.06.2022`
 
 ### ShoppingCart
 - ProcessID (internal counter)
@@ -71,10 +96,14 @@ Product information should be dynamically generated from the given data
     - ordered
     - delivered
 
+> `ToDo` `Name` `03.06.2022`
+
 ### ItemsInCart
 - ProcessID
 - ProductID
 - OrderCount
+
+> `ToDo` `Name` `03.06.2022`
 
 ## Views
 ### For Customers
@@ -108,9 +137,11 @@ Product information should be dynamically generated from the given data
 
 ## ToDo:
 - [ ] implementing database
+    - [ ] migrating database
 - [ ] implement views (see above)
-- [ ] implement file uploads
-- [ ] implement file downloads
+    - [ ] implement file uploads
+    - [ ] implement file downloads
 - [ ] styling
 - [ ] hosting
-- [ ] creating userdata
+    - [ ] creating userdata
+    - [ ] testing functionalities
