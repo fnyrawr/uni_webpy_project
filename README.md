@@ -10,8 +10,8 @@ Git Repo for our WebPy Semmesterproject
 | ---------- | ---------- | 
 | **Florian** | s51541 |
 | **Erdenay** | s50312 |
-| **Michael** | s????? |
-| **Eric** | s????? |
+| **Michael** | s89671 |
+| **Eric** | s51052 |
 
 ### Status updates
 To organize our work better we should try to claim tasks and write status updates:
