@@ -135,6 +135,18 @@ Product information should be dynamically generated from the given data
     - [ ] Edit Reviews for product
     - [ ] Delete Reviews for product
 
+## Process descriptions
+### Registration process
+Needed information:
+- username (has to be unique in db)
+- e-mail (twice for confirmation, has to be unique in db)
+- password (twice for confirmation)
+
+Mail is sent with a confirmation token to the given e-mail address.
+
+### Verification process
+Link in the registered e-mail directs back to a verification route. Here the user has to login for the first time with the registered credentials (username and password). After that the user is verified by e-mail and is allowed to use the website as a customer.
+
 ## ToDo:
 - [ ] implementing database
     - [ ] migrating database
