@@ -1,0 +1,14 @@
+{% extends 'home.html' %}
+
+{% block title %}Users list{% endblock %}
+
+{% block content %}
+<h2>Users list</h2>
+<ul>
+    {% for myuser in all_users %}
+        {{ myuser.user.first_name }} {{ myuser.user.last_name }} {{ myuser.role }}<br>
+        <img src="{{ myuser.profile_picture.url }}" height="150" width="150"><br>
+        <br>
+    {% endfor %}
+</ul>
+{% endblock %}

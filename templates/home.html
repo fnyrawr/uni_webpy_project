@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Homepage{% endblock %}
+{% block content %}
+    <h1>Amazon 2.0</h1>
+    {% if user.is_authenticated %}
+        {% block logged_in_content %}
+            <h2>Hi {{ user.username }}!</h2>
+            <p><a href="{% url 'myuser-list' %}">Show me the users</a></p>
+            <a href="{% url 'logout' %}">Logout</a>
+        {% endblock %}
+    {% else %}
+        {% block not_logged_in_content %}
+            <h2>You are not logged in!</h2>
+            <a href="{% url 'login' %}">Login</a>
+        {% endblock %}
+    {% endif %}
+    </div>
+{% endblock %}

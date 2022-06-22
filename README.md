@@ -47,12 +47,8 @@ Product information should be dynamically generated from the given data
 
 > `ToDo` `Name` `03.06.2022`
 
-### Users
-- UserID
-- Name, given name
-- E-Mail
-- Username
-- Password
+### CustomUsers
+- User
 - Role
 - Picture
 
@@ -107,12 +103,14 @@ Product information should be dynamically generated from the given data
 
 ## Views
 ### For Customers
-- [ ] Registration
-    - [ ] Verification
+- [x] Registration
+    - [ ] send mail for Verification
+    - [ ] e-mail (twice for confirmation, has to be unique in db)
+    - [ ] password (twice for confirmation)
 - [ ] Customer Portal
     - [ ] Changing basic data / password
     - [ ] Upload of profile picture
-- [ ] Customer Profile
+- [x] Customer Profile
 - [ ] Product List
     - [ ] Product Search by filters
         - [ ] filter by productName
@@ -136,14 +134,6 @@ Product information should be dynamically generated from the given data
     - [ ] Delete Reviews for product
 
 ## Process descriptions
-### Registration process
-Needed information:
-- username (has to be unique in db)
-- e-mail (twice for confirmation, has to be unique in db)
-- password (twice for confirmation)
-
-Mail is sent with a confirmation token to the given e-mail address.
-
 ### Verification process
 Link in the registered e-mail directs back to a verification route. Here the user has to login for the first time with the registered credentials (username and password). After that the user is verified by e-mail and is allowed to use the website as a customer.
 
