@@ -6,7 +6,7 @@
 <h2>Users list</h2>
 <ul>
     {% for myuser in all_users %}
-        {{ myuser.user.first_name }} {{ myuser.user.last_name }} {{ myuser.role }}<br>
+        {{ myuser.first_name }} {{ myuser.last_name }} {{ myuser.role }}<br>
         <img src="{{ myuser.profile_picture.url }}" height="150" width="150"><br>
         <br>
     {% endfor %}

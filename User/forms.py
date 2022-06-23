@@ -1,14 +1,9 @@
-from django.contrib.auth.models import User
-from django import forms
+from django.contrib.auth.forms import UserCreationForm
+from .models import CustomUser
 
 
-class SignUpForm(forms.ModelForm):
-    # Fields zusaetzlich zum User-Model
-    profile_picture = forms.ImageField()
-
+class SignUpForm(UserCreationForm):
     class Meta:
-        model = User
-        fields = ('username','first_name','last_name','password','email')
-        widgets = {
-            'password': forms.PasswordInput(),
-        }
+        model = CustomUser
+        fields = ('username', 'first_name', 'last_name', 'email', 'profile_picture',)
+		# password ist wegen UserCreationForm schon mit dabei

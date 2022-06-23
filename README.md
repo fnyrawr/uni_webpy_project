@@ -39,50 +39,47 @@ Since not every code change will be pushed immideately this would make it easier
 - ProductName
 - Description as text
 - EAN (article number on barcode)
-- Pictures (using fileuploads)
 - Price
-- PDF files
+- PDF file
 
-Product information should be dynamically generated from the given data
+Product PDF and ean should be auto generated
 
-> `ToDo` `Name` `03.06.2022`
+> `Finished` `Eric` `23.06.2022`
+
+### Product Picture
+- Product
+- Picture
 
 ### CustomUsers
-- User
+- Abstract User Attributes
 - Role
 - Picture
 
-> `ToDo` `Name` `03.06.2022`
-
-### Roles
-- RoleID
-- RoleName
-- Description
-
-> `ToDo` `Name` `03.06.2022`
+> `Finished` `Eric` `22.06.2022`
 
 ### Product Reviews
-- ReviewID
-- UserID
-- ProductID
+- User
+- Product
 - Rating (1 to 5 stars)
+- ReviewTitle
 - ReviewText
 
-> `ToDo` `Name` `03.06.2022`
+> `Finished` `Eric` `23.06.2022`
 
 ### ReviewRating
-- UserID
-- ReviewID
+- User
+- Review
 - Rating (true = useful, false = not useful)
 
-> `ToDo` `Name` `03.06.2022`
+> `Finished` `Eric` `23.06.2022`
 
 ### Complaints
-- UserID
-- ReviewID
+- type
+- User
+- Review
 - Text (why review is inappropriate)
 
-> `ToDo` `Name` `03.06.2022`
+> `Finished` `Eric` `23.06.2022`
 
 ### ShoppingCart
 - ProcessID (internal counter)
@@ -101,29 +98,26 @@ Product information should be dynamically generated from the given data
 
 > `ToDo` `Name` `03.06.2022`
 
-## Views
-### For Customers
-- [x] Registration
-    - [ ] send mail for Verification
-    - [ ] e-mail (twice for confirmation, has to be unique in db)
-    - [ ] password (twice for confirmation)
-- [ ] Customer Portal
-    - [ ] Changing basic data / password
-    - [ ] Upload of profile picture
-- [x] Customer Profile
-- [ ] Product List
+## Functions
+- [ ] Registration
+    - [ ] (send mail for Verification)
+    - [x] password (twice for confirmation)
+    - [x] customer profile picture
+- [ ] Product
+    - [ ] auto generate ean
+    - [ ] Product View
+        - [x] Product Information as PDF
+        - [ ] (auto generate product information as pdf if no pdf is available)
+        - [ ] multiple pictures for product
+    - [ ] Review
+        - [x] give stars for product and write text
+        - [x] delete own review
+        - [ ] others can mark review as useful or not 
+        - [ ] others can report review
     - [ ] Product Search by filters
         - [ ] filter by productName
         - [ ] filter by productDescription
         - [ ] filter by reviewRatings
-    - [ ] Product Search by text
-    - [ ] Product View
-        - [ ] Product Information as PDF
-- [ ] ShoppingCart
-    - [ ] (fake) Checkout
-- [ ] Orders (past orders for user)
-
-### For CustomerService
 - [ ] CustomerService-Portal
     - [ ] Restrict access by role check
     - [ ] Add new Products and PDFs
@@ -132,6 +126,9 @@ Product information should be dynamically generated from the given data
     - [ ] Review Complaints
     - [ ] Edit Reviews for product
     - [ ] Delete Reviews for product
+- [ ] ShoppingCart
+    - [ ] Orders (past orders for user)
+    - [ ] (fake Checkout)
 
 ## Process descriptions
 ### Verification process
