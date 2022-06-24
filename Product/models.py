@@ -5,7 +5,7 @@ from django.conf import settings
 class Product(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
-    price = models.IntegerField(default=1)
+    price = models.DecimalField(max_digits=10, decimal_places=2, default=1)
     ean = models.CharField(max_length=100)
     pdf = models.FileField(null= True, blank=True, validators=[FileExtensionValidator(['pdf'])])
     
