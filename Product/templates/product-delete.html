@@ -1,0 +1,12 @@
+{% extends 'home.html' %}
+{% load static %}
+
+{% block title %}Product delte{% endblock %}
+
+{% block content %}
+        <form method="POST">
+            {% csrf_token %}
+            <h2>Are you sure you want to delete "{{ that_one_product.name }}"?</h2>
+            <input type="submit" value="Confirm">
+        </form>
+{% endblock %}

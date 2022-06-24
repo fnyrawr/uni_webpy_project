@@ -69,7 +69,7 @@ Product PDF and ean should be auto generated
 ### ReviewRating
 - User
 - Review
-- Rating (true = useful, false = not useful)
+- Rating (useful, useless)
 
 > `Finished` `Eric` `23.06.2022`
 
@@ -98,22 +98,25 @@ Product PDF and ean should be auto generated
 
 > `ToDo` `Name` `03.06.2022`
 
+### Anmerkung
+    Sicher, dass wir wirklich Eans drin haben wollen, ist einfach nur unnötiger Zusatz, der keinen wirklichen Mehrwert hat und es ergibt auch keinen Sinn eine Ean autmatisch zu generieren, weil das sonst den Sinn einer Ean (eindeutige Identifizierung in der EU) zerstört
 ## Functions
 - [ ] Registration
     - [ ] (send mail for Verification)
     - [x] password (twice for confirmation)
     - [x] customer profile picture
 - [ ] Product
-    - [ ] auto generate ean
     - [ ] Product View
+        - [ ] edit product infos
         - [x] Product Information as PDF
         - [ ] (auto generate product information as pdf if no pdf is available)
-        - [ ] multiple pictures for product
+        - [x] multiple pictures for product
     - [ ] Review
+        - [ ] edit review
         - [x] give stars for product and write text
         - [x] delete own review
-        - [ ] others can mark review as useful or not 
-        - [ ] others can report review
+        - [x] others can mark review as useful or not 
+        - [x] others can report review
     - [ ] Product Search by filters
         - [ ] filter by productName
         - [ ] filter by productDescription

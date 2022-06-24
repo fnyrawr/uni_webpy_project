@@ -13,15 +13,8 @@ class Product(models.Model):
         verbose_name = 'Product'
         verbose_name_plural = 'Product'
     
-    def review(self, user, **kwargs):
-        ReviewVote.objects.filter(user=user, product = self).delete()
-        ReviewVote.objects.create(user=user, product = self,
-                                        title = kwargs.get('title'),
-                                        review=self
-                                    )
-    
     def __str__(self):
-        return self.name + ' (' + self.price + ')'
+        return self.name + ' (' + str(self.price) + ')'
 
     def __repr__(self):
         return self.name+ ' / ' + self.description + ' / ' + self.price
@@ -31,7 +24,7 @@ class ProductImage(models.Model):
     image = models.ImageField(upload_to='product_pictures/', blank = True, null = True)
 
     def __str__(self):
-        return self.product.name
+        return self.product.name + " | Url: " + self.image.url
 
 class Review(models.Model):
     stars = models.IntegerField(default=1)
@@ -50,7 +43,7 @@ class Review(models.Model):
         return len(self.get_useful())
 
     def get_useless(self):
-        upvotes = ReviewVote.objects.filter(up_or_down='N',
+        upvotes = ReviewVote.objects.filter(useful_or_not='N',
                                       review=self)
         return upvotes
 
@@ -59,10 +52,10 @@ class Review(models.Model):
     
     def vote(self, user, useful_or_not):
         U_or_N = 'U'
-        if useful_or_not == 'not':
+        if useful_or_not == 'useless':
             U_or_N = 'N'
-        if (ReviewVote.objects.filter(user=user, review=self, up_or_down=U_or_N).exists()):
-            ReviewVote.objects.filter(user=user, review=self, up_or_down=U_or_N).delete()
+        if (ReviewVote.objects.filter(user=user, review=self, useful_or_not=U_or_N).exists()):
+            ReviewVote.objects.filter(user=user, review=self, useful_or_not=U_or_N).delete()
         else:
             ReviewVote.objects.filter(user=user, review=self).delete()
             ReviewVote.objects.create(useful_or_not=U_or_N,
@@ -76,7 +69,7 @@ class Review(models.Model):
 class ReviewVote(models.Model):
     VOTE_TYPES = [
         ('U', 'useful'),
-        ('N', 'not useful'),
+        ('N', 'useless'),
     ]
     useful_or_not = models.CharField(max_length=1,
                                   choices=VOTE_TYPES,

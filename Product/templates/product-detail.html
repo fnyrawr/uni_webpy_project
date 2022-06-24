@@ -1,0 +1,59 @@
+{% extends 'home.html' %}
+{% load static %}
+
+{% block title %}Computergame detail{% endblock %}
+
+{% block content %}
+<h1>Product details</h1>
+        <h2>{{ that_one_product.name }}</h2>
+        <table>
+            {% comment %} pictures, pdf and other attributes of product missing {% endcomment %}
+             <tr>
+                 <td><b>Name:</b></td>
+                 <td>{{ that_one_product.name }}<br></td>
+             </tr>
+             <tr>
+                 <td><b>Description:</b></td>
+                 <td>{{ that_one_computergame.description }}<br></td>
+             </tr>
+        </table>
+        {% for image in product_images %}
+            <img src="{{ image.image.url }}" height="150" width="150"><br>
+        {% endfor %}
+
+        {% for review in product_reviews %}
+            <b style="color: #63a0cf">{{ review.stars }} Stars {{ review.user.username }} on {{ review.timestamp }}</b><br>
+            {{ review.title }} {{ review.text }}<br><br>
+            <span style="color: darkgreen">{{ review.get_useful_count }}</span>
+            <a href="{% url 'review-vote' that_one_product.id review.id 'useful' %}" style="text-decoration: none">
+                UP
+            </a>
+            &nbsp;&nbsp;&nbsp;
+            <span style="color: crimson">{{ review.get_useless_count }}</span>
+            <a href="{% url 'review-vote' that_one_product.id review.id 'useless' %}" style="text-decoration: none">
+                DOWN
+            </a>
+            <br><br>
+            {% if review.user == user %}
+                <br>
+                    <a href="{% url 'review-delete' that_one_product.id review.id %}"><b>Delete Review</b></a>
+                <br>
+            {% endif %}
+            <a href="{% url 'create-report' that_one_product.id review.id %}"><b>Report Review</b></a>
+        {% endfor %}
+        <br>
+
+        <b>Do you have a review for this product?</b><br>
+        <form method="POST">
+            {% csrf_token %}
+            {{ review_form.as_p }}
+            <button type="submit">Add review</button>
+        </form>
+
+        <br>
+        <a href="{% url 'product-delete' that_one_product.id %}"><b>Delete product</b></a>
+        <br>
+
+        <a href="{% url 'product-list' %}">Back to all products</a>
+    <div>
+{% endblock %}

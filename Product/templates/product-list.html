@@ -1,0 +1,16 @@
+{% extends 'home.html' %}
+{% load static %}
+
+{% block title %}Products list{% endblock %}
+
+{% block content %}
+    <h1>Products list</h1>
+    <ul>
+        {% for product in all_products %}
+            {% comment %} other attributes maybe picture of product {% endcomment %}
+            <a href="{{ product.id }}/"><b>{{ product.name }}</b></a>
+            <br>
+        {% endfor %}
+    </ul>
+    <a href={% url 'product-create' %}>Add a new product</a><br>
+{% endblock %}

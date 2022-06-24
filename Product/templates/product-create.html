@@ -1,0 +1,25 @@
+{% extends 'home.html' %}
+{% load static %}
+
+{% block title %}Create product{% endblock %}
+{% block content %} 
+    <h1>Create product</h1>
+    {% if user.is_authenticated %}
+        {% block logged_in_content %}
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div>
+                    <label for="images">Upload images</label>
+                    <input type="file" name="images" multiple accept="image/*" />
+                </div>
+                <button type="submit">Create</button>
+            </form>
+    {% endblock %}
+    {% else %}
+        {% block not_logged_in_content %}
+            <p>You must log in to add products</p>
+            <a id="login" href="{% url 'login' %}">Login</a>
+        {% endblock %}
+    {% endif %}
+{% endblock %}

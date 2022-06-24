@@ -1,0 +1,12 @@
+{% extends 'home.html' %}
+{% load static %}
+
+{% block title %}Review delete{% endblock %}
+
+{% block content %}
+        <form method="POST">
+            {% csrf_token %}
+            <h2>Are you sure you want to delete "{{ that_one_review.title }}"?</h2>
+            <input type="submit" value="Confirm">
+        </form>
+{% endblock %}
