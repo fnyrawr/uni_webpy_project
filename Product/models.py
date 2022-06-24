@@ -6,14 +6,20 @@ class Product(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2, default=1)
-    ean = models.CharField(max_length=100)
     pdf = models.FileField(null= True, blank=True, validators=[FileExtensionValidator(['pdf'])])
     
     class Meta:
         ordering = ['name']
         verbose_name = 'Product'
         verbose_name_plural = 'Product'
-        
+    
+    def review(self, user, **kwargs):
+        ReviewVote.objects.filter(user=user, product = self).delete()
+        ReviewVote.objects.create(user=user, product = self,
+                                        title = kwargs.get('title'),
+                                        review=self
+                                    )
+    
     def __str__(self):
         return self.name + ' (' + self.price + ')'
 
@@ -58,7 +64,7 @@ class Review(models.Model):
         if (ReviewVote.objects.filter(user=user, review=self, up_or_down=U_or_N).exists()):
             ReviewVote.objects.filter(user=user, review=self, up_or_down=U_or_N).delete()
         else:
-            ReviewVote.objects.filter(user=user, comment=self).delete()
+            ReviewVote.objects.filter(user=user, review=self).delete()
             ReviewVote.objects.create(useful_or_not=U_or_N,
                                         user=user,
                                         review=self
