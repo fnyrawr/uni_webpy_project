@@ -1,0 +1,45 @@
+{% extends 'home.html' %}
+{% load static %}
+
+{% block title %}Edit product{% endblock %}
+{% block content %} 
+    <h1>Edit product</h1>
+    {% if user.is_authenticated %}
+        {% block logged_in_content %}
+            <form method="POST">
+                {% csrf_token %}
+                <label for="{{ form.name.id_for_label }}">{{ form.name.label }}:</label>
+                <input id="{{ form.name.id_for_label }}" name="{{ form.name.html_name }}" type="{{ form.name.field.widget.input_type}}" value="{{ product.name }}" required>
+                <br>
+                <label for="{{ form.description.id_for_label }}">{{ form.description.label }}:</label>
+                <textarea id="{{ form.description.id_for_label }}" name="{{ form.description.html_name }}" rows="10" cols="40">{{ product.description }}</textarea>
+                <br>
+                <label for="{{ form.price.id_for_label }}">{{ form.price.label }}:</label>
+                <input id="{{ form.price.id_for_label }}" type="{{ form.price.field.widget.input_type }}" name="{{ form.price.html_name }}" value="{{ product.price }}" step="0.01" required>
+                <br>
+                {% if product.pdf %}
+                        <b>Pdf:</b>
+                        <a href="{{ that_one_product.pdf.url }}">Product Info Pdf</a>
+                        <a href="{% url 'pdf-delete' product.id %}"><b>Delete product pdf</b></a><br>
+                {% endif %}
+                <label for="{{ form.pdf.id_for_label }}">{{ form.pdf.label }}:</label>
+                <input id="{{ form.pdf.id_for_label }}" type="{{ form.pdf.field.widget.input_type }}" name="{{ form.pdf.html_name }}" accept="application/pdf">
+                <br>
+                <label for="images">Upload new images</label>
+                <input type="file" name="images" multiple accept="image/*" />
+                <br>
+                {% for image in images %}
+                    <img src="{{ image.image.url }}" height="150" width="150"><br>
+                    <a href="{% url 'image-delete' product.id image.id %}"><b>Delete image from product</b></a>
+                    <br>
+                {% endfor %}
+                <button type="submit">Submit changes</button>
+            </form>
+    {% endblock %}
+    {% else %}
+        {% block not_logged_in_content %}
+            <p>You must log in to edit products</p>
+            <a id="login" href="{% url 'login' %}">Login</a>
+        {% endblock %}
+    {% endif %}
+{% endblock %}

@@ -16,10 +16,12 @@ class ProductCreateView(CreateView):
     template_name = 'product-create.html'
     
     def post(self, request):
-        form = self.form_class(request.POST)
-        images = request.FILES.getlist('images')
+        form = self.form_class(request.POST)   
         if form.is_valid():
             product = form.save()
+            images = request.FILES.getlist('images')
+            pdf = request.FILES.get('pdf')
+            print(pdf)
             for image in images:
                 ProductImage.objects.create(product=product, image=image)
             
@@ -93,3 +95,39 @@ def create_report(request, **kwargs):
         context = {'form': form,
                    'review': review}
         return render(request, 'report-create.html', context)
+    
+def product_edit(request, **kwargs):
+    product_id = kwargs['pk']
+    product = Product.objects.get(
+            id=product_id)
+    if request.method == 'POST':
+        form = ProductForm(request.POST)
+        images = request.FILES.getlist('images')
+        data = form.data
+        if data['pdf']:
+            print("aa")
+            Product.objects.filter(
+                id=product_id).update(name=data['name'], description=data['description'], price=data['price'], pdf=data['pdf'])
+        else:
+            Product.objects.filter(
+                id=product_id).update(name=data['name'], description=data['description'], price=data['price'], pdf=data['pdf'])
+        for image in images:
+                ProductImage.objects.create(product=product, image=image)
+        return redirect('product-detail', pk=kwargs['pk'])
+    else:  # request.method == 'GET'
+        form = ProductForm()
+        images = ProductImage.objects.filter(product=product)
+        context = {'form': form,
+                   'product': product,
+                   'images': images}
+        return render(request, 'product-edit.html', context)
+    
+def image_delete(request, **kwargs):
+    image_id = kwargs['id']
+    ProductImage.objects.filter(id=image_id).delete()
+    return redirect('product-edit', pk=kwargs['pk'])
+
+def pdf_delete(request, **kwargs):
+    product_id = kwargs['pk']
+    Product.objects.filter(id=product_id).update(pdf='')
+    return redirect('product-edit', pk=kwargs['pk'])

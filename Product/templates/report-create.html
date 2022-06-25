@@ -3,7 +3,7 @@
 
 {% block title %}Create report{% endblock %}
 {% block content %} 
-    <h1>Create review</h1>
+    <h1>Create report</h1>
     {% if user.is_authenticated %}
         {% block logged_in_content %}
             <p>Some Infos about the review <p>
@@ -17,7 +17,7 @@
     {% endblock %}
     {% else %}
         {% block not_logged_in_content %}
-            <p>You must log in to add products</p>
+            <p>You must log in to write a review</p>
             <a id="login" href="{% url 'login' %}">Login</a>
         {% endblock %}
     {% endif %}

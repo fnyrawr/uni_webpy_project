@@ -99,7 +99,12 @@ Product PDF and ean should be auto generated
 > `ToDo` `Name` `03.06.2022`
 
 ### Anmerkung
-    Sicher, dass wir wirklich Eans drin haben wollen, ist einfach nur unnötiger Zusatz, der keinen wirklichen Mehrwert hat und es ergibt auch keinen Sinn eine Ean autmatisch zu generieren, weil das sonst den Sinn einer Ean (eindeutige Identifizierung in der EU) zerstört
+Sicher, dass wir wirklich Eans drin haben wollen, ist einfach nur unnötiger Zusatz, der keinen wirklichenMehrwert hat und es ergibt auch keinen Sinn eine Ean autmatisch zu generieren, weil das sonst den Sinneiner Ean (eindeutige Identifizierung in der EU) zerstört
+
+
+## Bugs 
+- [ ] pdf file not uploaded when creating a product
+- [ ] pdf file not uploaded when editing a product
 ## Functions
 - [ ] Registration
     - [ ] (send mail for Verification)
@@ -107,7 +112,7 @@ Product PDF and ean should be auto generated
     - [x] customer profile picture
 - [ ] Product
     - [ ] Product View
-        - [ ] edit product infos
+        - [x] edit product infos
         - [x] Product Information as PDF
         - [ ] (auto generate product information as pdf if no pdf is available)
         - [x] multiple pictures for product

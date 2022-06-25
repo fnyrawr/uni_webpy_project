@@ -6,8 +6,8 @@ class Product(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2, default=1)
-    pdf = models.FileField(null= True, blank=True, validators=[FileExtensionValidator(['pdf'])])
-    
+    pdf = models.FileField(upload_to='product_files/', null= True, blank=True, validators=[FileExtensionValidator(['pdf'])])
+    #maybe add user
     class Meta:
         ordering = ['name']
         verbose_name = 'Product'
@@ -64,7 +64,7 @@ class Review(models.Model):
                                     )
     
     def __str__(self):
-        return self.stars + "Stars " + self.text + "for " + self.product
+        return str(self.stars) + "Stars " + self.text + "for " + self.product.name
     
 class ReviewVote(models.Model):
     VOTE_TYPES = [
