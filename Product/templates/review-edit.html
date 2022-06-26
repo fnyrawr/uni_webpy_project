@@ -1,0 +1,29 @@
+{% extends 'home.html' %}
+{% load static %}
+
+{% block title %}Edit review{% endblock %}
+{% block content %} 
+    <h1>Edit review</h1>
+    {% if user.is_authenticated %}
+        {% block logged_in_content %}
+            <form method="POST">
+                {% csrf_token %}
+                <label for="{{ form.stars.id_for_label }}">{{ form.stars.label }}:</label>
+                <input id="{{ form.stars.id_for_label }}" name="{{ form.stars.html_name }}" type="{{ form.stars.field.widget.input_type}}" value="{{ review.stars }}" required>
+                <br>
+                <label for="{{ form.title.id_for_label }}">{{ form.title.label }}:</label>
+                <input id="{{ form.title.id_for_label }}" name="{{ form.title.html_name }}" type="{{ form.title.field.widget.input_type}}" value="{{ review.title }}">
+                <br>
+                <label for="{{ form.text.id_for_label }}">{{ form.text.label }}:</label>
+                <textarea id="{{ form.text.id_for_label }}" name="{{ form.text.html_name }}" rows="10" cols="40">{{ review.text }}</textarea>
+                <br>
+                <button type="submit">Create</button>
+            </form>
+    {% endblock %}
+    {% else %}
+        {% block not_logged_in_content %}
+            <p>You must log in to write a review</p>
+            <a id="login" href="{% url 'login' %}">Login</a>
+        {% endblock %}
+    {% endif %}
+{% endblock %}

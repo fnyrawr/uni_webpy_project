@@ -6,7 +6,7 @@
     <h1>Edit product</h1>
     {% if user.is_authenticated %}
         {% block logged_in_content %}
-            <form method="POST">
+            <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <label for="{{ form.name.id_for_label }}">{{ form.name.label }}:</label>
                 <input id="{{ form.name.id_for_label }}" name="{{ form.name.html_name }}" type="{{ form.name.field.widget.input_type}}" value="{{ product.name }}" required>

@@ -50,6 +50,7 @@ Product PDF and ean should be auto generated
 - Product
 - Picture
 
+> `Finished` `Eric` `23.06.2022`
 ### CustomUsers
 - Abstract User Attributes
 - Role
@@ -100,11 +101,6 @@ Product PDF and ean should be auto generated
 
 ### Anmerkung
 Sicher, dass wir wirklich Eans drin haben wollen, ist einfach nur unnötiger Zusatz, der keinen wirklichenMehrwert hat und es ergibt auch keinen Sinn eine Ean autmatisch zu generieren, weil das sonst den Sinneiner Ean (eindeutige Identifizierung in der EU) zerstört
-
-
-## Bugs 
-- [ ] pdf file not uploaded when creating a product
-- [ ] pdf file not uploaded when editing a product
 ## Functions
 - [ ] Registration
     - [ ] (send mail for Verification)
@@ -116,8 +112,8 @@ Sicher, dass wir wirklich Eans drin haben wollen, ist einfach nur unnötiger Zus
         - [x] Product Information as PDF
         - [ ] (auto generate product information as pdf if no pdf is available)
         - [x] multiple pictures for product
-    - [ ] Review
-        - [ ] edit review
+    - [x] Review
+        - [x] edit review
         - [x] give stars for product and write text
         - [x] delete own review
         - [x] others can mark review as useful or not 
@@ -136,8 +132,12 @@ Sicher, dass wir wirklich Eans drin haben wollen, ist einfach nur unnötiger Zus
     - [ ] Delete Reviews for product
 - [ ] ShoppingCart
     - [ ] Orders (past orders for user)
-    - [ ] (fake Checkout)
+    - [ ] fake Checkout
 
+## Frontend
+- [ ] Edit
+    - [ ] use Javascript to only edit part of the page not the full page 
+            e.g. delete product pdf in product edit view
 ## Process descriptions
 ### Verification process
 Link in the registered e-mail directs back to a verification route. Here the user has to login for the first time with the registered credentials (username and password). After that the user is verified by e-mail and is allowed to use the website as a customer.
@@ -146,8 +146,8 @@ Link in the registered e-mail directs back to a verification route. Here the use
 - [ ] implementing database
     - [ ] migrating database
 - [ ] implement views (see above)
-    - [ ] implement file uploads
-    - [ ] implement file downloads
+    - [x] implement file uploads
+    - [x] implement file downloads
 - [ ] styling
 - [ ] hosting
     - [ ] creating userdata

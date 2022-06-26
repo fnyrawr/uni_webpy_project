@@ -1,3 +1,4 @@
+from operator import delitem
 from django.db import models
 from django.core.validators import FileExtensionValidator
 from django.conf import settings
@@ -28,8 +29,8 @@ class ProductImage(models.Model):
 
 class Review(models.Model):
     stars = models.IntegerField(default=1)
-    title = models.TextField(max_length=100)
-    text = models.TextField(max_length=500)
+    title = models.CharField(max_length=100)
+    text = models.TextField()
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     timestamp = models.DateTimeField(auto_now_add=True)

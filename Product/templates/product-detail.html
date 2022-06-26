@@ -42,7 +42,9 @@
             <br><br>
             {% if review.user == user %}
                 <br>
-                    <a href="{% url 'review-delete' that_one_product.id review.id %}"><b>Delete Review</b></a>
+                <a href="{% url 'review-delete' that_one_product.id review.id %}"><b>Delete Review</b></a>
+                <br>
+                <a href="{% url 'review-edit' that_one_product.id review.id %}"><b>Edit Review</b></a>
                 <br>
             {% endif %}
             <a href="{% url 'create-report' that_one_product.id review.id %}"><b>Report Review</b></a>

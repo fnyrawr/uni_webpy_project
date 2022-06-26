@@ -8,7 +8,7 @@ class ProductForm(forms.ModelForm):
         model = Product
         fields = ['name', 'description', 'price', 'pdf']
         widget = {
-            'pdf': forms.FileField()
+           'pdf': forms.FileField()
         }
 class ReviewForm(forms.ModelForm):
 

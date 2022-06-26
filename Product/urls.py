@@ -13,7 +13,7 @@ urlpatterns = [
     path('delete/<int:pk>/review/<int:id>', views.review_delete, name='review-delete'),
     path('show/<int:pk>/review/<int:id>/vote/<str:useful_or_not>', views.vote_review, name='review-vote'),
     path('show/<int:pk>/review/<int:id>/report', views.create_report, name='create-report'),
-    #path('edit/<int:pk>/review/<int:id>', views.product_delete, name='review-edit'),
+    path('edit/<int:pk>/review/<int:id>', views.review_edit, name='review-edit'),
 
     #Image paths
     path('delete/<int:pk>/image/<int:id>', views.image_delete, name='image-delete'),
