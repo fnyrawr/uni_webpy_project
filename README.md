@@ -44,19 +44,19 @@ Since not every code change will be pushed immideately this would make it easier
 
 Product PDF and ean should be auto generated
 
-> `Finished` `Eric` `23.06.2022`
+> `Done` `Eric` `23.06.2022`
 
 ### Product Picture
 - Product
 - Picture
 
-> `Finished` `Eric` `23.06.2022`
+> `Done` `Eric` `23.06.2022`
 ### CustomUsers
 - Abstract User Attributes
 - Role
 - Picture
 
-> `Finished` `Eric` `22.06.2022`
+> `Done` `Eric` `22.06.2022`
 
 ### Product Reviews
 - User
@@ -65,14 +65,14 @@ Product PDF and ean should be auto generated
 - ReviewTitle
 - ReviewText
 
-> `Finished` `Eric` `23.06.2022`
+> `Done` `Eric` `23.06.2022`
 
 ### ReviewRating
 - User
 - Review
 - Rating (useful, useless)
 
-> `Finished` `Eric` `23.06.2022`
+> `Done` `Eric` `23.06.2022`
 
 ### Complaints
 - type
@@ -80,7 +80,7 @@ Product PDF and ean should be auto generated
 - Review
 - Text (why review is inappropriate)
 
-> `Finished` `Eric` `23.06.2022`
+> `Done` `Eric` `23.06.2022`
 
 ### ShoppingCart
 - ProcessID (internal counter)
@@ -90,17 +90,19 @@ Product PDF and ean should be auto generated
     - ordered
     - delivered
 
-> `ToDo` `Name` `03.06.2022`
+> `Done` `Eric` `28.06.2022`
 
 ### ItemsInCart
 - ProcessID
 - ProductID
 - OrderCount
 
-> `ToDo` `Name` `03.06.2022`
+> `Done` `Eric` `28.06.2022`
 
-### Anmerkung
-Sicher, dass wir wirklich Eans drin haben wollen, ist einfach nur unnötiger Zusatz, der keinen wirklichenMehrwert hat und es ergibt auch keinen Sinn eine Ean autmatisch zu generieren, weil das sonst den Sinneiner Ean (eindeutige Identifizierung in der EU) zerstört
+## Anmerkung
+- Sicher, dass wir wirklich Eans drin haben wollen, ist einfach nur unnötiger Zusatz, der keinen wirklichenMehrwert hat und es ergibt auch keinen Sinn eine Ean autmatisch  zu  generieren, weil das sonst den Sinneiner Ean (eindeutige Identifizierung in der EU) zerstört
+- im product könnte noch der user, der das Product als letztes editiert hat, rein
+- timestamp bei der review könnte in der edit view auf das jetzige datum geupdatet werden, wenn der user seine review ändert
 ## Functions
 - [ ] Registration
     - [ ] (send mail for Verification)
