@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-
+from Shoppingcart.models import ShoppingCart
 # Create your models here.
 class CustomUser(AbstractUser):
     ROLES = [
@@ -15,3 +15,12 @@ class CustomUser(AbstractUser):
                             choices=ROLES,
 							default='CU',
                             )
+
+    def count_shopping_cart_items(self):
+        count = 0
+        shopping_cart = ShoppingCart.objects.filter(user=self)
+        if shopping_cart:
+            shopping_cart = shopping_cart.first()
+            count = shopping_cart.get_number_of_items()
+
+        return count

@@ -1,7 +1,7 @@
 {% extends 'home.html' %}
 {% load static %}
 
-{% block title %}Computergame detail{% endblock %}
+{% block title %}Product detail{% endblock %}
 
 {% block content %}
 <h1>Product details</h1>
@@ -57,6 +57,18 @@
             {{ review_form.as_p }}
             <button type="submit">Add review</button>
         </form>
+
+        {% if user.is_authenticated %}
+        <br>
+        <form method="POST">
+            {% csrf_token %}
+            {{ quantity_form.as_p }}
+            <button type="submit" name="shopping_cart" >Add to shopping cart</button>
+        </form>
+        {% else %}
+            <br><a href="{% url 'login' %}">Login</a> to add to shopping cart
+            <br>
+        {%  endif %}
 
         <br>
         <a href="{% url 'product-edit' that_one_product.id %}"><b>Edit product</b></a>

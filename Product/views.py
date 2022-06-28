@@ -1,10 +1,11 @@
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, ListView, DeleteView
-from .forms import ProductForm, ReportForm, ReviewForm
+from .forms import ProductForm, QuantityForm, ReportForm, ReviewForm
 from .models import Product, ProductImage, Review
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
+from Shoppingcart.models import ShoppingCart
 
 # Create your views here.
 class ProductListView(ListView):
@@ -48,23 +49,32 @@ class ProductDeleteView(DeleteView):
 def product_detail(request, **kwargs):
     product_id = kwargs['pk']
     product = Product.objects.get(id=product_id)
+    rform = ReviewForm
+    qform = QuantityForm
     if request.method == 'POST':
-        form = ReviewForm(request.POST)
         user = request.user
-        form.instance.user = user
-        form.instance.product = product
-        print(form)
-        if form.is_valid():
-            Review.objects.filter(user=user, product = product).delete()
-            form.save()
-        else:
-            print(form.errors) 
+        if 'shopping_cart' in request.POST:
+            qform = QuantityForm(request.POST)
+            if qform.is_valid():
+                ShoppingCart.add_item(user, product, qform.cleaned_data['quantity'])
+            else:
+                print(qform.errors) 
+        else:    
+            rform = ReviewForm(request.POST)
+            rform.instance.user = user
+            rform.instance.product = product
+            if rform.is_valid():
+                Review.objects.filter(user=user, product = product).delete()
+                rform.save()
+            else:
+                print(rform.errors) 
     reviews = Review.objects.filter(product=product)
     images = ProductImage.objects.filter(product=product)
     context = {
         'that_one_product': product,
         'product_reviews': reviews,
-        'review_form': ReviewForm,
+        'review_form': rform,
+        'quantity_form': qform,
         'product_images': images}
     return render(request, 'product-detail.html', context)
     

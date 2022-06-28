@@ -1,0 +1,30 @@
+{% extends 'home.html' %}
+{% load static %}
+
+{% block title %}Payment{% endblock %}
+{%block shopping_cart%} {%endblock%}
+{% block content %}
+<h2>Payment</h2>
+    {% if paid %}
+        Thank you for your payment.<br><br>
+        <a href="{% url 'home' %}">back to home</a>
+    {% elif shopping_cart_is_empty %}
+        Your shopping cart is empty. There is nothing to pay for.<br><br>
+    {% else %}
+        <form method="POST">
+            {% csrf_token %}
+            {{ payment_form.as_p }}
+            <input type="hidden" id="shopping_cart_id" name="shopping_cart_id" value="{{ shopping_cart.id }}">
+            <button type="submit">Confirm payment type</button>
+        </form>
+        {% if payment_type_form %}
+            <form method="POST">
+                {% csrf_token %}
+                {{ payment_type_form.as_p }}
+                <button type="submit" name="pay">Pay</button>
+            </form>
+        {% endif %}
+        <br>
+        <a href="{% url 'product-list' %}">Keep shopping</a>
+    {% endif %}
+{% endblock %}

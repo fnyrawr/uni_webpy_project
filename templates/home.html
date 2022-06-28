@@ -1,6 +1,19 @@
 {% extends "base.html" %}
 
 {% block title %}Homepage{% endblock %}
+
+{% block shopping_cart %}
+    <a style="float: right;" href="{% url 'shopping-cart-show' %}">
+        Shopping Cart (
+        {% if user.is_authenticated %}
+            {{ request.user.count_shopping_cart_items }}
+        {% else %}
+            0
+        {% endif %}
+        )
+    </a>
+{% endblock %}
+
 {% block content %}
     <h1>Amazon 2.0</h1>
     {% if user.is_authenticated %}

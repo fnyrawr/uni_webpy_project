@@ -1,0 +1,29 @@
+{% extends 'home.html' %}
+{% load static %}
+
+{% block title %}Shopping cart{% endblock %}
+{%block shopping_cart%} {%endblock%}
+{% block content %}
+<h2>Shopping cart</h2>
+    {% if shopping_cart_is_empty %}
+        Your shopping cart is empty.<br>
+    {% else %}
+        {% for item in shopping_cart_items %}
+            {{ item.product.name }}<br>
+            {{ item.product.price }} € x{{ item.quantity }}<br>
+            <br>
+        {% endfor %}
+
+        Total amount: {{ total }} €
+
+        <br><br>
+        <form method="POST">
+            {% csrf_token %}
+            <button type="submit" name="empty">Empty the shopping cart</button><br>
+            <button type="submit" name="pay">Pay</button>
+        </form>
+    {% endif %}
+
+    <br>
+    <a href="{% url 'product-list' %}">Keep shopping</a>
+{% endblock %}

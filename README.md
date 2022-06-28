@@ -126,15 +126,16 @@ Product PDF and ean should be auto generated
         - [ ] filter by reviewRatings
 - [ ] CustomerService-Portal
     - [ ] Restrict access by role check
-    - [ ] Add new Products and PDFs
-    - [ ] Change Products
-    - [ ] Delete Products
+    - [x] Add new Products and PDFs
+    - [x] Change Products
+    - [x] Delete Products
     - [ ] Review Complaints
-    - [ ] Edit Reviews for product
-    - [ ] Delete Reviews for product
+    - [x] Edit Reviews for product
+    - [x] Delete Reviews for product
 - [ ] ShoppingCart
-    - [ ] Orders (past orders for user)
-    - [ ] fake Checkout
+    - [x] Orders 
+    - [ ] (user can see last 3 orders)
+    - [x] fake payment
 
 ## Frontend
 - [ ] Edit
