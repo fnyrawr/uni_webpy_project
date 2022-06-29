@@ -7,8 +7,10 @@
 <ul>
     {% for myuser in all_users %}
         {{ myuser.first_name }} {{ myuser.last_name }} {{ myuser.role }}<br>
-        <img src="{{ myuser.profile_picture.url }}" height="150" width="150"><br>
-        <br>
+        {% if myuser.profile_picture %}
+            <img src="{{ myuser.profile_picture.url }}" height="150" width="150"><br>
+            <br>
+        {% endif %}
     {% endfor %}
 </ul>
 {% endblock %}
