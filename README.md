@@ -4,6 +4,17 @@ Git Repo for our WebPy Semmesterproject
 
 [[_TOC_]]
 
+## How to start Project
+Follow all steps by order:
+- py -m venv .venv
+- .venv\scripts\activate
+- pip install django
+- pip install Pillow
+- python manage.py makemigrations
+- python manage.py migrate
+- python manage.py createsuperuser
+- python manage.py runserver
+
 ## Members
 
 | Name | Student ID |
