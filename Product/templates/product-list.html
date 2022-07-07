@@ -6,23 +6,39 @@
 {% block content %}
     <div class="container">
         <h3>Products list</h3>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Search</button>
+        </form>
         <div class="row">
-        {% for product in all_products %}
-            {% comment %} other attributes maybe picture of product {% endcomment %}
-            <div class="col s4">
-                <div class="card white">
-                    <div class="card-content">
-                        <span class="card-title black-text">{{ product.name }}</span>
-                        <p>{{ product.description }}</p>
-                        <div style="text-align: right;">{{ product.price }} € / pc.</div>
-                    </div>
-                    <div class="card-action">
-                        <a class="waves-effect red-text text-darken-1" href="{{ product.id }}/">View product</a>
+        {% if search %}
+            {% for product in products_found %}
+                {% comment %} other attributes maybe picture of product {% endcomment %}
+                <a href="{{ product.id }}/"><b>{{ product.name }}</b></a>
+                <br>
+            {% endfor %}
+            <a href={% url 'product-list' %}>Backt to all Products</a><br>
+        {% else %}
+            {% for product in all_products %}
+                {% comment %} other attributes maybe picture of product {% endcomment %}
+                <div class="col s4">
+                    <div class="card white">
+                        <div class="card-content">
+                            <span class="card-title black-text">{{ product.name }}</span>
+                            <p>{{ product.description }}</p>
+                            <div style="text-align: right;">{{ product.price }} € / pc.</div>
+                        </div>
+                        <div class="card-action">
+                            <a class="waves-effect red-text text-darken-1" href="{{ product.id }}/">View product</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
+        {% endif %}
         </div>
-        <a class="waves-effect btn red darken-1" href={% url 'product-create' %}><i class="material-icons left">add</i>Add a new product</a>
+        {% if user.is_authorized %}
+            <a class="waves-effect btn red darken-1" href={% url 'product-create' %}><i class="material-icons left">add</i>Add a new product</a>
+        {% endif %}
     </div>
 {% endblock %}

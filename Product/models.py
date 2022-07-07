@@ -18,7 +18,7 @@ class Product(models.Model):
         return self.name + ' (' + str(self.price) + ')'
 
     def __repr__(self):
-        return self.name+ ' / ' + self.description + ' / ' + self.price
+        return self.name + ' / ' + self.description + ' / ' + str(self.price)
 
 class ProductImage(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)

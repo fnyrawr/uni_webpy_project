@@ -25,8 +25,10 @@
             </div></li>
             <li><a class="waves-effect red-text text-darken-1" href="{% url 'logout' %}"><i class="material-icons red-text text-darken-1">logout</i>Logout</a></li>
             <li><div class="divider"></div></li>
-            <li><a class="subheader">Admin Functions</a></li>
-            <li><a class="waves-effect" href="{% url 'myuser-list' %}"><i class="material-icons red-text text-darken-1">group</i>Users</a></li>
+            {% if user.is_authorized %}
+                <li><a class="subheader">Admin Functions</a></li>
+                <li><a class="waves-effect" href="{% url 'myuser-list' %}"><i class="material-icons red-text text-darken-1">group</i>Users</a></li>
+            {% endif %}
             <li><div class="divider"></div></li>
             <li><a class="subheader">User Functions</a></li>
             <li><a class="waves-effect" href="{% url 'product-list' %}"><i class="material-icons red-text text-darken-1">shopping_bag</i>Products</a></li>
@@ -36,7 +38,6 @@
 
 {% block content %}
     {% if user.is_authenticated %}
-
     {% else %}
         {% block not_logged_in_content %}
             <div class="container">

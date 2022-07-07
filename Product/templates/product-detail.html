@@ -62,10 +62,13 @@
                     </div>
                     <div class="card-action">
                         {% if review.user == user %}
-                            <a class="waves-effect btn red darken-1" href="{% url 'review-edit' that_one_product.id review.id %}" %}><i class="material-icons left">edit</i>Edit review</a>
-                            <a class="waves-effect btn white red-text text-darken-1" href="{% url 'review-delete' that_one_product.id review.id %}" %}><i class="material-icons left">delete</i>Delete review</a>
+                            <a class="waves-effect btn red darken-1" href="{% url 'review-edit' that_one_product.id review.id %}" ><i class="material-icons left">edit</i>Edit review</a>
+                            <a class="waves-effect btn white red-text text-darken-1" href="{% url 'review-delete' that_one_product.id review.id %}" ><i class="material-icons left">delete</i>Delete review</a>
+                        {% elif is_authorized %}
+                            <a class="waves-effect btn white red-text text-darken-1" href="{% url 'review-delete' that_one_product.id review.id %}" ><i class="material-icons left">delete</i>Delete review</a>
+                            <a class="waves-effect btn white red-text text-darken-1" href="{% url 'report-list' that_one_product.id review.id %}" ><i class="material-icons left">show</i>Review reports</a>
                         {% else %}
-                            <a class="waves-effect btn red darken-1" href="{% url 'create-report' that_one_product.id review.id %}" %}><i class="material-icons left">report_problem</i>Report review</a>
+                            <a class="waves-effect btn red darken-1" href="{% url 'create-report' that_one_product.id review.id %}" ><i class="material-icons left">report_problem</i>Report review</a>
                         {% endif %}
                     </div>
                 </div>
@@ -89,8 +92,10 @@
 
         {% if user.is_authenticated %}
             <br>
-            <a class="waves-effect btn red darken-1" href="{% url 'product-edit' that_one_product.id %}"><b>Edit product</b></a>
-            <a class="waves-effect btn white red-text text-darken-1" href="{% url 'product-delete' that_one_product.id %}"><b>Delete product</b></a>
+            {% if is_authorized %}
+                <a class="waves-effect btn red darken-1" href="{% url 'product-edit' that_one_product.id %}"><b>Edit product</b></a>
+                <a class="waves-effect btn white red-text text-darken-1" href="{% url 'product-delete' that_one_product.id %}"><b>Delete product</b></a>
+                {% endif %}
         {% endif %}
         <br><br><br>
 {% endblock %}
