@@ -13,7 +13,18 @@
                         <span class="card-title black-text">Login</span>
                         <form method="post">
                             {% csrf_token %}
-                            {{ form.as_p }}
+                            <div class="row">
+                                <div class="input-field col s12 grey-text">
+                                    <i class="material-icons prefix">person</i>
+                                    <label for="id_username">Username</label>
+                                    <input type="text" name="username" autofocus autocapitalize="none" autocomplete="username" maxlength="150" required id="id_username">
+                                </div>
+                                <div class="input-field col s12 grey-text">
+                                    <i class="material-icons prefix">vpn_key</i>
+                                    <label for="id_password">Password</label>
+                                    <input type="password" name="password" autocapitalize="none" autocomplete="current-password" maxlength="150" required id="id_password">
+                                </div>
+                            </div>
                             <button type="submit" class="waves-effect waves-light btn red"><i class="material-icons left">login</i>Log in</button>
                         </form>
                     </div>

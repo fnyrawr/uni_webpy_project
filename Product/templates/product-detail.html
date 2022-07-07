@@ -75,15 +75,22 @@
         <div class="card white">
             <div class="card-content">
                 <span class="card-title">Write a review for this product</span>
-                <form method="POST">
-                    {% csrf_token %}
-                    {{ review_form.as_p }}
-                    <a class="waves-effect btn red darken-1" type="submit"><i class="material-icons left">add</i>Add review</a>
-                </form>
+                {% if user.is_authenticated %}
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{ review_form.as_p }}
+                        <a class="waves-effect btn red darken-1" type="submit"><i class="material-icons left">add</i>Add review</a>
+                    </form>
+                {% else %}
+                    <a class="red-text text-darken-1" href="{% url 'login' %}">Login</a> to write a review for this article.
+                {% endif %}
             </div>
         </div>
 
-        <br>
-        <a class="waves-effect btn red darken-1" href="{% url 'product-edit' that_one_product.id %}"><b>Edit product</b></a>
-        <a class="waves-effect btn white red-text text-darken-1" href="{% url 'product-delete' that_one_product.id %}"><b>Delete product</b></a>
+        {% if user.is_authenticated %}
+            <br>
+            <a class="waves-effect btn red darken-1" href="{% url 'product-edit' that_one_product.id %}"><b>Edit product</b></a>
+            <a class="waves-effect btn white red-text text-darken-1" href="{% url 'product-delete' that_one_product.id %}"><b>Delete product</b></a>
+        {% endif %}
+        <br><br><br>
 {% endblock %}
