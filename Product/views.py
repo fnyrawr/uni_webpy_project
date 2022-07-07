@@ -1,17 +1,53 @@
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, DetailView, ListView, DeleteView
-from .forms import ProductForm, QuantityForm, ReportForm, ReviewForm
-from .models import Product, ProductImage, Review
+from django.views.generic import CreateView, DeleteView
+from .forms import ProductForm, QuantityForm, ReportForm, ReviewForm, SearchForm
+from .models import Product, ProductImage, Report, Review
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 from Shoppingcart.models import ShoppingCart
+from django.db.models import Avg, Q
 
 # Create your views here.
-class ProductListView(ListView):
-    model = Product
-    context_object_name = 'all_products'
-    template_name = 'product-list.html'
+
+def product_list(request):
+    all_products = None
+    products_found = None
+    search=False
+    searchForm = SearchForm
+    if request.method == "POST":
+        search=True
+        searchForm = SearchForm(request.POST)
+        data = searchForm.data
+        print(data)
+        name = data['name']
+        products_found = Product.objects.filter(name__contains=name)
+        print(products_found)
+        description = data['description']
+        if description:
+            products_found = products_found.filter(description__contains=description)
+        price = data['price']
+        if price:
+            if data['sortPriceBy'] == "MIN":
+                products_found = products_found.filter(price__gt=price)
+            else:
+                products_found = products_found.filter(price__lt=price)
+        stars = data['stars']
+        if stars:
+            products_found = products_found.annotate(avg_stars=Avg('review__stars'))
+            if data['sortPriceBy'] == "MIN":
+                products_found = products_found.filter(avg_stars__gt=stars)
+            else:
+                products_found = products_found.filter(avg_stars__lt=stars)
+    else:    
+        all_products = Product.objects.all()
+    #filter by Stars min avg max avg
+    print(products_found)
+    context = {'all_products': all_products,
+                'products_found': products_found,
+                'search': search,
+               'form': searchForm}
+    return render(request, 'product-list.html', context)
 
 class ProductCreateView(CreateView):
     model = Product
@@ -51,8 +87,9 @@ def product_detail(request, **kwargs):
     product = Product.objects.get(id=product_id)
     rform = ReviewForm
     qform = QuantityForm
+    is_authorized = False
+    user = request.user
     if request.method == 'POST':
-        user = request.user
         if 'shopping_cart' in request.POST:
             qform = QuantityForm(request.POST)
             if qform.is_valid():
@@ -70,12 +107,15 @@ def product_detail(request, **kwargs):
                 print(rform.errors) 
     reviews = Review.objects.filter(product=product)
     images = ProductImage.objects.filter(product=product)
+    if not user.is_anonymous:
+        is_authorized = user.is_authorized()
     context = {
         'that_one_product': product,
         'product_reviews': reviews,
         'review_form': rform,
         'quantity_form': qform,
-        'product_images': images}
+        'product_images': images,
+        'is_authorized': is_authorized}
     return render(request, 'product-detail.html', context)
     
 def vote_review(request, pk: int, id: int, useful_or_not: str):
@@ -95,6 +135,14 @@ def review_delete(request, **kwargs):
         context = {
             'that_one_review': review}
         return render(request, 'review-delete.html', context)
+
+def show_reports(request, pk: int, id: int):
+    review = Review.objects.get(
+            id=id)
+    all_reports = Report.objects.filter(review=review)
+    context = {'all_reports': all_reports,
+                   'productId': pk}
+    return render(request, 'report-list.html', context)
     
 def create_report(request, **kwargs):
     review_id = kwargs['id']
@@ -114,7 +162,7 @@ def create_report(request, **kwargs):
         context = {'form': form,
                    'review': review}
         return render(request, 'report-create.html', context)
-    
+
 def product_edit(request, **kwargs):
     product_id = kwargs['pk']
     product = Product.objects.get(

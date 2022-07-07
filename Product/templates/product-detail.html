@@ -16,6 +16,10 @@
                 <td><b>Description:</b></td>
                 <td>{{ that_one_product.description }}<br></td>
              </tr>
+             <tr>
+                <td><b>Price:</b></td>
+                <td>{{ that_one_product.price }}<br></td>
+             </tr>
              {% if that_one_product.pdf %}
                 <tr>
                     <td><b>Pdf:</b></td>
@@ -46,8 +50,12 @@
                 <br>
                 <a href="{% url 'review-edit' that_one_product.id review.id %}"><b>Edit Review</b></a>
                 <br>
+            {% elif is_authorized %}
+                <a href="{% url 'review-delete' that_one_product.id review.id %}"><b>Delete Review</b></a>
+                <a href="{% url 'report-list' that_one_product.id review.id %}"><b>Show Complaints</b></a>
             {% endif %}
-            <a href="{% url 'create-report' that_one_product.id review.id %}"><b>Report Review</b></a>
+            
+            <a href="{% url 'report-create' that_one_product.id review.id %}"><b>Report Review</b></a>
         {% endfor %}
         <br>
 
@@ -70,12 +78,13 @@
             <br>
         {%  endif %}
 
+        {% if is_authorized %}
         <br>
         <a href="{% url 'product-edit' that_one_product.id %}"><b>Edit product</b></a>
         <br>
         <a href="{% url 'product-delete' that_one_product.id %}"><b>Delete product</b></a>
         <br>
-
+        {% endif %}
         <a href="{% url 'product-list' %}">Back to all products</a>
     <div>
 {% endblock %}

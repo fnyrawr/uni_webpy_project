@@ -41,7 +41,7 @@ class ShoppingCartItem(models.Model):
     shopping_cart = models.ForeignKey(ShoppingCart, on_delete=models.CASCADE)
 
     def add_quantity(shopping_cart, product, quantity):
-        item = ShoppingCartItem.objects.filter(product=product)
+        item = ShoppingCartItem.objects.filter(shopping_cart=shopping_cart, product=product)
         if item:
             item = item.first()
             ShoppingCartItem.objects.filter(id= item.id).update(quantity= item.quantity + quantity)

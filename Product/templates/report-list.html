@@ -1,0 +1,21 @@
+{% extends 'home.html' %}
+{% load static %}
+
+{% block title %}Report list{% endblock %}
+
+{% block content %}
+    <h1>Report list</h1>
+    <ul>
+{% comment %}         {% if all_reports %} {% endcomment %}
+            {% for report in all_reports %}
+                <p>{{report.user}}</p>
+                <p>{{report.type}}</p>
+                <p>{{report.description}}</p>
+                <br>
+            {% endfor %}
+{% comment %}         {%else%}
+        <p>No complaints for this review</p>
+        {% endif %} {% endcomment %}
+    </ul>
+    <a href={% url 'product-detail' productId %}>Back to product</a><br>
+{% endblock %}

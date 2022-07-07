@@ -3,6 +3,7 @@
 {% block title %}Users list{% endblock %}
 
 {% block content %}
+{% if user.is_authorized %}
 <h2>Users list</h2>
 <ul>
     {% for myuser in all_users %}
@@ -13,4 +14,7 @@
         {% endif %}
     {% endfor %}
 </ul>
+{% else %}
+<p>You are not authorized to see this.<p>
+{% endif %}
 {% endblock %}

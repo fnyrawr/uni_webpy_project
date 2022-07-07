@@ -114,16 +114,16 @@ Product PDF and ean should be auto generated
 - Sicher, dass wir wirklich Eans drin haben wollen, ist einfach nur unnötiger Zusatz, der keinen wirklichenMehrwert hat und es ergibt auch keinen Sinn eine Ean autmatisch  zu  generieren, weil das sonst den Sinneiner Ean (eindeutige Identifizierung in der EU) zerstört
 - im product könnte noch der user, der das Product als letztes editiert hat, rein
 - timestamp bei der review könnte in der edit view auf das jetzige datum geupdatet werden, wenn der user seine review ändert
+
 ## Functions
-- [ ] Registration
-    - [ ] (send mail for Verification)
+### Needed
+- [x] Registration
     - [x] password (twice for confirmation)
     - [x] customer profile picture
-- [ ] Product
-    - [ ] Product View
+- [x] Product
+    - [x] Product View
         - [x] edit product infos
         - [x] Product Information as PDF
-        - [ ] (auto generate product information as pdf if no pdf is available)
         - [x] multiple pictures for product
     - [x] Review
         - [x] edit review
@@ -135,19 +135,32 @@ Product PDF and ean should be auto generated
         - [ ] filter by productName
         - [ ] filter by productDescription
         - [ ] filter by reviewRatings
-- [ ] CustomerService-Portal
-    - [ ] Restrict access by role check
-    - [x] Add new Products and PDFs
+- [x] CustomerService-Portal
+    - [x] Restrict access by role check
+    - [x] Add new Products and PDF
     - [x] Change Products
     - [x] Delete Products
-    - [ ] Review Complaints
+    - [x] Review Complaints
     - [x] Edit Reviews for product
     - [x] Delete Reviews for product
-- [ ] ShoppingCart
-    - [x] Orders 
-    - [ ] (user can see last 3 orders)
-    - [x] fake payment
+- [x] ShoppingCart
+    - [x] Orders
 
+### Extra
+- [ ] Registration
+    - [ ] send mail for Verification
+    - [ ] send mail for password reset
+- [ ] Product
+    - [ ] Product View
+        - [ ] auto generate product information as pdf if no pdf is available
+    - [ ] Comment Search by filters
+        - [ ] filter by commenttitle
+        - [ ] filter by commentRatings
+- [ ] CustomerService-Portal
+    - [ ] CustomerServiceSite 
+- [ ] ShoppingCart
+    - [ ] user can see last 3 orders
+    - [x] fake payment
 ## Frontend
 - [ ] Edit
     - [ ] use Javascript to only edit part of the page not the full page 
@@ -157,11 +170,12 @@ Product PDF and ean should be auto generated
 Link in the registered e-mail directs back to a verification route. Here the user has to login for the first time with the registered credentials (username and password). After that the user is verified by e-mail and is allowed to use the website as a customer.
 
 ## ToDo:
-- [ ] implementing database
-    - [ ] migrating database
+- [x] implementing database
+    - [x] migrating database
 - [ ] implement views (see above)
     - [x] implement file uploads
     - [x] implement file downloads
+    - [ ] implement some extras
 - [ ] styling
 - [ ] hosting
     - [ ] creating userdata
