@@ -1,81 +1,89 @@
 {% extends 'home.html' %}
 {% load static %}
 
-{% block title %}Product detail{% endblock %}
+{% block title %}Amyzone - {{ that_one_product.name }} product details{% endblock %}
 
 {% block content %}
-<h1>Product details</h1>
-        <h2>{{ that_one_product.name }}</h2>
-        <table>
-            {% comment %} pictures, pdf and other attributes of product missing {% endcomment %}
-             <tr>
-                 <td><b>Name:</b></td>
-                 <td>{{ that_one_product.name }}<br></td>
-             </tr>
-             <tr>
-                <td><b>Description:</b></td>
-                <td>{{ that_one_product.description }}<br></td>
-             </tr>
-             {% if that_one_product.pdf %}
-                <tr>
-                    <td><b>Pdf:</b></td>
-                    <td><a href="{{ that_one_product.pdf.url }}">Product Info Pdf</a><br></td>
-                </tr>
+    <div class="container">
+        <br><a class="waves-effect btn red darken-1" href="{% url 'product-list' %}"><i class="material-icons left">arrow_back</i>Back to product list</a>
+        <h3>{{ that_one_product.name }}</h3>
+        <div class="card white">
+            <div class="card-content">
+                <span class="card-title">Product details</span>
+                {% for image in product_images %}
+                    <img src="{{ image.image.url }}" height="150" width="150"><br>
+                {% endfor %}
+
+                {% comment %} pictures, pdf and other attributes of product missing {% endcomment %}
+                <p><b>Description:</b> {{ that_one_product.description }}</p>
+                {% if that_one_product.pdf %}
+                    <b>Pdf:</b> <a href="{{ that_one_product.pdf.url }}">Product Info Pdf</a>
+                {% endif %}
+            </div>
+            {% if user.is_authenticated %}
+                <div class="card-content">
+                    <span class="card-title">Add to cart</span>
+                    <form method="POST">
+                        <div class="row">
+                            {% csrf_token %}
+                            <div class="col s3">
+                                {{ quantity_form.as_p }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s3">
+                                <button type="submit" class="waves-effect btn red darken-1" name="shopping_cart"><i class="material-icons left">add_shopping_cart</i>Add to cart</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            {% else %}
+                <div class="card-content">
+                    <a class="red-text text-darken-1" href="{% url 'login' %}">Login</a> to add to shopping cart.
+                </div>
             {% endif %}
-        </table>
-        {% for image in product_images %}
-            <img src="{{ image.image.url }}" height="150" width="150"><br>
-        {% endfor %}
+        </div>
 
-        {% for review in product_reviews %}
-            <b style="color: #63a0cf">{{ review.stars }} Stars {{ review.user.username }} on {{ review.timestamp }}</b><br>
-            {{ review.title }} {{ review.text }}<br><br>
-            <span style="color: darkgreen">{{ review.get_useful_count }}</span>
-            <a href="{% url 'review-vote' that_one_product.id review.id 'useful' %}" style="text-decoration: none">
-                UP
-            </a>
-            &nbsp;&nbsp;&nbsp;
-            <span style="color: crimson">{{ review.get_useless_count }}</span>
-            <a href="{% url 'review-vote' that_one_product.id review.id 'useless' %}" style="text-decoration: none">
-                DOWN
-            </a>
-            <br><br>
-            {% if review.user == user %}
-                <br>
-                <a href="{% url 'review-delete' that_one_product.id review.id %}"><b>Delete Review</b></a>
-                <br>
-                <a href="{% url 'review-edit' that_one_product.id review.id %}"><b>Edit Review</b></a>
-                <br>
-            {% endif %}
-            <a href="{% url 'create-report' that_one_product.id review.id %}"><b>Report Review</b></a>
-        {% endfor %}
-        <br>
+        <h4>Customer reviews</h4>
+        <div class="row">
+            {% for review in product_reviews %}
+                <div class="col s6 card white">
+                    <div class="card-content">
+                    <span class="card-title"><b>{{ review.title }}</b></span>
+                        <div class="chip red darken-1 white-text">{{ review.stars }} <i class="material-icons tiny">star</i></div>
+                        <b>{{ review.user.username }}</b> on {{ review.timestamp }}
+                        <br>{{ review.text }}
+                        <br><br>{{ review.get_useful_count }}<a href="{% url 'review-vote' that_one_product.id review.id 'useful' %}" class="light-green-text" style="text-decoration: none">
+                            <i class="material-icons">thumb_up</i>
+                        </a>
+                        {{ review.get_useless_count }}<a href="{% url 'review-vote' that_one_product.id review.id 'useless' %}" class="red-text" style="text-decoration: none">
+                            <i class="material-icons">thumb_down</i>
+                        </a>
+                    </div>
+                    <div class="card-action">
+                        {% if review.user == user %}
+                            <a class="waves-effect btn red darken-1" href="{% url 'review-edit' that_one_product.id review.id %}" %}><i class="material-icons left">edit</i>Edit review</a>
+                            <a class="waves-effect btn white red-text text-darken-1" href="{% url 'review-delete' that_one_product.id review.id %}" %}><i class="material-icons left">delete</i>Delete review</a>
+                        {% else %}
+                            <a class="waves-effect btn red darken-1" href="{% url 'create-report' that_one_product.id review.id %}" %}><i class="material-icons left">report_problem</i>Report review</a>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
 
-        <b>Do you have a review for this product?</b><br>
-        <form method="POST">
-            {% csrf_token %}
-            {{ review_form.as_p }}
-            <button type="submit">Add review</button>
-        </form>
-
-        {% if user.is_authenticated %}
-        <br>
-        <form method="POST">
-            {% csrf_token %}
-            {{ quantity_form.as_p }}
-            <button type="submit" name="shopping_cart" >Add to shopping cart</button>
-        </form>
-        {% else %}
-            <br><a href="{% url 'login' %}">Login</a> to add to shopping cart
-            <br>
-        {%  endif %}
+        <div class="card white">
+            <div class="card-content">
+                <span class="card-title">Write a review for this product</span>
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ review_form.as_p }}
+                    <a class="waves-effect btn red darken-1" type="submit"><i class="material-icons left">add</i>Add review</a>
+                </form>
+            </div>
+        </div>
 
         <br>
-        <a href="{% url 'product-edit' that_one_product.id %}"><b>Edit product</b></a>
-        <br>
-        <a href="{% url 'product-delete' that_one_product.id %}"><b>Delete product</b></a>
-        <br>
-
-        <a href="{% url 'product-list' %}">Back to all products</a>
-    <div>
+        <a class="waves-effect btn red darken-1" href="{% url 'product-edit' that_one_product.id %}"><b>Edit product</b></a>
+        <a class="waves-effect btn white red-text text-darken-1" href="{% url 'product-delete' that_one_product.id %}"><b>Delete product</b></a>
 {% endblock %}

@@ -1,14 +1,24 @@
-{% extends "base.html" %}
+{% extends "home.html" %}
 
-{% block title %}Sign Up{% endblock %}
+{% block title %}Amyzone - Signup{% endblock %}
+{% load static %}
 
 {% block content %}
-  <h1>Sign up</h1>
-  <form method="post" enctype="multipart/form-data">
-    <div>
-    {% csrf_token %}
-    {{ form.as_p }}
+    <div class="container">
+        <br><img src="{% static '/images/amyzonelogo.png' %}" alt="Amyzone Logo" width="350">
+        <div class="row">
+            <div class="col s12 m6">
+                <div class="card white">
+                    <div class="card-content white-text">
+                        <span class="card-title black-text">Sign up</span>
+                        <form method="post">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <button type="submit" class="waves-effect waves-light btn red"><i class="material-icons left">person_add</i>Sign up</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <button type="submit">Sign Up</button>
-  </form>
 {% endblock %}
