@@ -13,6 +13,8 @@
                         <span class="card-title black-text">Sign up</span>
                         <form method="post">
                             {% csrf_token %}
+                            {% comment %} use this to get errors if something went wrong you can also check more precise {% endcomment %}
+                            {{ form.errors }}
                             <div class="row">
                                 <div class="input-field col s6 grey-text">
                                     <i class="material-icons prefix">person</i>
@@ -23,7 +25,7 @@
                                 <div class="input-field col s6 grey-text">
                                     <i class="material-icons prefix">mail</i>
                                     <label for="id_email">E-Mail</label>
-                                    <input type="email" name="email" maxlength="254" id="id_email">
+                                    <input type="email" name="email" maxlength="254" required id="id_email">
                                     <span class="helper-text" data-error="wrong" data-success="right">Required.</span>
                                 </div>
                             </div>
