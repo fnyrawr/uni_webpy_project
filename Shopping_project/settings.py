@@ -141,3 +141,13 @@ LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
 
 AUTH_USER_MODEL = 'User.CustomUser'
+
+#Email Config
+
+#EMAIL_FROM_USER = os.environ.get('EMAIL_FROM_USER')
+EMAIL_FROM_USER = 'kattie.wolf60@ethereal.email'
+EMAIL_HOST = 'smtp.ethereal.email'
+EMAIL_HOST_USER = 'kattie.wolf60@ethereal.email'
+EMAIL_HOST_PASSWORD = 'Y3tJe8a8RB8ezzXTfh'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587

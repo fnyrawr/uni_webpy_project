@@ -148,16 +148,12 @@ Product PDF and ean should be auto generated
 
 ### Extra
 - [ ] Registration
-    - [ ] send mail for Verification
+    - [x] send mail for Verification
     - [ ] send mail for password reset
 - [ ] Product
-    - [ ] Product View
-        - [ ] auto generate product information as pdf if no pdf is available
     - [ ] Comment Search by filters
         - [ ] filter by commenttitle
         - [ ] filter by commentRatings
-- [ ] CustomerService-Portal
-    - [ ] CustomerServiceSite 
 - [ ] ShoppingCart
     - [ ] user can see last 3 orders
     - [x] fake payment

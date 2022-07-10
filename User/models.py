@@ -14,7 +14,8 @@ class CustomUser(AbstractUser):
                             choices=ROLES,
 							default='CU',
                             )
-
+    is_verified = models.BooleanField(default=False)
+    
     def count_shopping_cart_items(self):
         count = 0
         shopping_cart = ShoppingCart.objects.filter(user=self)
