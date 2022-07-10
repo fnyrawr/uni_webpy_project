@@ -131,10 +131,10 @@ Product PDF and ean should be auto generated
         - [x] delete own review
         - [x] others can mark review as useful or not 
         - [x] others can report review
-    - [ ] Product Search by filters
-        - [ ] filter by productName
-        - [ ] filter by productDescription
-        - [ ] filter by reviewRatings
+    - [x] Product Search by filters
+        - [x] filter by productName
+        - [x] filter by productDescription
+        - [x] filter by reviewRatings
 - [x] CustomerService-Portal
     - [x] Restrict access by role check
     - [x] Add new Products and PDF

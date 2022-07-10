@@ -36,9 +36,9 @@ def product_list(request):
         if stars:
             products_found = products_found.annotate(avg_stars=Avg('review__stars'))
             if data['sortPriceBy'] == "MIN":
-                products_found = products_found.filter(avg_stars__gt=stars)
+                products_found = products_found.filter(avg_stars__gte=stars)
             else:
-                products_found = products_found.filter(avg_stars__lt=stars)
+                products_found = products_found.filter(avg_stars__lte=stars)
     else:    
         all_products = Product.objects.all()
     #filter by Stars min avg max avg
@@ -46,7 +46,7 @@ def product_list(request):
     context = {'all_products': all_products,
                 'products_found': products_found,
                 'search': search,
-               'form': searchForm}
+               'form': searchForm,}
     return render(request, 'product-list.html', context)
 
 class ProductCreateView(CreateView):
@@ -109,13 +109,16 @@ def product_detail(request, **kwargs):
     images = ProductImage.objects.filter(product=product)
     if not user.is_anonymous:
         is_authorized = user.is_authorized()
+    avg_stars = Review.objects.filter(product=product).aggregate(Avg('stars'))
+    print(avg_stars)
     context = {
         'that_one_product': product,
         'product_reviews': reviews,
         'review_form': rform,
         'quantity_form': qform,
         'product_images': images,
-        'is_authorized': is_authorized}
+        'is_authorized': is_authorized,
+        'avg_stars': avg_stars,}
     return render(request, 'product-detail.html', context)
     
 def vote_review(request, pk: int, id: int, useful_or_not: str):
