@@ -6,7 +6,3 @@ input:focus {
 label.active {
   color: #E53935 !important;
 }
-
-header, main, footer {
-  padding-left: 300px;
-}

@@ -82,7 +82,7 @@
                     <form method="POST">
                         {% csrf_token %}
                         {{ review_form.as_p }}
-                        <a class="waves-effect btn red darken-1" type="submit"><i class="material-icons left">add</i>Add review</a>
+                        <button class="waves-effect btn red darken-1" type="submit"><i class="material-icons left">add</i>Add review</button>
                     </form>
                 {% else %}
                     <a class="red-text text-darken-1" href="{% url 'login' %}">Login</a> to write a review for this article.

@@ -3,7 +3,10 @@
 {% block title %}Amyzone{% endblock %}
 {% load static %}
 {% block css %}
-    <link rel="stylesheet" type="text/css" href="{% static 'theme.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/theming.css' %}">
+{% endblock %}
+{% block scripts %}
+    <script type="text/javascript" src="{% static 'js/loadingMaterialize.js' %}"></script>
 {% endblock %}
 
 {% block shopping_cart %}
@@ -15,25 +18,30 @@
 {% endblock %}
 
 {% block sidenav %}
-    {% if user.is_authenticated %}
-        <ul id="userSidenav" class="sidenav sidenav-fixed z-depth-3">
-            <li><div class="user-view">
-                <div class="background red darken-1"></div>
-                <a class="brand-logo"><img src="{% static '/images/amyzonelogo.png' %}" alt="Amyzone Logo" height="60"></a>
+    <ul id="userSidenav" class="sidenav z-depth-3">
+        <li><div class="user-view">
+            <div class="background red darken-1"></div>
+            <a class="brand-logo"><img src="{% static '/images/amyzonelogo.png' %}" alt="Amyzone Logo" height="60"></a>
+            {% if user.is_authenticated %}
                 <span class="white-text name"><h5>{{ user.username }}</h5></span>
                 <span class="white-text email"><h6>{{ user.email }}</h6></span>
-            </div></li>
+            {% else %}
+                <span class="white-text"><h5></h5></span>
+            {% endif %}
+        </div></li>
+        {% if user.is_authorized %}
             <li><a class="waves-effect red-text text-darken-1" href="{% url 'logout' %}"><i class="material-icons red-text text-darken-1">logout</i>Logout</a></li>
             <li><div class="divider"></div></li>
-            {% if user.is_authorized %}
-                <li><a class="subheader">Admin Functions</a></li>
-                <li><a class="waves-effect" href="{% url 'myuser-list' %}"><i class="material-icons red-text text-darken-1">group</i>Users</a></li>
-            {% endif %}
+            <li><a class="subheader">Admin Functions</a></li>
+            <li><a class="waves-effect" href="{% url 'myuser-list' %}"><i class="material-icons red-text text-darken-1">group</i>Users</a></li>
             <li><div class="divider"></div></li>
             <li><a class="subheader">User Functions</a></li>
             <li><a class="waves-effect" href="{% url 'product-list' %}"><i class="material-icons red-text text-darken-1">shopping_bag</i>Products</a></li>
-        </ul>
-    {% endif %}
+        {% else %}
+            <li><a class="waves-effect" href="{% url 'signup' %}"><i class="material-icons lime-text">person_add</i>Sign up</a></li>
+            <li><a class="waves-effect" href="{% url 'login' %}"><i class="material-icons red-text text-darken-1">login</i>Login</a></li>
+        {% endif %}
+    </ul>
 {% endblock %}
 
 {% block content %}

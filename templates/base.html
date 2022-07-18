@@ -4,37 +4,42 @@
   <meta charset="utf-8">
   <title>{% block title %}{% endblock %}</title>
 
+  {% load static %}
+
   <!-- Materialize CSS dependencies -->
-  <!-- Compiled and minified CSS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-  <!-- Compiled and minified JavaScript -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <!--Import Google Icon Font-->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!--JQuery-->
+  <script type="text/javascript" src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
   <!--Import materialize.css-->
-  <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+  <link type="text/css" rel="stylesheet" href="{% static 'css/materialize.min.css' %}"  media="screen,projection"/>
 
     {% load static %}
     {% block css %}{% endblock %}
+    {% block scripts %}{% endblock %}
 </head>
 <body>
     <main>
         {% block navbar %}
-            {% if user.is_authenticated %}
-                <nav>
-                    <div class="nav-wrapper red darken-1">
-                        <ul class="right hide-on-med-and-down">
+            <nav>
+                <div class="nav-wrapper red darken-1">
+                    <ul class="left">
+                        <li><a href="" data-target="userSidenav" class="sidenav-trigger show-on-large"><i class="material-icons">menu</i></a></li>
+                        <li><img src="{% static '/images/amyzonelogo.png' %}" alt="Amyzone Logo" height="60"></li>
+                    </ul>
+                    {% if user.is_authenticated %}
+                        <ul class="right">
                             <li><a href="{% url 'shopping-cart-show' %}"><i class="material-icons left">shopping_cart</i> {% block shopping_cart %}{% endblock %} </a></li>
                         </ul>
-                    </div>
-                </nav>
-            {% endif %}
+                    {% endif %}
+                </div>
+            </nav>
         {% endblock %}
         {% block sidenav %}{% endblock %}
         {% block content %}{% endblock %}
     </main>
 
     <!--JavaScript at end of body for optimized loading-->
-    <script type="text/javascript" src="js/materialize.min.js"></script>
+    <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
 </body>
 </html>
