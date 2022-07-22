@@ -6,39 +6,85 @@
 {% block content %}
     <div class="container">
         <h3>Products list</h3>
-        <form method="POST">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Search</button>
-        </form>
-        <div class="row">
-        {% if search %}
-            {% for product in products_found %}
-                {% comment %} other attributes maybe picture of product {% endcomment %}
-                <a href="{{ product.id }}/"><b>{{ product.name }}</b></a>
-                <br>
-            {% endfor %}
-            <a href={% url 'product-list' %}>Backt to all Products</a><br>
-        {% else %}
-            {% for product in all_products %}
-                {% comment %} other attributes maybe picture of product {% endcomment %}
-                <div class="col s4">
-                    <div class="card white">
-                        <div class="card-content">
-                            <span class="card-title black-text">{{ product.name }}</span>
-                            <p>{{ product.description }}</p>
-                            <div style="text-align: right;">{{ product.price }} € / pc.</div>
+        {% if user.is_authorized %}
+            <a class="waves-effect btn red darken-1" href={% url 'product-create' %}><i class="material-icons left">add</i>Add a new product</a><br><br>
+        {% endif %}
+    </div>
+
+    <div class="row">
+        <div class="col s3">
+            <div class="card white">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="card-content">
+                        <span class="card-title red-text text-darken-1">Product Search</span>
+                        <div class="row">
+                            <div class="input-field col s6 grey-text">
+                                <label for="id_name">Name</label>
+                                <input type="text" name="name" maxlength="100" required id="id_name">
+                            </div>
+                            <div class="input-field col s6 grey-text">
+                                <label for="id_description">Description</label>
+                                <textarea name="description" class="materialize-textarea" cols="40" rows="10" id="id_description"></textarea>
+                            </div>
                         </div>
-                        <div class="card-action">
-                            <a class="waves-effect red-text text-darken-1" href="{{ product.id }}/">View product</a>
+                        <div class="row">
+                            <div class="input-field col s6 grey-text">
+                                <label for="id_price">Price</label>
+                                <input type="number" name="price" id="id_price">
+                            </div>
+                            <div class="input-field col s6">
+                                <select name="sortPriceBy" id="id_sortPriceBy">
+                                    <option value="MIN" selected>Minimum</option>
+                                    <option value="MAX">Maximum</option>
+                                </select>
+                                <label for="id_sortPriceBy">Sort price by</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="range-field col s6">
+                                <label for="id_stars">Stars</label>
+                                <input type="range" name="stars" id="id_stars" min="1" max="5">
+                            </div>
+                            <div class="input-field col s6">
+                                <select name="sortStarsBy" id="id_sortStarsBy">
+                                    <option value="MIN" selected>Minimum</option>
+                                    <option value="MAX">Maximum</option>
+                                </select>
+                                <label for="id_sortStarsBy">Sort stars by</label>
+                            </div>
                         </div>
                     </div>
-                </div>
-            {% endfor %}
-        {% endif %}
+                    <div class="card-action">
+                        <button class="waves-effect btn red darken-1 white-text" type="submit"><i class="material-icons left">search</i>Search Products</button>
+                    </div>
+                </form>
+            </div>
         </div>
-        {% if user.is_authorized %}
-            <a class="waves-effect btn red darken-1" href={% url 'product-create' %}><i class="material-icons left">add</i>Add a new product</a>
-        {% endif %}
+
+    {% if search %}
+        {% for product in products_found %}
+            {% comment %} other attributes maybe picture of product {% endcomment %}
+            <a href="{{ product.id }}/"><b>{{ product.name }}</b></a>
+            <br>
+        {% endfor %}
+        <a href={% url 'product-list' %}>Back to all Products</a><br>
+    {% else %}
+        {% for product in all_products %}
+            {% comment %} other attributes maybe picture of product {% endcomment %}
+            <div class="col s3">
+                <div class="card white">
+                    <div class="card-content">
+                        <span class="card-title black-text">{{ product.name }}</span>
+                        <p>{{ product.description }}</p>
+                        <div style="text-align: right;">{{ product.price }} € / pc.</div>
+                    </div>
+                    <div class="card-action">
+                        <a class="waves-effect red-text text-darken-1" href="{{ product.id }}/">View product</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
     </div>
 {% endblock %}

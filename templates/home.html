@@ -46,6 +46,26 @@
 
 {% block content %}
     {% if user.is_authenticated %}
+        <div class="container">
+            <div class="row">
+                <div class="col s6 m3">
+                    <img src="{% static '/images/amyzoneface.png' %}" alt="Amyzone Logo" width="350">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12 m6">
+                    <div class="card red darken-1 z-depth-3">
+                        <div class="card-content white-text">
+                            <p>Willkommen zurück, {{ user.username }}.</p>
+                            <br><p>Stöbere ganz entspannt durch unsere Produkte und gönn dir mal etwas ganz besonderes.</p>
+                        </div>
+                        <div class="card-action">
+                          <a class="waves-effect white-text" href="{% url 'product-list' %}"><i class="material-icons black-text">shopping_bag</i>zu den Produkten</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     {% else %}
         {% block not_logged_in_content %}
             <div class="container">
