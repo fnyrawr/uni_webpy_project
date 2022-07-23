@@ -73,7 +73,13 @@
                     <div class="col s4">
                         <div class="card sticky-action white">
                             <div class="card-image waves-effect waves-block waves-light">
-                                <img class="activator" src="{% static '/images/amyzoneface.png' %}" alt="Amyzone Logo" style="width: 100%; height: auto">
+                                {% with p_image=product.first_image %}
+                                    {% if p_image %}
+                                        <img class="activator" src="{{ p_image.image.url }}" alt="Amyzone Logo" style="width: 100%; height: auto">
+                                    {% else %}
+                                        <img class="activator" src="{% static '/images/amyzoneface.png' %}" alt="Amyzone Logo" style="width: 100%; height: auto">
+                                    {% endif %}
+                                {% endwith %}
                             </div>
                             <div class="card-content">
                                 <span class="card-title black-text">{{ product.name }}<i class="material-icons right">more_vert</i></span>
@@ -95,7 +101,13 @@
                     <div class="col s4">
                         <div class="card sticky-action white">
                             <div class="card-image waves-effect waves-block waves-light">
-                                <img class="activator" src="{% static '/images/amyzoneface.png' %}" alt="Amyzone Logo" style="width: 100%; height: auto">
+                                {% with p_image=product.first_image %}
+                                    {% if p_image %}
+                                        <img class="activator" src="{{ p_image.image.url }}" alt="Amyzone Logo" style="width: 100%; height: auto">
+                                    {% else %}
+                                        <img class="activator" src="{% static '/images/amyzoneface.png' %}" alt="Amyzone Logo" style="width: 100%; height: auto">
+                                    {% endif %}
+                                {% endwith %}
                             </div>
                             <div class="card-content">
                                 <span class="card-title black-text">{{ product.name }}<i class="material-icons right">more_vert</i></span>

@@ -6,7 +6,7 @@ from .models import Product, ProductImage, Report, Review
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 from Shoppingcart.models import ShoppingCart
-from django.db.models import Avg, Q
+from django.db.models import Avg
 
 # Create your views here.
 
@@ -40,7 +40,7 @@ def product_list(request):
                 products_found = products_found.filter(avg_stars__lte=stars)
     else:    
         all_products = Product.objects.all()
-    #filter by Stars min avg max avg
+
     print(products_found)
     context = {'all_products': all_products,
                 'products_found': products_found,

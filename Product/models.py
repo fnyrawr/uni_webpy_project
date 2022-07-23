@@ -20,6 +20,12 @@ class Product(models.Model):
     def __repr__(self):
         return self.name + ' / ' + self.description + ' / ' + str(self.price)
 
+    def first_image(self):
+        image = ProductImage.objects.filter(product=self)
+        if(image):
+            return image.first()
+        return None
+
 class ProductImage(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='product_pictures/', blank = True, null = True)
