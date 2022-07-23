@@ -13,10 +13,9 @@
                         <div class="card-content">
                             <span class="card-title">Product details</span>
                             <div class="row">
-                                <div class="range-field col s6">
-                                    <label for="{{ form.stars.id_for_label }}">Rating in stars</label>
-                                    <input type="range" name="{{ form.stars.html_name }}" required id="{{ form.stars.id_for_label }}" value="{{ review.stars }}" min="1" max="5">
-                                </div>
+                                <span class="chip red darken-1 white-text" id="review_stars">{{ review.stars }} Stars</span>
+                                <span id="rateyo_review_stars" class="rateYo" data-rateyo-rating="{{ review.stars }}" data-rateyo-num-stars="5" data-rateyo-score="4" data-rateyo-multi-color="true" data-rateyo-full-star="true"></span>
+                                <input type="number" name="stars" required id="id_stars" value="3" min="1" max="5" hidden>
                             </div>
                             <div class="row">
                                 <div class="input-field col s6">

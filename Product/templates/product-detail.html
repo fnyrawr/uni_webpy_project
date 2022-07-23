@@ -19,7 +19,8 @@
                 <span class="card-title">Product details</span>
                 <p><b>Description:</b> {{ that_one_product.description }}</p>
                 <p><b>Price:</b> {{ that_one_product.price }}€/pc.</p>
-                <p><b>Customer rating:</b> <span class="chip red darken-1 white-text">{{ that_one_product.avg_stars }} <i class="material-icons tiny">star</i></span></p>
+                {% comment %}Rating here does not work with {{ that_one_product.avg_stars }}, needs fix{% endcomment %}
+                <p><b>Customer rating:</b> <span class="rateYo" data-rateyo-rating="3" data-rateyo-num-stars="5" data-rateyo-score="4" data-rateyo-multi-color="true" data-rateyo-full-star="true" data-rateyo-read-only="true"></span></p>
                 <div class="row">
                     {% for image in product_images %}
                         <div class="col s3">
@@ -54,7 +55,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="waves-effect btn red darken-1" name="shopping_cart"><i class="material-icons left">add_shopping_cart</i>Add to cart</button>
+                        <button type="submit" class="waves-effect waves-light btn red darken-1" name="shopping_cart"><i class="material-icons left">add_shopping_cart</i>Add to cart</button>
                     </div>
                 </form>
             {% else %}
@@ -63,7 +64,7 @@
                      You need to login to add items into your shopping cart.
                 </div>
                 <div class="modal-footer">
-                    <a class="red-text text-darken-1" href="{% url 'login' %}">Login</a>
+                    <a class="waves-effect waves-light btn red darken-1 white-text" href="{% url 'login' %}"><i class="material-icons left">login</i>Login</a>
                 </div>
             {% endif %}
         </div>
@@ -75,10 +76,10 @@
             {% for review in product_reviews %}
                 <div class="col s4 card white">
                     <div class="card-content">
-                    <span class="card-title">{{ review.title }}</span>
-                        <div class="chip red darken-1 white-text">{{ review.stars }} <i class="material-icons tiny">star</i></div>
-                        <b>{{ review.user.username }}</b> on {{ review.timestamp }}
-                        <br>{{ review.text }}
+                        <span class="card-title">{{ review.title }}</span>
+                        <div class="rateYo" data-rateyo-rating="{{ review.stars }}" data-rateyo-num-stars="5" data-rateyo-score="4" data-rateyo-multi-color="true" data-rateyo-read-only="true"></div>
+                        {{ review.text }}
+                        <br><b>{{ review.user.username }}</b> on {{ review.timestamp }}
                         <br><br>{{ review.get_useful_count }}<a href="{% url 'review-vote' that_one_product.id review.id 'useful' %}" class="light-green-text" style="text-decoration: none">
                             <i class="material-icons">thumb_up</i>
                         </a>
@@ -93,7 +94,7 @@
                         {% elif is_authorized %}
                             <a class="waves-effect btn white red-text text-darken-1" href="{% url 'review-delete' that_one_product.id review.id %}" ><i class="material-icons left">delete</i>Delete</a>
                             <a class="waves-effect btn white red-text text-darken-1" href="{% url 'report-list' that_one_product.id review.id %}" ><i class="material-icons left">show</i>Reports</a>
-                        {% else %}
+                        {% elif user.is_authenticated %}
                             <a class="waves-effect btn red darken-1" href="{% url 'create-report' that_one_product.id review.id %}" ><i class="material-icons left">report_problem</i>Report</a>
                         {% endif %}
                     </div>
@@ -108,12 +109,9 @@
                     {% csrf_token %}
                     <div class="modal-content">
                         <h5>Write a review for this product</h5>
-                        <div class="row">
-                            <div class="range-field col s6">
-                                <label for="id_stars">Rating in stars</label>
-                                <input type="range" name="stars" required id="id_stars" min="1" max="5">
-                            </div>
-                        </div>
+                        <span class="chip red darken-1 white-text" id="review_stars">3 Stars</span>
+                        <span id="rateyo_review_stars" class="rateYo" data-rateyo-rating="3" data-rateyo-num-stars="5" data-rateyo-score="4" data-rateyo-multi-color="true" data-rateyo-full-star="true"></span>
+                        <input type="number" name="stars" required id="id_stars" value="3" min="1" max="5" hidden>
                         <div class="row">
                             <div class="input-field col s6">
                                 <label for="id_title">Title</label>
