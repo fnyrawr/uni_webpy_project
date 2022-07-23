@@ -50,6 +50,8 @@ Since not every code change will be pushed immideately this would make it easier
 - [ ] Styling of Product Details, Product Create, Product Edit `WIP` `Florian` `23.07.2022`
 - [ ] Payment details as a modal `WIP` `Florian` `23.07.2022`
 - [ ] Styling of User List `ToDo` `Florian` `n/A`
+- [ ] Product Pictures and Product Details for real world data `ToDo` `Erdio` `n/A`
+- [ ] PDF generation `ToDo` `Michael` `n/A`
 
 ## Database
 ### Products
