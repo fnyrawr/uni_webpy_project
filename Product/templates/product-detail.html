@@ -6,50 +6,76 @@
 {% block content %}
     <div class="container">
         <br><a class="waves-effect btn red darken-1" href="{% url 'product-list' %}"><i class="material-icons left">arrow_back</i>Back to product list</a>
+        {% if user.is_authenticated %}
+            {% if is_authorized %}
+                <br><br>
+                <a class="waves-effect btn btn red darken-1" href="{% url 'product-edit' that_one_product.id %}"><i class="material-icons left">edit</i>Edit product</a>
+                <a class="waves-effect btn white red-text text-darken-1" href="{% url 'product-delete' that_one_product.id %}"><i class="material-icons left">delete</i>Delete product</a>
+                {% endif %}
+        {% endif %}
         <h3>{{ that_one_product.name }}</h3>
         <div class="card white">
             <div class="card-content">
                 <span class="card-title">Product details</span>
-                {% for image in product_images %}
-                    <img src="{{ image.image.url }}" height="150" width="150"><br>
-                {% endfor %}
-
-                {% comment %} pictures, pdf and other attributes of product missing {% endcomment %}
                 <p><b>Description:</b> {{ that_one_product.description }}</p>
+                <p><b>Price:</b> {{ that_one_product.price }}€/pc.</p>
+                <p><b>Customer rating:</b> <span class="chip red darken-1 white-text">{{ that_one_product.avg_stars }} <i class="material-icons tiny">star</i></span></p>
+                <div class="row">
+                    {% for image in product_images %}
+                        <div class="col s3">
+                            <img src="{{ image.image.url }}" style="max-width: 90%; max-height: 150px">
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="card-action">
                 {% if that_one_product.pdf %}
-                    <b>Pdf:</b> <a href="{{ that_one_product.pdf.url }}">Product Info Pdf</a>
+                    <a class="waves-effect waves-light btn red darken-1" href="{{ that_one_product.pdf.url }}"><i class="material-icons left">remove_red_eye</i> Product Info PDF</a>
+                {% endif %}
+                {% if user.is_authenticated %}
+                    <!-- Modal Trigger -->
+                    <a class="waves-effect waves-light btn red darken-1 modal-trigger" href="#modalAddToCard"><i class="material-icons left">shopping_cart</i>Buy</a>
                 {% endif %}
             </div>
+        </div>
+
+        <!-- Modal Structure -->
+        <div id="modalAddToCard" class="modal">
             {% if user.is_authenticated %}
-                <div class="card-content">
-                    <span class="card-title">Add to cart</span>
-                    <form method="POST">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="modal-content">
+                        <h5>Select quantity of {{ that_one_product.name }} to buy ({{ that_one_product.price }}€/pc.)</h5>
                         <div class="row">
-                            {% csrf_token %}
-                            <div class="col s3">
-                                {{ quantity_form.as_p }}
+                            <div class="col s6">
+                                <label for="id_quantity">Quantity</label>
+                                <input type="number" name="quantity" value="1" required id="id_quantity">
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col s3">
-                                <button type="submit" class="waves-effect btn red darken-1" name="shopping_cart"><i class="material-icons left">add_shopping_cart</i>Add to cart</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="waves-effect btn red darken-1" name="shopping_cart"><i class="material-icons left">add_shopping_cart</i>Add to cart</button>
+                    </div>
+                </form>
             {% else %}
-                <div class="card-content">
-                    <a class="red-text text-darken-1" href="{% url 'login' %}">Login</a> to add to shopping cart.
+                <div class="modal-content">
+                    <h5>Login required</h5>
+                     You need to login to add items into your shopping cart.
+                </div>
+                <div class="modal-footer">
+                    <a class="red-text text-darken-1" href="{% url 'login' %}">Login</a>
                 </div>
             {% endif %}
         </div>
 
-        <h4>Customer reviews</h4>
+        <h5>Customer reviews</h5>
+        <!-- Modal Trigger -->
+        <a class="waves-effect waves-light btn red darken-1 modal-trigger" href="#modalAddReview"><i class="material-icons left">add</i>Add review</a>
         <div class="row">
             {% for review in product_reviews %}
-                <div class="col s6 card white">
+                <div class="col s4 card white">
                     <div class="card-content">
-                    <span class="card-title"><b>{{ review.title }}</b></span>
+                    <span class="card-title">{{ review.title }}</span>
                         <div class="chip red darken-1 white-text">{{ review.stars }} <i class="material-icons tiny">star</i></div>
                         <b>{{ review.user.username }}</b> on {{ review.timestamp }}
                         <br>{{ review.text }}
@@ -62,40 +88,57 @@
                     </div>
                     <div class="card-action">
                         {% if review.user == user %}
-                            <a class="waves-effect btn red darken-1" href="{% url 'review-edit' that_one_product.id review.id %}" ><i class="material-icons left">edit</i>Edit review</a>
-                            <a class="waves-effect btn white red-text text-darken-1" href="{% url 'review-delete' that_one_product.id review.id %}" ><i class="material-icons left">delete</i>Delete review</a>
+                            <a class="waves-effect btn red darken-1" href="{% url 'review-edit' that_one_product.id review.id %}" ><i class="material-icons left">edit</i>Edit</a>
+                            <a class="waves-effect btn white red-text text-darken-1" href="{% url 'review-delete' that_one_product.id review.id %}" ><i class="material-icons left">delete</i>Delete</a>
                         {% elif is_authorized %}
-                            <a class="waves-effect btn white red-text text-darken-1" href="{% url 'review-delete' that_one_product.id review.id %}" ><i class="material-icons left">delete</i>Delete review</a>
-                            <a class="waves-effect btn white red-text text-darken-1" href="{% url 'report-list' that_one_product.id review.id %}" ><i class="material-icons left">show</i>Review reports</a>
+                            <a class="waves-effect btn white red-text text-darken-1" href="{% url 'review-delete' that_one_product.id review.id %}" ><i class="material-icons left">delete</i>Delete</a>
+                            <a class="waves-effect btn white red-text text-darken-1" href="{% url 'report-list' that_one_product.id review.id %}" ><i class="material-icons left">show</i>Reports</a>
                         {% else %}
-                            <a class="waves-effect btn red darken-1" href="{% url 'create-report' that_one_product.id review.id %}" ><i class="material-icons left">report_problem</i>Report review</a>
+                            <a class="waves-effect btn red darken-1" href="{% url 'create-report' that_one_product.id review.id %}" ><i class="material-icons left">report_problem</i>Report</a>
                         {% endif %}
                     </div>
                 </div>
             {% endfor %}
         </div>
 
-        <div class="card white">
-            <div class="card-content">
-                <span class="card-title">Write a review for this product</span>
-                {% if user.is_authenticated %}
-                    <form method="POST">
-                        {% csrf_token %}
-                        {{ review_form.as_p }}
+        <!-- Modal Structure -->
+        <div id="modalAddReview" class="modal">
+            {% if user.is_authenticated %}
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="modal-content">
+                        <h5>Write a review for this product</h5>
+                        <div class="row">
+                            <div class="range-field col s6">
+                                <label for="id_stars">Rating in stars</label>
+                                <input type="range" name="stars" required id="id_stars" min="1" max="5">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <label for="id_title">Title</label>
+                                <input type="text" name="title" maxlength="100" required id="id_title">
+                            </div>
+                            <div class="input-field col s6">
+                                <label for="id_text">Text</label>
+                                <textarea class="materialize-textarea" name="text" cols="40" rows="10" required id="id_text"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
                         <button class="waves-effect btn red darken-1" type="submit"><i class="material-icons left">add</i>Add review</button>
-                    </form>
-                {% else %}
-                    <a class="red-text text-darken-1" href="{% url 'login' %}">Login</a> to write a review for this article.
-                {% endif %}
-            </div>
+                    </div>
+                </form>
+            {% else %}
+                <div class="modal-content">
+                    <h5>Login required</h5>
+                     You need to login to add items into your shopping cart.
+                </div>
+                <div class="modal-footer">
+                    <a class="red-text text-darken-1" href="{% url 'login' %}">Login</a>
+                </div>
+            {% endif %}
         </div>
 
-        {% if user.is_authenticated %}
-            <br>
-            {% if is_authorized %}
-                <a class="waves-effect btn red darken-1" href="{% url 'product-edit' that_one_product.id %}"><b>Edit product</b></a>
-                <a class="waves-effect btn white red-text text-darken-1" href="{% url 'product-delete' that_one_product.id %}"><b>Delete product</b></a>
-                {% endif %}
-        {% endif %}
         <br><br><br>
 {% endblock %}

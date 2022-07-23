@@ -13,8 +13,6 @@
                         <span class="card-title black-text">Sign up</span>
                         <form method="post">
                             {% csrf_token %}
-                            {% comment %} use this to get errors if something went wrong you can also check more precise {% endcomment %}
-                            {{ form.errors }}
                             <div class="row">
                                 <div class="input-field col s6 grey-text">
                                     <i class="material-icons prefix">person</i>
@@ -43,7 +41,7 @@
                             </div>
                             <div class="row">
                                 <div class="file-field input-field col s12">
-                                    <div class="waves-effect waves-light btn red">
+                                    <div class="waves-effect waves-light btn red darken-1">
                                         <span><i class="material-icons left">photo</i> Upload profile picture</span>
                                         <input type="file">
                                     </div>
@@ -66,7 +64,11 @@
                                     <span class="helper-text" data-error="wrong" data-success="right">Enter the same password as before, for verification.</span>
                                 </div>
                             </div>
-                            <button type="submit" class="waves-effect waves-light btn red"><i class="material-icons left">person_add</i>Sign up</button>
+                            {% comment %} use this to get errors if something went wrong you can also check more precise {% endcomment %}
+                            <div class="red-text text-darken-1">
+                                {{ form.errors }}
+                            </div>
+                            <button type="submit" class="waves-effect waves-light btn red darken-1"><i class="material-icons left">person_add</i>Sign up</button>
                         </form>
                     </div>
                 </div>

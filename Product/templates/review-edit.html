@@ -1,29 +1,45 @@
 {% extends 'home.html' %}
 {% load static %}
 
-{% block title %}Edit review{% endblock %}
-{% block content %} 
-    <h1>Edit review</h1>
-    {% if user.is_authenticated %}
-        {% block logged_in_content %}
-            <form method="POST">
-                {% csrf_token %}
-                <label for="{{ form.stars.id_for_label }}">{{ form.stars.label }}:</label>
-                <input id="{{ form.stars.id_for_label }}" name="{{ form.stars.html_name }}" type="{{ form.stars.field.widget.input_type}}" value="{{ review.stars }}" required>
-                <br>
-                <label for="{{ form.title.id_for_label }}">{{ form.title.label }}:</label>
-                <input id="{{ form.title.id_for_label }}" name="{{ form.title.html_name }}" type="{{ form.title.field.widget.input_type}}" value="{{ review.title }}">
-                <br>
-                <label for="{{ form.text.id_for_label }}">{{ form.text.label }}:</label>
-                <textarea id="{{ form.text.id_for_label }}" name="{{ form.text.html_name }}" rows="10" cols="40">{{ review.text }}</textarea>
-                <br>
-                <button type="submit">Create</button>
-            </form>
-    {% endblock %}
-    {% else %}
-        {% block not_logged_in_content %}
-            <p>You must log in to write a review</p>
-            <a id="login" href="{% url 'login' %}">Login</a>
+{% block title %}Amyzone - edit product review{% endblock %}
+{% block content %}
+    <div class="container">
+        <h3>Edit review</h3>
+        {% if user.is_authenticated %}
+            {% block logged_in_content %}
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="card white">
+                        <div class="card-content">
+                            <span class="card-title">Product details</span>
+                            <div class="row">
+                                <div class="range-field col s6">
+                                    <label for="{{ form.stars.id_for_label }}">Rating in stars</label>
+                                    <input type="range" name="{{ form.stars.html_name }}" required id="{{ form.stars.id_for_label }}" value="{{ review.stars }}" min="1" max="5">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s6">
+                                    <label for="{{ form.title.id_for_label }}">{{ form.title.label }}</label>
+                                    <input type="{{ form.title.field.widget.input_type}}" name="{{ form.title.html_name }}" value="{{ review.title }}" maxlength="100" required id="{{ form.title.id_for_label }}">
+                                </div>
+                                <div class="input-field col s6">
+                                    <label for="{{ form.text.id_for_label }}">{{ form.text.label }}</label>
+                                    <textarea class="materialize-textarea" name="{{ form.text.html_name }}" cols="40" rows="10" required id="{{ form.text.id_for_label }}">{{ review.text }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-action">
+                            <button class="waves-effect btn red darken-1" type="submit"><i class="material-icons left">edit</i> Edit</button>
+                        </div>
+                    </div>
+                </form>
         {% endblock %}
-    {% endif %}
+        {% else %}
+            {% block not_logged_in_content %}
+                <p>You must log in to write a review</p>
+                <a id="login" href="{% url 'login' %}">Login</a>
+            {% endblock %}
+        {% endif %}
+    </div>
 {% endblock %}

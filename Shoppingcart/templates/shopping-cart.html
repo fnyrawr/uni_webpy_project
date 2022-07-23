@@ -1,29 +1,56 @@
 {% extends 'home.html' %}
 {% load static %}
 
-{% block title %}Shopping cart{% endblock %}
-{%block shopping_cart%} {%endblock%}
+{% block title %}Amyzone - view shopping cart{% endblock %}
+{% block shopping_cart %} {% endblock %}
 {% block content %}
-<h2>Shopping cart</h2>
-    {% if shopping_cart_is_empty %}
-        Your shopping cart is empty.<br>
-    {% else %}
-        {% for item in shopping_cart_items %}
-            {{ item.product.name }}<br>
-            {{ item.product.price }} € x{{ item.quantity }}<br>
-            <br>
-        {% endfor %}
-
-        Total amount: {{ total }} €
-
-        <br><br>
-        <form method="POST">
-            {% csrf_token %}
-            <button type="submit" name="empty">Empty the shopping cart</button><br>
-            <button type="submit" name="pay">Pay</button>
-        </form>
-    {% endif %}
-
-    <br>
-    <a href="{% url 'product-list' %}">Keep shopping</a>
+    <div class="container">
+        <h3>Shopping cart</h3>
+        {% if shopping_cart_is_empty %}
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title">Items in your shopping cart</span>
+                    <p>Your shopping cart is empty.</p><br>
+                    <a class="waves-effect waves-light btn white red-text text-darken-1" href="{% url 'product-list' %}"><i class="material-icons left">shopping_cart</i>Keep shopping</a>
+                </div>
+            </div>
+        {% else %}
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title">Items in your shopping cart</span><br>
+                    <table class="striped highlight">
+                        <thead class="red darken-1 white-text">
+                            <tr>
+                                <th>Name</th>
+                                <th>Quantity</th>
+                                <th>Price per piece</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in shopping_cart_items %}
+                                <tr>
+                                    <td>{{ item.product.name }}</td>
+                                    <td>{{ item.quantity }} pc.</td>
+                                    <td>{{ item.product.price }} €</td>
+                                </tr>
+                            {% endfor %}
+                            <tr class="grey white-text">
+                                <td><b>Total amount</b></td>
+                                <td></td>
+                                <td><b>{{ total }} €</b></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-action">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <button class="waves-effect waves-light btn red darken-1" type="submit" name="pay"><i class="material-icons left">credit_card</i>Pay</button>
+                        <button class="waves-effect waves-light btn white red-text text-darken-1" type="submit" name="empty"><i class="material-icons left">remove_shopping_cart</i>Empty the shopping cart</button>
+                        <a class="waves-effect waves-light btn white red-text text-darken-1" href="{% url 'product-list' %}"><i class="material-icons left">shopping_cart</i>Keep shopping</a>
+                    </form>
+                </div>
+            </div>
+        {% endif %}
+    </div>
 {% endblock %}

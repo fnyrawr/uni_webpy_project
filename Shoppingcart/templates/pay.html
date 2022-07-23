@@ -1,30 +1,79 @@
 {% extends 'home.html' %}
 {% load static %}
 
-{% block title %}Payment{% endblock %}
-{%block shopping_cart%} {%endblock%}
+{% block title %}Amyzone- Payment process{% endblock %}
+{% block shopping_cart%} {% endblock %}
 {% block content %}
-<h2>Payment</h2>
-    {% if paid %}
-        Thank you for your payment.<br><br>
-        <a href="{% url 'home' %}">back to home</a>
-    {% elif shopping_cart_is_empty %}
-        Your shopping cart is empty. There is nothing to pay for.<br><br>
-    {% else %}
+    <div class="container">
+        <h3>Payment</h3>
+        {% if paid %}
+            Thank you for your payment.<br><br>
+            <a href="{% url 'home' %}">back to home</a>
+        {% elif shopping_cart_is_empty %}
+            Your shopping cart is empty. There is nothing to pay for.<br><br>
+        {% else %}
         <form method="POST">
             {% csrf_token %}
-            {{ payment_form.as_p }}
-            <input type="hidden" id="shopping_cart_id" name="shopping_cart_id" value="{{ shopping_cart.id }}">
-            <button type="submit">Confirm payment type</button>
+            <div class="card">
+                <div class="card-content">
+                    <span class="card-title">Select payment type</span>
+                    <div class="row">
+                        <div class="col s6">
+                            <label for="id_amount">Amount in €</label>
+                            <input type="text" name="amount" value="{{ payment_form.amount.value }}" readonly required id="id_amount">
+                        </div>
+                        <div class="col s6">
+                            <label for="id_payment_method">Payment method</label>
+                            <select name="payment_method" required id="id_payment_method">
+                                <option value="" selected disabled>Select a payment method</option>
+                                <option value="G">Girocard</option>
+                                <option value="C">Credit card</option>
+                                <option value="P">PayPal</option>
+                            </select>
+                        </div>
+                    </div>
+                    <input type="hidden" id="shopping_cart_id" name="shopping_cart_id" value="{{ shopping_cart.id }}">
+                </div>
+                <div class="card-action">
+                    <!-- Modal Trigger -->
+                    <button class="waves-effect waves-light btn red darken-1 white-text modal-trigger" data-target="modalPaymentDetails" type="submit"><i class="material-icons left">credit_card</i>Confirm payment type</button>
+                    <a class="waves-effect waves-light btn white red-text text-darken-1" href="{% url 'product-list' %}"><i class="material-icons left">shopping_cart</i>Keep shopping</a>
+                </div>
+            </div>
         </form>
+
+        <!-- Modal Structure -->
+        <div id="modalPaymentDetails" class="modal">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="modal-content">
+                    <h5>Payment details</h5>
+                    {{ payment_type_form }}
+                </div>
+                <div class="modal-footer">
+                    <button class="waves-effect waves-light btn red darken-1 white-text" type="submit" name="pay"><i class="material-icons left">paid</i>Pay</button>
+                </div>
+            </form>
+        </div>
+
         {% if payment_type_form %}
             <form method="POST">
                 {% csrf_token %}
-                {{ payment_type_form.as_p }}
-                <button type="submit" name="pay">Pay</button>
+                <div class="card">
+                    <div class="card-content">
+                        <span class="card-title">Payment details</span>
+                        <div class="row">
+                            <div class="col s6">
+                                {{ payment_type_form }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-action">
+                        <button class="waves-effect waves-light btn red darken-1 white-text" type="submit" name="pay"><i class="material-icons left">paid</i>Pay</button>
+                    </div>
+                </div>
             </form>
         {% endif %}
-        <br>
-        <a href="{% url 'product-list' %}">Keep shopping</a>
     {% endif %}
+    </div>
 {% endblock %}

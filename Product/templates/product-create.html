@@ -1,25 +1,65 @@
 {% extends 'home.html' %}
 {% load static %}
 
-{% block title %}Create product{% endblock %}
-{% block content %} 
-    <h1>Create product</h1>
-    {% if user.is_authenticated %}
-        {% block logged_in_content %}
-            <form method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <div>
-                    <label for="images">Upload images</label>
-                    <input type="file" name="images" multiple accept="image/*" />
+{% block title %}Amyzone - create product{% endblock %}
+{% block content %}
+    <div class="container">
+        <h3>Create product</h3>
+        {% if user.is_authenticated %}
+            {% block logged_in_content %}
+                <div class="card white">
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="card-content">
+                            <span class="card-title">Product details</span>
+                            <div class="row">
+                                <div class="input-field col s6">
+                                    <label for="id_name">Name</label>
+                                    <input type="text" name="name" maxlength="100" required id="id_name">
+                                </div>
+                                <div class="input-field col s6">
+                                    <label for="id_description">Description</label>
+                                    <textarea name="description" class="materialize-textarea" cols="40" rows="10" id="id_description"></textarea>
+                                </div>
+                                <div class="input-field col s6">
+                                    <label for="id_price">Price per piece in €</label>
+                                    <input type="number" name="price" value="1" step="0.01" required id="id_price">
+                                </div>
+                                <div class="file-field input-field col s6">
+                                    <div class="waves-effect waves-light btn red darken-1">
+                                        <span><i class="material-icons left">text_snippet</i> Upload Product Info</span>
+                                        <input type="file" name="pdf" id="id_pdf" accept="application/pdf">
+                                    </div>
+                                    <div class="file-path-wrapper grey-text">
+                                        <input class="file-path" type="text" placeholder="Product PDF">
+                                    </div>
+                                </div>
+                                <div class="file-field input-field col s12">
+                                    <div class="waves-effect waves-light btn red darken-1">
+                                        <span><i class="material-icons left">photo</i> Upload product pictures</span>
+                                        <input type="file" multiple accept="image/*" name="images">
+                                    </div>
+                                    <div class="file-path-wrapper grey-text">
+                                        <input class="file-path" type="text" placeholder="Product pictures">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-action">
+                            <button type="submit" class="waves-effect waves-light btn red darken-1"><i class="material-icons left">cloud_upload</i> Create</button>
+                        </div>
+                    </form>
                 </div>
-                <button type="submit">Create</button>
-            </form>
-    {% endblock %}
-    {% else %}
-        {% block not_logged_in_content %}
-            <p>You must log in to add products</p>
-            <a id="login" href="{% url 'login' %}">Login</a>
         {% endblock %}
-    {% endif %}
+        {% else %}
+            {% block not_logged_in_content %}
+                <div class="card red darken-1">
+                    <div class="card-content white-text">
+                        <p>You have to login to create products.</p>
+                        <br><a href="{% url 'login' %}" class="waves-effect waves-light btn white black-text"><i class="material-icons left">login</i>Login</a>
+                    </div>
+                </div>
+            {% endblock %}
+        {% endif %}
+    </div>
 {% endblock %}

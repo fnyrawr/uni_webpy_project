@@ -1,12 +1,22 @@
 {% extends 'home.html' %}
 {% load static %}
 
-{% block title %}Product delte{% endblock %}
+{% block title %}Amyzone - delete product{% endblock %}
 
 {% block content %}
-        <form method="POST">
-            {% csrf_token %}
-            <h2>Are you sure you want to delete "{{ that_one_product.name }}"?</h2>
-            <input type="submit" value="Confirm">
-        </form>
+    <div class="container">
+    <h3>Delete product</h3>
+        <div class="card red darken-1 white-text">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="card-content">
+                    <span class="card-title">Delete {{ that_one_product.name }}</span>
+                    <p>Are you sure you want to delete the product {{ that_one_product.name }}?</p>
+                </div>
+                <div class="card-action">
+                    <button type="submit" class="waves-effect waves-light btn white red-text text-darken-1"><i class="material-icons left">delete</i> Delete</button>
+                </div>
+            </form>
+        </div>
+    </div>
 {% endblock %}

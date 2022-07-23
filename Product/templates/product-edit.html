@@ -2,44 +2,77 @@
 {% load static %}
 
 {% block title %}Edit product{% endblock %}
-{% block content %} 
-    <h1>Edit product</h1>
-    {% if user.is_authenticated %}
-        {% block logged_in_content %}
-            <form method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
-                <label for="{{ form.name.id_for_label }}">{{ form.name.label }}:</label>
-                <input id="{{ form.name.id_for_label }}" name="{{ form.name.html_name }}" type="{{ form.name.field.widget.input_type}}" value="{{ product.name }}" required>
-                <br>
-                <label for="{{ form.description.id_for_label }}">{{ form.description.label }}:</label>
-                <textarea id="{{ form.description.id_for_label }}" name="{{ form.description.html_name }}" rows="10" cols="40">{{ product.description }}</textarea>
-                <br>
-                <label for="{{ form.price.id_for_label }}">{{ form.price.label }}:</label>
-                <input id="{{ form.price.id_for_label }}" type="{{ form.price.field.widget.input_type }}" name="{{ form.price.html_name }}" value="{{ product.price }}" step="0.01" required>
-                <br>
-                {% if product.pdf %}
-                        <b>Pdf:</b>
-                        <a href="{{ that_one_product.pdf.url }}">Product Info Pdf</a>
-                        <a href="{% url 'pdf-delete' product.id %}"><b>Delete product pdf</b></a><br>
-                {% endif %}
-                <label for="{{ form.pdf.id_for_label }}">{{ form.pdf.label }}:</label>
-                <input id="{{ form.pdf.id_for_label }}" type="{{ form.pdf.field.widget.input_type }}" name="{{ form.pdf.html_name }}" accept="application/pdf">
-                <br>
-                <label for="images">Upload new images</label>
-                <input type="file" name="images" multiple accept="image/*" />
-                <br>
-                {% for image in images %}
-                    <img src="{{ image.image.url }}" height="150" width="150"><br>
-                    <a href="{% url 'image-delete' product.id image.id %}"><b>Delete image from product</b></a>
-                    <br>
-                {% endfor %}
-                <button type="submit">Submit changes</button>
-            </form>
-    {% endblock %}
-    {% else %}
-        {% block not_logged_in_content %}
-            <p>You must log in to edit products</p>
-            <a id="login" href="{% url 'login' %}">Login</a>
+{% block content %}
+    <div class="container">
+        <h3>Edit product</h3>
+        {% if user.is_authenticated %}
+            {% block logged_in_content %}
+                <div class="card white">
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="card-content">
+                            <span class="card-title">Product details</span>
+                            <div class="row">
+                                <div class="input-field col s6">
+                                    <label for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
+                                    <input type="{{ form.name.field.widget.input_type}}" name="{{ form.name.html_name }}" id="{{ form.name.id_for_label }}" value="{{ product.name }}" maxlength="100" required>
+                                </div>
+                                <div class="input-field col s6">
+                                    <label for="{{ form.description.id_for_label }}">{{ form.description.label }}</label>
+                                    <textarea name="{{ form.description.html_name }}" class="materialize-textarea" cols="40" rows="10" id="{{ form.description.id_for_label }}">{{ product.description }}</textarea>
+                                </div>
+                                <div class="input-field col s6">
+                                    <label for="{{ form.price.id_for_label }}">{{ form.price.label }}</label>
+                                    <input type="{{ form.price.field.widget.input_type }}" name="{{ form.price.html_name }}" value="{{ product.price }}" step="0.01" required id="{{ form.price.id_for_label }}">
+                                </div>
+                                <div class="file-field input-field col s6">
+                                    <div class="waves-effect waves-light btn red darken-1">
+                                        <span><i class="material-icons left">text_snippet</i> Upload Product Info</span>
+                                        <input type="{{ form.pdf.field.widget.input_type }}" name="{{ form.pdf.html_name }}" id="{{ form.pdf.id_for_label }}" accept="application/pdf">
+                                    </div>
+                                    <div class="file-path-wrapper grey-text">
+                                        <input class="file-path" type="text" placeholder="Product PDF">
+                                    </div>
+                                </div>
+                                <div class="file-field input-field col s12">
+                                    <div class="waves-effect waves-light btn red darken-1">
+                                        <span><i class="material-icons left">photo</i> Upload product pictures</span>
+                                        <input type="file" multiple accept="image/*" name="images">
+                                    </div>
+                                    <div class="file-path-wrapper grey-text">
+                                        <input class="file-path" type="text" placeholder="Product pictures">
+                                    </div>
+                                </div>
+                            </div>
+                            {% if product.pdf %}
+                                <span class="card-title">Uploaded product info PDF file</span>
+                                <a class="waves-effect waves-light btn red darken-1" href="{{ product.pdf.url }}"><i class="material-icons left">remove_red_eye</i> View</a>
+                                <a class="waves-effect waves-light btn white red-text text-darken-1" href="{% url 'pdf-delete' product.id %}"><i class="material-icons left">delete</i>Delete</a>
+                            {% endif %}
+                            <div class="row">
+                                {% for image in images %}
+                                    <div class="col s3">
+                                        <img src="{{ image.image.url }}" style="max-width: 90%; max-height: 150px">
+                                        <a class="waves-effect waves-light btn white red-text text-darken-1" href="{% url 'image-delete' product.id image.id %}"><i class="material-icons left">delete</i>Remove image</a>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="card-action">
+                            <button type="submit" class="waves-effect waves-light btn red darken-1"><i class="material-icons left">cloud_upload</i> Submit changes</button>
+                        </div>
+                    </form>
+                </div>
         {% endblock %}
-    {% endif %}
+        {% else %}
+            {% block not_logged_in_content %}
+                <div class="card red darken-1">
+                    <div class="card-content white-text">
+                        <p>You have to login to edit products.</p>
+                        <br><a href="{% url 'login' %}" class="waves-effect waves-light btn white black-text"><i class="material-icons left">login</i>Login</a>
+                    </div>
+                </div>
+            {% endblock %}
+        {% endif %}
+    </div>
 {% endblock %}
