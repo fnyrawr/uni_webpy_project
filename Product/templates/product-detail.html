@@ -19,8 +19,11 @@
                 <span class="card-title">Product details</span>
                 <p><b>Description:</b> {{ that_one_product.description }}</p>
                 <p><b>Price:</b> {{ that_one_product.price }}€/pc.</p>
-                {% comment %}Rating here does not work with {{ that_one_product.avg_stars }}, needs fix{% endcomment %}
-                <p><b>Customer rating:</b> <span class="rateYo" data-rateyo-rating="3" data-rateyo-num-stars="5" data-rateyo-score="4" data-rateyo-multi-color="true" data-rateyo-full-star="true" data-rateyo-read-only="true"></span></p>
+                {% if avg_stars.stars__avg != null %}
+                    <p><b>Customer rating:</b> <span class="rateYo" id="product_rating_stars_id" data-rateyo-rating="{{ avg_stars.stars__avg }}" data-rateyo-num-stars="5" data-rateyo-multi-color="true" data-rateyo-full-star="true" data-rateyo-read-only="true"></span></p>
+                {% else %}
+                    <p><b>Customer rating:</b> <span class="rateYo" id="product_rating_stars_id" data-rateyo-rating="0" data-rateyo-num-stars="5" data-rateyo-multi-color="true" data-rateyo-full-star="true" data-rateyo-read-only="true"></span></p>
+                {% endif %}
                 <div class="row">
                     {% for image in product_images %}
                         <div class="col s3">
@@ -35,13 +38,13 @@
                 {% endif %}
                 {% if user.is_authenticated %}
                     <!-- Modal Trigger -->
-                    <a class="waves-effect waves-light btn red darken-1 modal-trigger" href="#modalAddToCard"><i class="material-icons left">shopping_cart</i>Buy</a>
+                    <a class="waves-effect waves-light btn red darken-1 modal-trigger" href="#modalAddToCart"><i class="material-icons left">shopping_cart</i>Buy</a>
                 {% endif %}
             </div>
         </div>
 
         <!-- Modal Structure -->
-        <div id="modalAddToCard" class="modal">
+        <div id="modalAddToCart" class="modal">
             {% if user.is_authenticated %}
                 <form method="POST">
                     {% csrf_token %}

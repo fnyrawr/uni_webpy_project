@@ -64,9 +64,9 @@
         </div>
 
     {% if search %}
+        <a class="waves-effect btn red darken-1 white-text" href={% url 'product-list' %}><i class="material-icons left">arrow_back</i>Back to all Products</a><br>
         <h5>Search results</h5>
         {% for product in products_found %}
-            {% comment %} ToCheck: no product data here {% endcomment %}
             {% comment %} other attributes maybe picture of product {% endcomment %}
             <div class="col s3">
                 <div class="card sticky-action white">
@@ -87,7 +87,6 @@
                 </div>
             </div>
         {% endfor %}
-        <a href={% url 'product-list' %}>Back to all Products</a><br>
     {% else %}
         {% for product in all_products %}
             {% comment %} other attributes maybe picture of product {% endcomment %}

@@ -3,18 +3,37 @@
 {% block title %}Users list{% endblock %}
 
 {% block content %}
-{% if user.is_authorized %}
-<h2>Users list</h2>
-<ul>
-    {% for myuser in all_users %}
-        {{ myuser.first_name }} {{ myuser.last_name }} {{ myuser.role }}<br>
-        {% if myuser.profile_picture %}
-            <img src="{{ myuser.profile_picture.url }}" height="150" width="150"><br>
-            <br>
+    <div class="container">
+    {% if user.is_authorized %}
+        <h3>Users list</h3>
+        <div class="row">
+            {% for myuser in all_users %}
+                <div class="col s4">
+                    {% if myuser.role == "SU" %}
+                        <div class="card red darken-1 white-text">
+                            <div class="card-content">
+                                <span class="card-title">{{ myuser }}</span>
+                                <b>Role:</b> Admin<br>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="card white">
+                            <div class="card-content">
+                                <span class="card-title">{{ myuser }}</span>
+                                <b>First name:</b> {{ myuser.first_name }}<br>
+                                <b>Last name:</b> {{ myuser.last_name }}<br>
+                                <b>Role:</b> Customer<br>
+                                {% if myuser.profile_picture %}
+                                    <img src="{{ myuser.profile_picture.url }}" height="150" width="150"><br>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+        {% else %}
+            <p>Please go along, there is nothing to see here.<p>
         {% endif %}
-    {% endfor %}
-</ul>
-{% else %}
-<p>You are not authorized to see this.<p>
-{% endif %}
+    </div>
 {% endblock %}
