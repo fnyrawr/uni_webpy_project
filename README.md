@@ -120,7 +120,6 @@ Product PDF and ean should be auto generated
 > `Done` `Eric` `28.06.2022`
 
 ## Anmerkung
-- Sicher, dass wir wirklich Eans drin haben wollen, ist einfach nur unnötiger Zusatz, der keinen wirklichenMehrwert hat und es ergibt auch keinen Sinn eine Ean autmatisch  zu  generieren, weil das sonst den Sinneiner Ean (eindeutige Identifizierung in der EU) zerstört
 - im product könnte noch der user, der das Product als letztes editiert hat, rein
 - timestamp bei der review könnte in der edit view auf das jetzige datum geupdatet werden, wenn der user seine review ändert
 

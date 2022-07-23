@@ -22,7 +22,6 @@ def product_list(request):
         print(data)
         name = data['name']
         products_found = Product.objects.filter(name__contains=name)
-        print(products_found)
         description = data['description']
         if description:
             products_found = products_found.filter(description__contains=description)
@@ -33,7 +32,7 @@ def product_list(request):
             else:
                 products_found = products_found.filter(price__lt=price)
         stars = data['stars']
-        if stars:
+        if stars and int(stars) > 0:
             products_found = products_found.annotate(avg_stars=Avg('review__stars'))
             if data['sortPriceBy'] == "MIN":
                 products_found = products_found.filter(avg_stars__gte=stars)
