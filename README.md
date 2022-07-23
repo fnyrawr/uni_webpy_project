@@ -44,6 +44,13 @@ Since not every code change will be pushed immideately this would make it easier
 
 [Link to requirements](https://lms.bht-berlin.de/pluginfile.php/1760338/mod_resource/content/1/group_project_requirements.pdf)
 
+## Current ToDo
+- [ ] Product List: Check why search results are not displayed `Testing` `Eric` `23.07.2022`
+- [ ] First product image in result set in Product List `ToDo` `Eric` `23.07.2022`
+- [ ] Styling of Product Details, Product Create, Product Edit `WIP` `Florian` `23.07.2022`
+- [ ] Payment details as a modal `WIP` `Florian` `23.07.2022`
+- [ ] Styling of User List `ToDo` `Florian` `n/A`
+
 ## Database
 ### Products
 - ProductID
