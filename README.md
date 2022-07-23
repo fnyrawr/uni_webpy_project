@@ -47,10 +47,12 @@ Since not every code change will be pushed immideately this would make it easier
 ## Current ToDo
 - [ ] Product List: Check why search results are not displayed `Testing` `Eric` `23.07.2022`
 - [ ] First product image in result set in Product List `ToDo` `Eric` `23.07.2022`
-- [ ] Styling of Product Details, Product Create, Product Edit `WIP` `Florian` `23.07.2022`
+- [ ] Check implementation of average rating in Product Detail and Product List `ToDo` `Eric` `23.07.2022`
+- [X] Styling of Product Details, Product Create, Product Edit `Done` `Florian` `23.07.2022`
 - [ ] Payment details as a modal `WIP` `Florian` `23.07.2022`
 - [ ] Styling of User List `ToDo` `Florian` `n/A`
 - [ ] Product Pictures and Product Details for real world data `ToDo` `Erdio` `n/A`
+- [ ] General application testing `ToDo` `Erdio` `n/A`
 - [ ] PDF generation `ToDo` `Michael` `n/A`
 
 ## Database
