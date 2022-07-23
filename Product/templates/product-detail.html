@@ -82,13 +82,23 @@
                         <span class="card-title">{{ review.title }}</span>
                         <div class="rateYo" data-rateyo-rating="{{ review.stars }}" data-rateyo-num-stars="5" data-rateyo-score="4" data-rateyo-multi-color="true" data-rateyo-read-only="true"></div>
                         {{ review.text }}
-                        <br><b>{{ review.user.username }}</b> on {{ review.timestamp }}
-                        <br><br>{{ review.get_useful_count }}<a href="{% url 'review-vote' that_one_product.id review.id 'useful' %}" class="light-green-text" style="text-decoration: none">
-                            <i class="material-icons">thumb_up</i>
-                        </a>
-                        {{ review.get_useless_count }}<a href="{% url 'review-vote' that_one_product.id review.id 'useless' %}" class="red-text" style="text-decoration: none">
-                            <i class="material-icons">thumb_down</i>
-                        </a>
+                        {% if user.is_authenticated %}
+                            <br><b>{{ review.user.username }}</b> on {{ review.timestamp }}
+                            <br><br>{{ review.get_useful_count }}<a href="{% url 'review-vote' that_one_product.id review.id 'useful' %}" class="light-green-text" style="text-decoration: none">
+                                <i class="material-icons">thumb_up</i>
+                            </a>
+                            {{ review.get_useless_count }}<a href="{% url 'review-vote' that_one_product.id review.id 'useless' %}" class="red-text" style="text-decoration: none">
+                                <i class="material-icons">thumb_down</i>
+                            </a>
+                        {% else %}
+                            <br><b>{{ review.user.username }}</b> on {{ review.timestamp }}
+                            <br><br>{{ review.get_useful_count }}<a class="light-green-text" style="text-decoration: none">
+                                <i class="material-icons">thumb_up</i>
+                            </a>
+                            {{ review.get_useless_count }}<a class="red-text" style="text-decoration: none">
+                                <i class="material-icons">thumb_down</i>
+                            </a>
+                        {% endif %}
                     </div>
                     <div class="card-action">
                         {% if review.user == user %}
