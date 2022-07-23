@@ -49,6 +49,7 @@ Since not every code change will be pushed immideately this would make it easier
 - [ ] First product image in result set in Product List `ToDo` `Eric` `23.07.2022`
 - [X] Check implementation of average rating in Product Detail and Product List `ToDo` `Eric` `23.07.2022`
 - [ ] Shopping Cart: Remove items, Change quantity, total quantity, total per item `ToDo` `Eric` `23.07.2022`
+- [ ] E-Mail verification needed for comments `ToDo` `Eric` `23.07.2022`
 - [X] Styling of Product Details, Product Create, Product Edit `Done` `Florian` `23.07.2022`
 - [X] Styling of User List `ToDo` `Florian` `n/A`
 - [ ] Styling of Reports `ToDo` `Florian` `n/A`
