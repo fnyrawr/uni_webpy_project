@@ -56,6 +56,8 @@ Since not every code change will be pushed immideately this would make it easier
 - [x] Product Pictures and Product Details for real world data `ToDo` `Erdio` `n/A`
 - [ ] General application testing (also testing for mobile) `ToDo` `Erdio` `n/A`
 - [ ] PDF generation `ToDo` `Michael` `n/A`
+- [ ] Fix CSS colors for inputs `ToDo` `tba` `n/A`
+- [ ] Implement profile picture in sidebar and userlist `ToDo` `tba` `n/A`
 
 ## Database
 ### Products
