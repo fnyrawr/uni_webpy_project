@@ -1,24 +1,57 @@
 {% extends 'home.html' %}
 {% load static %}
 
-{% block title %}Create report{% endblock %}
-{% block content %} 
-    <h1>Create report</h1>
-    {% if user.is_authenticated %}
-        {% block logged_in_content %}
-            <p>Some Infos about the review <p>
-            {{review.title}}
-            {{review.text}}
-            <form method="POST">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit">Create</button>
-            </form>
-        {% endblock %}
-    {% else %}
-        {% block not_logged_in_content %}
-            <p>You must log in to write a review</p>
-            <a id="login" href="{% url 'login' %}">Login</a>
-        {% endblock %}
-    {% endif %}
+{% block title %}Amyzone - create report{% endblock %}
+{% block content %}
+    <div class="container">
+        <h3>Create report</h3>
+        {% if user.is_authenticated %}
+            {% block logged_in_content %}
+                <div class="card white">
+                    <div class="card-content">
+                        <span class="card-title">Report review</span>
+                        <span class="rateYo" data-rateyo-rating="{{ review.stars }}" data-rateyo-num-stars="5" data-rateyo-score="4" data-rateyo-multi-color="true" data-rateyo-read-only="true"></span>
+                        <b>{{ review.title }}</b>
+                        <p>{{ review.text }}</p>
+                        <br><div class="chip red darken-1 white-text z-depth-1">
+                            <i class="material-icons tiny">person</i> {{ review.user.username }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card white">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="card-content">
+                            <span class="card-title">Report details</span>
+                            <div class="row">
+                                <div class="input-field col s6">
+                                    <select name="type" id="id_type">
+                                        <option value="" disabled selected>Select a reason</option>
+                                        <option value="H">Hatespeech</option>
+                                        <option value="S">Spam or Scam</option>
+                                        <option value="V">Violence</option>
+                                        <option value="O">Other</option>
+                                    </select>
+                                    <label for="id_type">Reason</label>
+                                </div>
+                                <div class="input-field col s6">
+                                    <label for="id_description">Description</label>
+                                    <textarea name="description" class="materialize-textarea" cols="40" rows="10" id="id_description"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-action">
+                            <button class="waves-effect waves-light btn red darken-1" type="submit"><i class="material-icons left">send</i>Send report</button>
+                        </div>
+                    </form>
+                </div>
+            {% endblock %}
+        {% else %}
+            {% block not_logged_in_content %}
+                <p>You must log in to write a review</p>
+                <a id="login" href="{% url 'login' %}">Login</a>
+            {% endblock %}
+        {% endif %}
+    </div>
 {% endblock %}

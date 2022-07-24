@@ -6,7 +6,7 @@
 {% block content %}
     <div class="container">
         <h3>Report list</h3>
-        <a class="waves-effect btn btn red darken-1" href={% url 'product-detail' productId %}><i class="material-icons left">arrow_back</i>Back</a><br><br>
+        <a class="waves-effect waves-light btn red darken-1" href={% url 'product-detail' productId %}><i class="material-icons left">arrow_back</i>Back</a><br><br>
         {% comment %} {% if all_reports %} {% endcomment %}
         {% for report in all_reports %}
             <div class="row">
@@ -28,7 +28,7 @@
                             <br>{{report.description}}
                         </div>
                         <div class="card-action">
-                            <a class="waves-effect btn red darken-1 white-text"><i class="material-icons left">delete</i>Delete</a>
+                            <a class="waves-effect waves-light btn red darken-1 white-text"><i class="material-icons left">delete</i>Delete</a>
                             <span class="chip white red-text text-darken-1 z-depth-1" style="text-align: right;">
                                 <i class="material-icons tiny">schedule</i> {{report.timestamp}}
                             </span>
