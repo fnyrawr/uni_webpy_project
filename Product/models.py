@@ -102,6 +102,7 @@ class Report(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     review = models.ForeignKey(Review, on_delete=models.CASCADE)
     description = models.CharField(max_length=500)
+    timestamp = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
         return self.type + "for " + self.review.title

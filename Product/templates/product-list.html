@@ -83,6 +83,13 @@
                             </div>
                             <div class="card-content">
                                 <span class="card-title black-text">{{ product.name }}<i class="material-icons right">more_vert</i></span>
+                                <div style="text-align: left;">
+                                    {% if avg_stars.stars__avg != null %}
+                                        <span class="rateYo" id="product_rating_stars_id" data-rateyo-rating="{{ avg_stars.stars__avg }}" data-rateyo-num-stars="5" data-rateyo-multi-color="true" data-rateyo-full-star="true" data-rateyo-read-only="true"></span>
+                                    {% else %}
+                                        <span class="rateYo" id="product_rating_stars_id" data-rateyo-rating="0" data-rateyo-num-stars="5" data-rateyo-multi-color="true" data-rateyo-full-star="true" data-rateyo-read-only="true"></span>
+                                    {% endif %}
+                                </div>
                                 <div style="text-align: right;">{{ product.price }} € / pc.</div>
                             </div>
                             <div class="card-reveal">
@@ -90,7 +97,7 @@
                                 <p>{{ product.description }}</p>
                             </div>
                             <div class="card-action">
-                                <a class="waves-effect red-text text-darken-1" href="{{ product.id }}/">View product</a>
+                                <a class="waves-effect btn red darken-1 white-text" href="{{ product.id }}/"><i class="material-icons left">remove_red_eye</i>View details</a>
                             </div>
                         </div>
                     </div>
@@ -111,14 +118,23 @@
                             </div>
                             <div class="card-content">
                                 <span class="card-title black-text">{{ product.name }}<i class="material-icons right">more_vert</i></span>
-                                <div style="text-align: right;">{{ product.price }} € / pc.</div>
+                                <div style="text-align: left;">
+                                    {% if avg_stars.stars__avg != null %}
+                                        <span class="rateYo" id="product_rating_stars_id" data-rateyo-rating="{{ avg_stars.stars__avg }}" data-rateyo-num-stars="5" data-rateyo-multi-color="true" data-rateyo-full-star="true" data-rateyo-read-only="true"></span>
+                                    {% else %}
+                                        <span class="rateYo" id="product_rating_stars_id" data-rateyo-rating="0" data-rateyo-num-stars="5" data-rateyo-multi-color="true" data-rateyo-full-star="true" data-rateyo-read-only="true"></span>
+                                    {% endif %}
+                                </div>
+                                <div style="text-align: right;">
+                                    {{ product.price }} € / pc.
+                                </div>
                             </div>
                             <div class="card-reveal">
                                 <span class="card-title grey-text text-darken-4">Product description:<i class="material-icons right">close</i></span>
                                 <p>{{ product.description }}</p>
                             </div>
                             <div class="card-action">
-                                <a class="waves-effect red-text text-darken-1" href="{{ product.id }}/">View product</a>
+                                <a class="waves-effect btn red darken-1 white-text" href="{{ product.id }}/"><i class="material-icons left">remove_red_eye</i>View details</a>
                             </div>
                         </div>
                     </div>

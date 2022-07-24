@@ -1,21 +1,44 @@
 {% extends 'home.html' %}
 {% load static %}
 
-{% block title %}Report list{% endblock %}
+{% block title %}Amyzone - report list{% endblock %}
 
 {% block content %}
-    <h1>Report list</h1>
-    <ul>
-{% comment %}         {% if all_reports %} {% endcomment %}
-            {% for report in all_reports %}
-                <p>{{report.user}}</p>
-                <p>{{report.type}}</p>
-                <p>{{report.description}}</p>
-                <br>
-            {% endfor %}
-{% comment %}         {%else%}
-        <p>No complaints for this review</p>
+    <div class="container">
+        <h3>Report list</h3>
+        <a class="waves-effect btn btn red darken-1" href={% url 'product-detail' productId %}><i class="material-icons left">arrow_back</i>Back</a><br><br>
+        {% comment %} {% if all_reports %} {% endcomment %}
+        {% for report in all_reports %}
+            <div class="row">
+                <div class="col s6">
+                    <div class="card white">
+                        <div class="card-content">
+                            <span class="chip red darken-1 white-text z-depth-1">
+                                <i class="material-icons tiny">person</i> {{report.user}}
+                            </span>
+                            <span class="chip red darken-1 white-text z-depth-1"><i class="material-icons tiny">flag</i>
+                                {% if report.type == 'H' %}
+                                    Hatespeech
+                                {% elif report.type == 'S' %}
+                                    Spam or Scam
+                                {% elif report.type == 'V' %}
+                                    Other
+                                {% endif %}
+                            </span>
+                            <br>{{report.description}}
+                        </div>
+                        <div class="card-action">
+                            <a class="waves-effect btn red darken-1 white-text"><i class="material-icons left">delete</i>Delete</a>
+                            <span class="chip white red-text text-darken-1 z-depth-1" style="text-align: right;">
+                                <i class="material-icons tiny">schedule</i> {{report.timestamp}}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        {% comment %} {%else%}
+            <p>No complaints for this review</p>
         {% endif %} {% endcomment %}
-    </ul>
-    <a href={% url 'product-detail' productId %}>Back to product</a><br>
+    </div>
 {% endblock %}
