@@ -52,7 +52,7 @@
                             <div class="row">
                                 {% for image in images %}
                                     <div class="col s3">
-                                        <img src="{{ image.image.url }}" style="max-width: 90%; max-height: 150px">
+                                        <br><img class="materialboxed" src="{{ image.image.url }}" style="max-width: 90%; max-height: 150px">
                                         <a class="waves-effect waves-light btn white red-text text-darken-1" href="{% url 'image-delete' product.id image.id %}"><i class="material-icons left">delete</i>Remove image</a>
                                     </div>
                                 {% endfor %}

@@ -2,6 +2,7 @@ from operator import delitem
 from django.db import models
 from django.core.validators import FileExtensionValidator
 from django.conf import settings
+from django.db.models import Avg
 # Create your models here.
 class Product(models.Model):
     name = models.CharField(max_length=100)
@@ -25,6 +26,10 @@ class Product(models.Model):
         if(image):
             return image.first()
         return None
+
+    def average_rating(self):
+        avg_stars = Review.objects.filter(product=self).aggregate(Avg('stars'))
+        return avg_stars
 
 class ProductImage(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)

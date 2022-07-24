@@ -33,8 +33,7 @@
                         </div>
                     </div>
                     <input type="hidden" id="shopping_cart_id" name="shopping_cart_id" value="{{ shopping_cart.id }}">
-                </div>
-                <div class="card-action">
+
                     <button class="waves-effect waves-light btn red darken-1 white-text" type="submit"><i class="material-icons left">credit_card</i>Confirm payment type</button>
                     <a class="waves-effect waves-light btn white red-text text-darken-1" href="{% url 'product-list' %}"><i class="material-icons left">shopping_cart</i>Keep shopping</a>
                 </div>
@@ -52,8 +51,7 @@
                                 {{ payment_type_form }}
                             </div>
                         </div>
-                    </div>
-                    <div class="card-action">
+
                         <button class="waves-effect waves-light btn red darken-1 white-text" type="submit" name="pay"><i class="material-icons left">paid</i>Pay</button>
                     </div>
                 </div>

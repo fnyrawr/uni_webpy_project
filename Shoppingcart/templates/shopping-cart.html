@@ -30,7 +30,7 @@
                             {% for item in shopping_cart_items %}
                                 <tr>
                                     <td>{{ item.product.name }}</td>
-                                    <td>{{ item.quantity }} pc.</td>
+                                    <td>{{ item.quantity }} x</td>
                                     <td>{{ item.product.price }} €</td>
                                 </tr>
                             {% endfor %}
@@ -41,9 +41,8 @@
                             </tr>
                         </tbody>
                     </table>
-                </div>
-                <div class="card-action">
-                    <form method="POST">
+
+                    <br><form method="POST">
                         {% csrf_token %}
                         <button class="waves-effect waves-light btn red darken-1" type="submit" name="pay"><i class="material-icons left">credit_card</i>Pay</button>
                         <button class="waves-effect waves-light btn white red-text text-darken-1" type="submit" name="empty"><i class="material-icons left">remove_shopping_cart</i>Empty the shopping cart</button>

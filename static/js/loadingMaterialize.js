@@ -1,6 +1,7 @@
 $(document).ready(function(){
     $('.sidenav').sidenav();
     $('select').formSelect();
+    $('.materialboxed').materialbox();
     $('.modal').modal();
     $('.rateYo').rateYo({
         starWidth: "20px"

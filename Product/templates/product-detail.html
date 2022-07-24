@@ -17,22 +17,26 @@
         <div class="card white">
             <div class="card-content">
                 <span class="card-title">Product details</span>
-                <p><b>Description:</b> {{ that_one_product.description }}</p>
-                <p><b>Price:</b> {{ that_one_product.price }}€/pc.</p>
+                <p><b>Description:</b> {{ that_one_product.description }}</p><br>
                 {% if avg_stars.stars__avg != null %}
                     <p><b>Customer rating:</b> <span class="rateYo" id="product_rating_stars_id" data-rateyo-rating="{{ avg_stars.stars__avg }}" data-rateyo-num-stars="5" data-rateyo-multi-color="true" data-rateyo-full-star="true" data-rateyo-read-only="true"></span></p>
                 {% else %}
                     <p><b>Customer rating:</b> <span class="rateYo" id="product_rating_stars_id" data-rateyo-rating="0" data-rateyo-num-stars="5" data-rateyo-multi-color="true" data-rateyo-full-star="true" data-rateyo-read-only="true"></span></p>
                 {% endif %}
+                <div style="text-align: right;">
+                    <span class="chip red darken-1 white-text z-depth-1">
+                        {{ that_one_product.price }} €
+                    </span>
+                </div>
+
                 <div class="row">
                     {% for image in product_images %}
                         <div class="col s3">
-                            <img src="{{ image.image.url }}" style="max-width: 90%; max-height: 150px">
+                            <img class="materialboxed" src="{{ image.image.url }}" style="max-width: 100%; max-height: 250px"><br>
                         </div>
                     {% endfor %}
                 </div>
-            </div>
-            <div class="card-action">
+
                 {% if that_one_product.pdf %}
                     <a class="waves-effect waves-light btn red darken-1" href="{{ that_one_product.pdf.url }}"><i class="material-icons left">remove_red_eye</i> Product Info PDF</a>
                 {% endif %}
@@ -73,8 +77,10 @@
         </div>
 
         <h5>Customer reviews</h5>
-        <!-- Modal Trigger -->
-        <a class="waves-effect waves-light btn red darken-1 modal-trigger" href="#modalAddReview"><i class="material-icons left">add</i>Add review</a>
+        {% if user.is_authenticated %}
+            <!-- Modal Trigger -->
+            <a class="waves-effect waves-light btn red darken-1 modal-trigger" href="#modalAddReview"><i class="material-icons left">add</i>Add review</a>
+        {% endif %}
         <div class="row">
             {% for review in product_reviews %}
                 <div class="col s6 card white">
@@ -84,23 +90,28 @@
                         {{ review.text }}
                         {% if user.is_authenticated %}
                             <br><b>{{ review.user.username }}</b> on {{ review.timestamp }}
-                            <br><br>{{ review.get_useful_count }}<a href="{% url 'review-vote' that_one_product.id review.id 'useful' %}" class="light-green-text" style="text-decoration: none">
-                                <i class="material-icons">thumb_up</i>
+                            <br><br><a href="{% url 'review-vote' that_one_product.id review.id 'useful' %}" class="white-text" style="text-decoration: none">
+                                <span class="chip lime darken-1 white-text z-depth-1">{{ review.get_useful_count }}
+                                    <i class="material-icons tiny">thumb_up</i>
+                                </span>
                             </a>
-                            {{ review.get_useless_count }}<a href="{% url 'review-vote' that_one_product.id review.id 'useless' %}" class="red-text" style="text-decoration: none">
-                                <i class="material-icons">thumb_down</i>
+                            <a href="{% url 'review-vote' that_one_product.id review.id 'useless' %}" class="white-text" style="text-decoration: none">
+                                <span class="chip red darken-1 white-text z-depth-1">{{ review.get_useless_count }}
+                                    <i class="material-icons tiny">thumb_down</i>
+                                </span>
                             </a>
                         {% else %}
                             <br><b>{{ review.user.username }}</b> on {{ review.timestamp }}
-                            <br><br>{{ review.get_useful_count }}<a class="light-green-text" style="text-decoration: none">
-                                <i class="material-icons">thumb_up</i>
-                            </a>
-                            {{ review.get_useless_count }}<a class="red-text" style="text-decoration: none">
-                                <i class="material-icons">thumb_down</i>
-                            </a>
+                            <br><br>
+                            <span class="chip lime darken-1 white-text z-depth-1">{{ review.get_useful_count }}
+                                <i class="material-icons tiny">thumb_up</i>
+                            </span>
+                            <span class="chip red darken-1 white-text z-depth-1">{{ review.get_useless_count }}
+                                <i class="material-icons tiny">thumb_down</i>
+                            </span>
                         {% endif %}
-                    </div>
-                    <div class="card-action">
+
+                        <br><br>
                         {% if review.user == user %}
                             <a class="waves-effect btn red darken-1" href="{% url 'review-edit' that_one_product.id review.id %}" ><i class="material-icons left">edit</i>Edit</a>
                             <a class="waves-effect btn white red-text text-darken-1" href="{% url 'review-delete' that_one_product.id review.id %}" ><i class="material-icons left">delete</i>Delete</a>
@@ -120,38 +131,28 @@
 
         <!-- Modal Structure -->
         <div id="modalAddReview" class="modal">
-            {% if user.is_authenticated %}
-                <form method="POST">
-                    {% csrf_token %}
-                    <div class="modal-content">
-                        <h5>Write a review for this product</h5>
-                        <span class="chip red darken-1 white-text" id="review_stars">3 Stars</span>
-                        <span id="rateyo_review_stars" class="rateYo" data-rateyo-rating="3" data-rateyo-num-stars="5" data-rateyo-score="4" data-rateyo-multi-color="true" data-rateyo-full-star="true"></span>
-                        <input type="number" name="stars" required id="id_stars" value="3" min="1" max="5" hidden>
-                        <div class="row">
-                            <div class="input-field col s6">
-                                <label for="id_title">Title</label>
-                                <input type="text" name="title" maxlength="100" required id="id_title">
-                            </div>
-                            <div class="input-field col s6">
-                                <label for="id_text">Text</label>
-                                <textarea class="materialize-textarea" name="text" cols="40" rows="10" required id="id_text"></textarea>
-                            </div>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="modal-content">
+                    <h5>Write a review for this product</h5>
+                    <span class="chip red darken-1 white-text" id="review_stars">3 Stars</span>
+                    <span id="rateyo_review_stars" class="rateYo" data-rateyo-rating="3" data-rateyo-num-stars="5" data-rateyo-score="4" data-rateyo-multi-color="true" data-rateyo-full-star="true"></span>
+                    <input type="number" name="stars" required id="id_stars" value="3" min="1" max="5" hidden>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <label for="id_title">Title</label>
+                            <input type="text" name="title" maxlength="100" required id="id_title">
+                        </div>
+                        <div class="input-field col s6">
+                            <label for="id_text">Text</label>
+                            <textarea class="materialize-textarea" name="text" cols="40" rows="10" required id="id_text"></textarea>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button class="waves-effect btn red darken-1" type="submit"><i class="material-icons left">add</i>Add review</button>
-                    </div>
-                </form>
-            {% else %}
-                <div class="modal-content">
-                    <h5>Login required</h5>
-                     You need to login to add items into your shopping cart.
                 </div>
                 <div class="modal-footer">
-                    <a class="red-text text-darken-1" href="{% url 'login' %}">Login</a>
+                    <button class="waves-effect btn red darken-1" type="submit"><i class="material-icons left">add</i>Add review</button>
                 </div>
-            {% endif %}
+            </form>
         </div>
 
         <br><br><br>

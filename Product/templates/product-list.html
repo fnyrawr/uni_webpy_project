@@ -30,35 +30,36 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="input-field col s6 grey-text">
-                                <label for="id_price">Price</label>
-                                <input type="number" name="price" id="id_price">
-                            </div>
                             <div class="input-field col s6">
                                 <select name="sortPriceBy" id="id_sortPriceBy">
-                                    <option value="MIN" selected>Minimum</option>
-                                    <option value="MAX">Maximum</option>
+                                    <option value="MIN" selected>Less than</option>
+                                    <option value="MAX">More than</option>
                                 </select>
-                                <label for="id_sortPriceBy">Sort price by</label>
+                                <label for="id_sortPriceBy">Filter by price</label>
+                            </div>
+                            <div class="input-field col s6 grey-text">
+                                <label for="id_price">Price in €</label>
+                                <input type="number" name="price" id="id_price" min="0">
                             </div>
                         </div>
                         <div class="row">
+                            <div class="input-field col s6">
+                                <select name="sortStarsBy" id="id_sortStarsBy">
+                                    <option value="MIN" selected>More than</option>
+                                    <option value="MAX">Less than</option>
+                                </select>
+                                <label for="id_sortStarsBy">Filter by rating</label>
+                            </div>
                             <div class="col s6">
                                 <span class="chip red darken-1 white-text" id="chip_stars">Stars</span>
                                 <span id="rateyo_stars" class="rateYo" data-rateyo-rating="0" data-rateyo-num-stars="5" data-rateyo-score="4" data-rateyo-multi-color="true" data-rateyo-full-star="true"></span>
                                 <input type="number" name="stars" required id="id_sortStarsBy" value="0" min="0" max="5" hidden>
                             </div>
-                            <div class="input-field col s6">
-                                <select name="sortStarsBy" id="id_sortStarsBy">
-                                    <option value="MIN" selected>Minimum</option>
-                                    <option value="MAX">Maximum</option>
-                                </select>
-                                <label for="id_sortStarsBy">Sort stars by</label>
-                            </div>
                         </div>
-                    </div>
-                    <div class="card-action">
-                        <button class="waves-effect btn red darken-1 white-text" type="submit"><i class="material-icons left">search</i>Search Products</button>
+                        <button class="waves-effect btn red darken-1 white-text" type="submit"><i class="material-icons left">search</i>Search</button>
+                        {% if search %}
+                            <a class="waves-effect btn white red-text text-darken-1" href={% url 'product-list' %}><i class="material-icons left">clear</i>Clear filters</a>
+                        {% endif %}
                     </div>
                 </form>
             </div>
@@ -66,7 +67,6 @@
 
         <div class="col s9">
             {% if search %}
-                <a class="waves-effect btn red darken-1 white-text" href={% url 'product-list' %}><i class="material-icons left">arrow_back</i>Back to all Products</a><br>
                 <h5>Search results</h5>
                 {% for product in products_found %}
                     {% comment %} other attributes maybe picture of product {% endcomment %}
@@ -75,29 +75,35 @@
                             <div class="card-image waves-effect waves-block waves-light">
                                 {% with p_image=product.first_image %}
                                     {% if p_image %}
-                                        <img class="activator" src="{{ p_image.image.url }}" alt="Amyzone Logo" style="width: 100%; height: auto">
+                                        <a href="{{ product.id }}/"><img src="{{ p_image.image.url }}" alt="Amyzone Logo" style="width: 100%; height: auto"></a>
                                     {% else %}
-                                        <img class="activator" src="{% static '/images/amyzoneface.png' %}" alt="Amyzone Logo" style="width: 100%; height: auto">
+                                        <a href="{{ product.id }}/"><img src="{% static '/images/amyzoneface.png' %}" alt="Amyzone Logo" style="width: 100%; height: auto"></a>
                                     {% endif %}
                                 {% endwith %}
                             </div>
                             <div class="card-content">
-                                <span class="card-title black-text">{{ product.name }}<i class="material-icons right">more_vert</i></span>
+                                <span class="card-title activator black-text">{{ product.name }}</span>
                                 <div style="text-align: left;">
-                                    {% if avg_stars.stars__avg != null %}
-                                        <span class="rateYo" id="product_rating_stars_id" data-rateyo-rating="{{ avg_stars.stars__avg }}" data-rateyo-num-stars="5" data-rateyo-multi-color="true" data-rateyo-full-star="true" data-rateyo-read-only="true"></span>
+                                    {% if product.average_rating.stars__avg != null %}
+                                        <span class="rateYo" id="product_rating_stars_id" data-rateyo-rating="{{ product.average_rating.stars__avg }}" data-rateyo-num-stars="5" data-rateyo-multi-color="true" data-rateyo-full-star="true" data-rateyo-read-only="true"></span>
                                     {% else %}
                                         <span class="rateYo" id="product_rating_stars_id" data-rateyo-rating="0" data-rateyo-num-stars="5" data-rateyo-multi-color="true" data-rateyo-full-star="true" data-rateyo-read-only="true"></span>
                                     {% endif %}
                                 </div>
-                                <div style="text-align: right;">{{ product.price }} € / pc.</div>
+                                <div style="text-align: right;">
+                                    <span class="chip red darken-1 white-text z-depth-1">
+                                        {{ product.price }} €
+                                    </span>
+                                </div>
                             </div>
                             <div class="card-reveal">
                                 <span class="card-title grey-text text-darken-4">Product description:<i class="material-icons right">close</i></span>
                                 <p>{{ product.description }}</p>
-                            </div>
-                            <div class="card-action">
-                                <a class="waves-effect btn red darken-1 white-text" href="{{ product.id }}/"><i class="material-icons left">remove_red_eye</i>View details</a>
+                                <div style="text-align: right;">
+                                    <span class="chip red darken-1 white-text z-depth-1">
+                                        {{ product.price }} €
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -110,31 +116,35 @@
                             <div class="card-image waves-effect waves-block waves-light">
                                 {% with p_image=product.first_image %}
                                     {% if p_image %}
-                                        <img class="activator" src="{{ p_image.image.url }}" alt="Amyzone Logo" style="width: 100%; height: auto">
+                                        <a href="{{ product.id }}/"><img src="{{ p_image.image.url }}" alt="Amyzone Logo" style="width: 100%; height: auto"></a>
                                     {% else %}
-                                        <img class="activator" src="{% static '/images/amyzoneface.png' %}" alt="Amyzone Logo" style="width: 100%; height: auto">
+                                        <a href="{{ product.id }}/"><img src="{% static '/images/amyzoneface.png' %}" alt="Amyzone Logo" style="width: 100%; height: auto"></a>
                                     {% endif %}
                                 {% endwith %}
                             </div>
                             <div class="card-content">
-                                <span class="card-title black-text">{{ product.name }}<i class="material-icons right">more_vert</i></span>
+                                <span class="card-title activator black-text">{{ product.name }}</span>
                                 <div style="text-align: left;">
-                                    {% if avg_stars.stars__avg != null %}
-                                        <span class="rateYo" id="product_rating_stars_id" data-rateyo-rating="{{ avg_stars.stars__avg }}" data-rateyo-num-stars="5" data-rateyo-multi-color="true" data-rateyo-full-star="true" data-rateyo-read-only="true"></span>
+                                    {% if product.average_rating.stars__avg != null %}
+                                        <span class="rateYo" id="product_rating_stars_id" data-rateyo-rating="{{ product.average_rating.stars__avg }}" data-rateyo-num-stars="5" data-rateyo-multi-color="true" data-rateyo-full-star="true" data-rateyo-read-only="true"></span>
                                     {% else %}
                                         <span class="rateYo" id="product_rating_stars_id" data-rateyo-rating="0" data-rateyo-num-stars="5" data-rateyo-multi-color="true" data-rateyo-full-star="true" data-rateyo-read-only="true"></span>
                                     {% endif %}
                                 </div>
                                 <div style="text-align: right;">
-                                    {{ product.price }} € / pc.
+                                    <span class="chip red darken-1 white-text z-depth-1">
+                                        {{ product.price }} €
+                                    </span>
                                 </div>
                             </div>
                             <div class="card-reveal">
                                 <span class="card-title grey-text text-darken-4">Product description:<i class="material-icons right">close</i></span>
                                 <p>{{ product.description }}</p>
-                            </div>
-                            <div class="card-action">
-                                <a class="waves-effect btn red darken-1 white-text" href="{{ product.id }}/"><i class="material-icons left">remove_red_eye</i>View details</a>
+                                <div style="text-align: right;">
+                                    <span class="chip red darken-1 white-text z-depth-1">
+                                        {{ product.price }} €
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </div>
