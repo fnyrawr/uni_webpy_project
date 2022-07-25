@@ -23,6 +23,11 @@
             <div class="background red darken-1"></div>
             <a class="brand-logo"><img src="{% static '/images/amyzonelogo.png' %}" alt="Amyzone Logo" height="60"></a>
             {% if user.is_authenticated %}
+                {% if user.profile_picture %} {% comment %} user.profile_picture does not work {% endcomment %}
+                    <img class="circle" src="{{ user.profile_picture }}">
+                {% else %}
+                    <img class="circle" src="{% static '/images/amyzoneface.png' %}">
+                {% endif %}
                 <span class="white-text name"><h5>{{ user.username }}</h5></span>
                 <span class="white-text email"><h6>{{ user.email }}</h6></span>
             {% else %}
