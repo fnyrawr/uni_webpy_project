@@ -24,7 +24,7 @@
             <a class="brand-logo"><img src="{% static '/images/amyzonelogo.png' %}" alt="Amyzone Logo" height="60"></a>
             {% if user.is_authenticated %}
                 {% if user.profile_picture %} {% comment %} user.profile_picture does not work {% endcomment %}
-                    <img class="circle" src="{{ user.profile_picture }}">
+                    <img class="circle" src="{{ user.profile_picture.url }}">
                 {% else %}
                     <img class="circle" src="{% static '/images/amyzoneface.png' %}">
                 {% endif %}
