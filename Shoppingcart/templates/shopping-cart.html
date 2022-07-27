@@ -32,7 +32,7 @@
                             {% for item in shopping_cart_items %}
                                 <tr>
                                     <td>{{ item.product.name }}</td>
-                                    <td><input type="number" id="itemquantity" value="{{ item.quantity }}"></td>
+                                    <td>{{ item.quantity }}</td>
                                     <td>{{ item.product.price }} €</td>
                                     <td>{{ item.get_itemSum }} €</td>
                                     <td><a href={% url 'shopping-cart-item-delete' item.id %}>Delete</a></td>

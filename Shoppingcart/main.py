@@ -2,11 +2,11 @@ from fpdf import FPDF
 import random
 from datetime import date
 import datetime
-from collections import Counter
 from django.conf import settings
-
+from django.core.files.storage import FileSystemStorage
+import os
 class PDF(FPDF):
-    def __init__(self, *args, data=[], user="", email="", payment=""):
+    def __init__(self, *args, data=[], user="", email="", payment="", payment_id=0):
         super().__init__(*args)
         self.set_auto_page_break(auto=True, margin=15)
         self.alias_nb_pages()
@@ -25,11 +25,12 @@ class PDF(FPDF):
         self.set_price()
         self.passing_data()
         self.fill_page()
-         # self.output('Invoice.pdf')
+        
+        file_name = "." + settings.INVOICE_FILES_URL + user + str(payment_id) + "Invoice.pdf"
+        self.output(file_name)
 
     def header(self):
-        print(".." + settings.STATIC_URL + "images/amyzonelogo.png")
-        #self.image("amyzonelogo.png", 10, 20, 52, 12)
+        self.image("." + settings.STATIC_URL + "images/amyzonelogo.png", 10, 20, 52, 12)
         self.set_font('helvetica', 'B', 20)
         self.cell(80)
         self.set_font('Arial', '', 10)
@@ -46,7 +47,7 @@ class PDF(FPDF):
         self.cell(0, 5, "Amyzone.com - order number: {}".format(self.order_number), ln=1, align='L')
         self.cell(0, 5, "Name: {}".format(self.user), ln=1, align='L')
         self.cell(0, 5, "Email: {}".format(self.email), ln=1, align='L')
-        self.cell(0, 5, "Order Total: ${}".format(self.order_price), ln=1, align='L')
+        self.cell(0, 5, "Order Total: {} Euro".format(self.order_price), ln=1, align='L')
         self.ln(5)
         self.cell(0, 5, "Shipping Address:", ln=1, align='L')
         self.cell(0, 5, "Luxemburger Str. 10", ln=1, align='L')
@@ -98,11 +99,9 @@ class PDF(FPDF):
 
     def passing_data(self):
         self.data = list(self.data)
-        z = Counter(self.data)
-        self.data = [("{}x{}".format(z[d], d[0]), float(d[1]) * z[d]) for d in self.data]
-        self.data = list(set([(row[0], "", "", "${}".format(row[1])) for row in self.data]))
+        self.data = list(set([(row[0], "", "", "{} Euro".format(row[1])) for row in self.data]))
         self.data.insert(0, ("Product name", "", "", "Price"))
-        self.data.insert(len(self.data), ("Total price", "", "", "${}".format(self.order_price)))
+        self.data.insert(len(self.data), ("Total price", "", "", "{} Euro".format(self.order_price)))
 
     def set_price(self):
         temp = 0
@@ -110,17 +109,3 @@ class PDF(FPDF):
             temp += float(p[-1])
         self.order_price = temp
         self.order_price = "{:.2f}".format(self.order_price)
-
-
-if __name__ == "__main__":
-    data = (
-        ("Bla", "99.99"),
-        ("Bla", "99.99"),
-        ("Blubb", "99.99"),
-        ("Fooo", "99.99"),
-        ("Luuuu", "99.99"),
-        ("Luku", "99.99"),
-    )
-
-    pdf = PDF('P', 'mm', 'Letter', data=data, user="Prof. Amy Siu", email="amy.siu@bht-berlin.de",
-              payment="Girocard | DE02120300000000202051")

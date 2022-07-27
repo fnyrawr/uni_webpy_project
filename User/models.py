@@ -4,9 +4,9 @@ from Shoppingcart.models import ShoppingCart
 # Create your models here.
 class CustomUser(AbstractUser):
     ROLES = [
-        ('SU', 'superuser'),
-        ('CS', 'customer service'),
-        ('CU', 'customer'),
+        ('SU', 'Superuser'),
+        ('CS', 'Customer service'),
+        ('CU', 'Customer'),
     ]
     email = models.EmailField(blank=True, unique=True)
     profile_picture = models.ImageField(upload_to='profile_pictures/', blank = True, null = True)

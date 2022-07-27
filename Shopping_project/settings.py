@@ -132,6 +132,10 @@ PRODUCT_FILES_ROOT = MEDIA_ROOT / 'product_files'
 PRODUCT_FILES_URL = MEDIA_URL + 'product_files/'
 PRODUCT_FILES = 'product_files/'
 
+INVOICE_FILES_ROOT = MEDIA_ROOT / 'invoice_files'
+INVOICE_FILES_URL = MEDIA_URL + 'invoice_files/'
+INVOICE_FILES = 'invoice_files/'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 

@@ -1,10 +1,10 @@
 from decimal import Decimal
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
-
 from Shoppingcart.main import PDF
 from .forms import CreditCardForm, GiroCardForm, PaymentForm
 from .models import Payment, ShoppingCart, ShoppingCartItem
+from django.conf import settings
 
 def show_shopping_cart(request):
     if request.method == 'POST':
@@ -40,6 +40,7 @@ def show_shopping_cart(request):
 
 @login_required(login_url='/useradmin/login/')
 def pay(request, **kwargs):
+    payment = None
     shopping_cart_is_empty = True
     paid = False
     user = request.user
@@ -57,24 +58,24 @@ def pay(request, **kwargs):
                 payment_method = "C"
                 payment_type_form = CreditCardForm(request.POST)
             else:
+                print(request.POST)
                 payment_method = "G"
                 payment_type_form = GiroCardForm(request.POST)
-                
+            
+            payment_type_form.instance.user = user
             if(payment_type_form.is_valid()):
+                payment_type_form.save()
                 amount = shopping_cart.get_total()
-                data2 = (
-                        ("Bla", "99.99"),
-                        ("Bla", "99.99"),
-                        ("Blubb", "99.99"),
-                        ("Fooo", "99.99"),
-                        ("Luuuu", "99.99"),
-                        ("Luku", "99.99"),
-                        )
-                pdf = PDF('P', 'mm', 'Letter', data=data2, user=user.username, email=user.email, payment = payment_method)
-                Payment.objects.create(payment_method=payment_method,
+
+                item_set = ShoppingCartItem.objects.filter(shopping_cart=shopping_cart)
+                data2 = [(str(item.quantity) +"x " + str(item.product.name), item.get_itemSum()) for item in item_set]
+                
+                payment = Payment.objects.create(payment_method=payment_method,
                                        amount= amount, 
                                        user = user,
-                                       pdf = pdf)
+                                       )
+                PDF('P', 'mm', 'Letter', data=data2, user=user.username, email=user.email, payment = payment.get_payment(), payment_id = payment.id)
+                payment.pdf = settings.INVOICE_FILES + user.username + str(payment.id) + "Invoice.pdf"
                 paid = True
                 ShoppingCart.objects.get(user=user).delete()
             else:
@@ -98,7 +99,8 @@ def pay(request, **kwargs):
     context = {'shopping_cart_is_empty': shopping_cart_is_empty,
                'payment_form': form,
                'paid': paid,
-               'payment_type_form': payment_type_form}
+               'payment_type_form': payment_type_form,
+               'payment': payment}
     return render(request, 'pay.html', context)
 
 def delete_item(request, **kwargs):

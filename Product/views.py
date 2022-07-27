@@ -178,6 +178,7 @@ def product_edit(request, **kwargs):
             pdf = request.FILES.get('pdf')
             fs = FileSystemStorage(location=settings.PRODUCT_FILES_ROOT, base_url=settings.PRODUCT_FILES_URL)
             file = fs.save(pdf.name, pdf)
+            print("Pdf:" + str(pdf))
             Product.objects.filter(
                 id=product_id).update(name=data['name'], description=data['description'], price=data['price'], pdf=settings.PRODUCT_FILES + str(pdf))
         else:

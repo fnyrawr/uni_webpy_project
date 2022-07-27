@@ -68,9 +68,9 @@ class ShoppingCartItem(models.Model):
 
 class Payment(models.Model):
     PAYMENT_TYPES = [
-        ('C', 'creditcard'),
-        ('P', 'paypal'),
-        ('G', 'girocard'),
+        ('C', 'Creditcard'),
+        ('P', 'Paypal'),
+        ('G', 'Girocard'),
     ]
     
     payment_method = models.CharField(max_length=1, choices=PAYMENT_TYPES)
@@ -80,6 +80,17 @@ class Payment(models.Model):
                                on_delete=models.CASCADE,
                                null = True, blank = True)
     pdf = models.FileField(upload_to='invoices/', null= True, blank=True)
+    
+    def get_payment(self):
+        if(self.payment_method == 'C'):
+            c = CreditCard.objects.filter(user=self.user).first()
+            info = c.credit_card_number
+        else:
+            g=GiroCard.objects.filter(user=self.user).first()
+            info = g.iban
+
+        return dict(self.PAYMENT_TYPES)[self.payment_method] + " | " + info
+    
 #user can safe his credit card infos
 class CreditCard(models.Model):
     credit_card_number = models.CharField(max_length=19)  # Format: 1234 5678 1234 5678
@@ -89,6 +100,6 @@ class CreditCard(models.Model):
 
 #user can safe his giro card infos
 class GiroCard(models.Model):
-    iban = models.CharField(primary_key=True, max_length=27)  # Format: DE22 2222 2222 2222 2222 22
+    iban = models.CharField(max_length=27)  # Format: DE22 2222 2222 2222 2222 22
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                                on_delete=models.CASCADE)
