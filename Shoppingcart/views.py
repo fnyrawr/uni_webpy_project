@@ -1,6 +1,8 @@
 from decimal import Decimal
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
+
+from Shoppingcart.main import PDF
 from .forms import CreditCardForm, GiroCardForm, PaymentForm
 from .models import Payment, ShoppingCart, ShoppingCartItem
 
@@ -60,9 +62,19 @@ def pay(request, **kwargs):
                 
             if(payment_type_form.is_valid()):
                 amount = shopping_cart.get_total()
+                data2 = (
+                        ("Bla", "99.99"),
+                        ("Bla", "99.99"),
+                        ("Blubb", "99.99"),
+                        ("Fooo", "99.99"),
+                        ("Luuuu", "99.99"),
+                        ("Luku", "99.99"),
+                        )
+                pdf = PDF('P', 'mm', 'Letter', data=data2, user=user.username, email=user.email, payment = payment_method)
                 Payment.objects.create(payment_method=payment_method,
                                        amount= amount, 
-                                       user = user)
+                                       user = user,
+                                       pdf = pdf)
                 paid = True
                 ShoppingCart.objects.get(user=user).delete()
             else:

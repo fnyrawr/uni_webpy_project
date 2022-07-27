@@ -16,6 +16,19 @@ class PaymentForm(forms.ModelForm):
             'payment_method': forms.Select(choices=Payment.PAYMENT_TYPES),
             'user': forms.HiddenInput(),
         }
+class PaymentForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(PaymentForm, self).__init__(*args, **kwargs)
+        self.fields['amount'].widget.attrs['readonly'] = True
+
+    class Meta:
+        model = Payment
+        fields = ['payment_method', 'amount']
+        widgets = {
+            'payment_method': forms.Select(choices=Payment.PAYMENT_TYPES),
+            'user': forms.HiddenInput(),
+        }
 class CreditCardForm(forms.ModelForm):
     class Meta:
         model = CreditCard

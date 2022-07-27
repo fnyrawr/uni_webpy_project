@@ -79,7 +79,7 @@ class Payment(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                                on_delete=models.CASCADE,
                                null = True, blank = True)
-
+    pdf = models.FileField(upload_to='invoices/', null= True, blank=True)
 #user can safe his credit card infos
 class CreditCard(models.Model):
     credit_card_number = models.CharField(max_length=19)  # Format: 1234 5678 1234 5678
