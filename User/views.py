@@ -67,6 +67,7 @@ class CustomSignUpView(generic.CreateView):
     def post(self, request):
         form = self.form_class(request.POST)
         if form.is_valid():
+            print(form.data)
             user = form.save()
             send_email(user, request)
             
