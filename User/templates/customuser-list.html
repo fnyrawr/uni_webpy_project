@@ -22,7 +22,7 @@
                                 <span class="card-title">{{ myuser }}</span>
                                 <b>First name:</b> {{ myuser.first_name }}<br>
                                 <b>Last name:</b> {{ myuser.last_name }}<br>
-                                <b>Role:</b> Customer<br>
+                                <b>Role:</b> {{myuser.get_role_display}}<br>
                                 {% if myuser.profile_picture %}
                                     <img src="{{ myuser.profile_picture.url }}" height="150" width="150"><br>
                                 {% endif %}

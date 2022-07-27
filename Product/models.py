@@ -1,4 +1,3 @@
-from operator import delitem
 from django.db import models
 from django.core.validators import FileExtensionValidator
 from django.conf import settings
@@ -19,7 +18,7 @@ class Product(models.Model):
         return self.name + ' (' + str(self.price) + ')'
 
     def __repr__(self):
-        return self.name + ' / ' + self.description + ' / ' + str(self.price)
+        return self.name + ' / ' + self.description + ' / ' + str(self.price) + '/'
 
     def first_image(self):
         image = ProductImage.objects.filter(product=self)

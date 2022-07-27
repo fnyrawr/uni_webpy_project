@@ -24,6 +24,8 @@
                                 <th>Name</th>
                                 <th>Quantity</th>
                                 <th>Price per piece</th>
+                                <th>Price of pieces</th>
+                                <th>Delete</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -32,6 +34,8 @@
                                     <td>{{ item.product.name }}</td>
                                     <td>{{ item.quantity }} x</td>
                                     <td>{{ item.product.price }} €</td>
+                                    <td>{{ item.get_itemSum }} €</td>
+                                    <td><a href={% url 'shopping-cart-item-delete' item.id %}>Delete</a></td>
                                 </tr>
                             {% endfor %}
                             <tr class="grey white-text">

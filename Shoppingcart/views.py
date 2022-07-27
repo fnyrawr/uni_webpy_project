@@ -1,7 +1,6 @@
 from decimal import Decimal
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
-
 from .forms import CreditCardForm, GiroCardForm, PaymentForm
 from .models import Payment, ShoppingCart, ShoppingCartItem
 
@@ -89,3 +88,13 @@ def pay(request, **kwargs):
                'paid': paid,
                'payment_type_form': payment_type_form}
     return render(request, 'pay.html', context)
+
+def delete_item(request, **kwargs):
+        item_id = kwargs['pk']
+        ShoppingCartItem.objects.filter(id=item_id).delete()
+        shopping_cart = ShoppingCart.objects.filter(user = request.user).first()
+        cart_items = ShoppingCartItem.objects.filter(shopping_cart=shopping_cart)
+        print(len(cart_items))
+        if not cart_items:
+            shopping_cart.delete()
+        return redirect('shopping-cart-show')

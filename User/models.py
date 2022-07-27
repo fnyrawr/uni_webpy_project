@@ -35,3 +35,6 @@ class CustomUser(AbstractUser):
             return True
         else:
             return False
+        
+    def __str__(self):
+        return self.username

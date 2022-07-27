@@ -1,13 +1,13 @@
 from django import forms
-from .models import CreditCard, GiroCard, Payment
+from .models import CreditCard, GiroCard, Payment, ShoppingCartItem
 from django.core.exceptions import ValidationError
 import re
+
 class PaymentForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(PaymentForm, self).__init__(*args, **kwargs)
         self.fields['amount'].widget.attrs['readonly'] = True
-
 
     class Meta:
         model = Payment

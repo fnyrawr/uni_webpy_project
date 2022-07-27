@@ -34,6 +34,11 @@ class ShoppingCart(models.Model):
             total += item.product.price * item.quantity
         return total
 
+    def __str__(self):
+        return str(self.timestamp) + " from " + self.user.username
+    
+    def __repr__(self):
+        return str(self.timestamp) + " from " + self.user.username
 
 class ShoppingCartItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
@@ -49,6 +54,18 @@ class ShoppingCartItem(models.Model):
             ShoppingCartItem.objects.create(product = product,
                                         quantity=quantity,
                                         shopping_cart=shopping_cart)
+    
+    def get_itemSum(self):
+        sum = Decimal(0.0)  # Default without Decimal() would be type float!
+        sum = self.quantity * self.product.price
+        return sum
+    
+    def __str__(self):
+        return self.product + " quantity " + self.quantity + " for " + self.shopping_cart
+    
+    def __repr__(self):
+        return self.product + " quantity " + self.quantity + " for " + self.shopping_cart
+
 class Payment(models.Model):
     PAYMENT_TYPES = [
         ('C', 'creditcard'),
