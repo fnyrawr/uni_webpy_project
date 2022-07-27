@@ -77,7 +77,7 @@
         </div>
 
         <h5>Customer reviews</h5>
-        {% if user.is_authenticated %}
+        {% if user.is_authenticated and user.is_verified %}
             <!-- Modal Trigger -->
             <a class="waves-effect waves-light btn red darken-1 modal-trigger" href="#modalAddReview"><i class="material-icons left">add</i>Add review</a>
         {% endif %}
@@ -88,7 +88,7 @@
                         <span class="card-title">{{ review.title }}</span>
                         <div class="rateYo" data-rateyo-rating="{{ review.stars }}" data-rateyo-num-stars="5" data-rateyo-score="4" data-rateyo-multi-color="true" data-rateyo-read-only="true"></div>
                         {{ review.text }}
-                        {% if user.is_authenticated %}
+                        {% if user.is_authenticated and user.is_verified %}
                             <br><b>{{ review.user.username }}</b> on {{ review.timestamp }}
                             <br><br><a href="{% url 'review-vote' that_one_product.id review.id 'useful' %}" class="white-text" style="text-decoration: none">
                                 <span class="chip lime darken-1 white-text z-depth-1">{{ review.get_useful_count }}
