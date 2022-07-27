@@ -11,13 +11,13 @@
                 <div class="card white">
                     <div class="card-content white-text">
                         <span class="card-title black-text">Sign up</span>
-                        <form method="post">
+                        <form method="POST" enctype="multipart/form-data">
                             {% csrf_token %}
                             <div class="row">
                                 <div class="input-field col s6 grey-text">
                                     <i class="material-icons prefix">person</i>
-                                    <label for="id_username">Username</label>
-                                    <input type="text" name="username" maxlength="150" autofocus required id="id_username">
+                                    <label for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+                                    <input type="text" name="{{ form.username.html_name }}" maxlength="150" autofocus required id="{{ form.username.id_for_label }}">
                                     <span class="helper-text" data-error="wrong" data-success="right">Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</span>
                                 </div>
                                 <div class="input-field col s6 grey-text">
@@ -43,10 +43,10 @@
                                 <div class="file-field input-field col s12">
                                     <div class="waves-effect waves-light btn red darken-1">
                                         <span><i class="material-icons left">photo</i> Upload profile picture</span>
-                                        <input type="file">
+                                        <input type="file" name="{{ form.profile_picture.html_name }}" accept="image/*">
                                     </div>
                                     <div class="file-path-wrapper grey-text">
-                                        <input class="file-path" type="text" name="profile_picture" accept="image/*" id="id_profile_picture" placeholder="Profile picture">
+                                        <input class="file-path" type="text" placeholder="Profile picture">
                                     </div>
                                 </div>
                             </div>

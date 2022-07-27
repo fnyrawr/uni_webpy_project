@@ -3,8 +3,6 @@ import random
 from datetime import date
 import datetime
 from django.conf import settings
-from django.core.files.storage import FileSystemStorage
-import os
 class PDF(FPDF):
     def __init__(self, *args, data=[], user="", email="", payment="", payment_id=0):
         super().__init__(*args)
