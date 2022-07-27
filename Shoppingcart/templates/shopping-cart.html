@@ -16,45 +16,46 @@
             </div>
         {% else %}
             <div class="card">
-                <div class="card-content">
-                    <span class="card-title">Items in your shopping cart</span><br>
-                    <table class="striped highlight">
-                        <thead class="red darken-1 white-text">
-                            <tr>
-                                <th>Name</th>
-                                <th>Quantity</th>
-                                <th>Price per piece</th>
-                                <th>Price of pieces</th>
-                                <th>Delete</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for item in shopping_cart_items %}
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="card-content">
+                        <span class="card-title">Items in your shopping cart</span><br>
+                        <table class="striped highlight">
+                            <thead class="red darken-1 white-text">
                                 <tr>
-                                    <td>{{ item.product.name }}</td>
-                                    <td>{{ item.quantity }}</td>
-                                    <td>{{ item.product.price }} €</td>
-                                    <td>{{ item.get_itemSum }} €</td>
-                                    <td><a href={% url 'shopping-cart-item-delete' item.id %}>Delete</a></td>
+                                    <th>Position</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Sum</th>
+                                    <th></th>
                                 </tr>
-                            {% endfor %}
-                            <tr class="grey white-text">
-                                <td><b>Total amount</b></td>
-                                <td></td>
-                                <td><b>{{ total }} €</b></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                {% for item in shopping_cart_items %}
+                                    <tr>
+                                        <td>{{ item.product.name }}</td>
+                                        <td>{{ item.product.price }} €</td>
+                                        <td>{{ item.quantity }}x</td>
+                                        <td>{{ item.get_itemSum }} €</td>
+                                        <td><a class="waves-effect waves-light btn red darken-1" href={% url 'shopping-cart-item-delete' item.id %}><i class="material-icons left">delete</i>Delete</a></td>
+                                    </tr>
+                                {% endfor %}
+                                <tr class="grey white-text">
+                                    <td><b>Total amount</b></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><b>{{ total }} €</b></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
 
-                    <br><form method="POST">
-                        {% csrf_token %}
+                        <br>
                         <button class="waves-effect waves-light btn red darken-1" type="submit" name="pay"><i class="material-icons left">credit_card</i>Pay</button>
                         <button class="waves-effect waves-light btn white red-text text-darken-1" type="submit" name="empty"><i class="material-icons left">remove_shopping_cart</i>Empty the shopping cart</button>
                         <a class="waves-effect waves-light btn white red-text text-darken-1" href="{% url 'product-list' %}"><i class="material-icons left">shopping_cart</i>Keep shopping</a>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
         {% endif %}
     </div>
