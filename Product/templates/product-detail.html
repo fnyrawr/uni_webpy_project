@@ -83,47 +83,49 @@
         {% endif %}
         <div class="row">
             {% for review in product_reviews %}
-                <div class="col s6 card white">
-                    <div class="card-content">
-                        <span class="card-title">{{ review.title }}</span>
-                        <div class="rateYo" data-rateyo-rating="{{ review.stars }}" data-rateyo-num-stars="5" data-rateyo-score="4" data-rateyo-multi-color="true" data-rateyo-read-only="true"></div>
-                        {{ review.text }}
-                        {% if user.is_authenticated and user.is_verified %}
-                            <br><b>{{ review.user.username }}</b> on {{ review.timestamp }}
-                            <br><br><a href="{% url 'review-vote' that_one_product.id review.id 'useful' %}" class="white-text" style="text-decoration: none">
+                <div class="col s6">
+                    <div class="card white">
+                        <div class="card-content">
+                            <span class="card-title">{{ review.title }}</span>
+                            <div class="rateYo" data-rateyo-rating="{{ review.stars }}" data-rateyo-num-stars="5" data-rateyo-score="4" data-rateyo-multi-color="true" data-rateyo-read-only="true"></div>
+                            {{ review.text }}
+                            {% if user.is_authenticated and user.is_verified %}
+                                <br><b>{{ review.user.username }}</b> on {{ review.timestamp }}
+                                <br><br><a href="{% url 'review-vote' that_one_product.id review.id 'useful' %}" class="white-text" style="text-decoration: none">
+                                    <span class="chip lime darken-1 white-text z-depth-1">{{ review.get_useful_count }}
+                                        <i class="material-icons tiny">thumb_up</i>
+                                    </span>
+                                </a>
+                                <a href="{% url 'review-vote' that_one_product.id review.id 'useless' %}" class="white-text" style="text-decoration: none">
+                                    <span class="chip red darken-1 white-text z-depth-1">{{ review.get_useless_count }}
+                                        <i class="material-icons tiny">thumb_down</i>
+                                    </span>
+                                </a>
+                            {% else %}
+                                <br><b>{{ review.user.username }}</b> on {{ review.timestamp }}
+                                <br><br>
                                 <span class="chip lime darken-1 white-text z-depth-1">{{ review.get_useful_count }}
                                     <i class="material-icons tiny">thumb_up</i>
                                 </span>
-                            </a>
-                            <a href="{% url 'review-vote' that_one_product.id review.id 'useless' %}" class="white-text" style="text-decoration: none">
                                 <span class="chip red darken-1 white-text z-depth-1">{{ review.get_useless_count }}
                                     <i class="material-icons tiny">thumb_down</i>
                                 </span>
-                            </a>
-                        {% else %}
-                            <br><b>{{ review.user.username }}</b> on {{ review.timestamp }}
-                            <br><br>
-                            <span class="chip lime darken-1 white-text z-depth-1">{{ review.get_useful_count }}
-                                <i class="material-icons tiny">thumb_up</i>
-                            </span>
-                            <span class="chip red darken-1 white-text z-depth-1">{{ review.get_useless_count }}
-                                <i class="material-icons tiny">thumb_down</i>
-                            </span>
-                        {% endif %}
+                            {% endif %}
 
-                        <br><br>
-                        {% if review.user == user %}
-                            <a class="waves-effect btn red darken-1" href="{% url 'review-edit' that_one_product.id review.id %}" ><i class="material-icons left">edit</i>Edit</a>
-                            <a class="waves-effect btn white red-text text-darken-1" href="{% url 'review-delete' that_one_product.id review.id %}" ><i class="material-icons left">delete</i>Delete</a>
-                        {% endif %}
-                        {% if is_authorized %}
-                            {% if review.user != user %}
+                            <br><br>
+                            {% if review.user == user %}
+                                <a class="waves-effect btn red darken-1" href="{% url 'review-edit' that_one_product.id review.id %}" ><i class="material-icons left">edit</i>Edit</a>
                                 <a class="waves-effect btn white red-text text-darken-1" href="{% url 'review-delete' that_one_product.id review.id %}" ><i class="material-icons left">delete</i>Delete</a>
                             {% endif %}
-                            <a class="waves-effect btn white red-text text-darken-1" href="{% url 'report-list' that_one_product.id review.id %}" ><i class="material-icons left">info</i>Reports</a>
-                        {% elif user.is_authenticated %}
-                            <a class="waves-effect btn red darken-1" href="{% url 'report-create' that_one_product.id review.id %}" ><i class="material-icons left">report_problem</i>Report</a>
-                        {% endif %}
+                            {% if is_authorized %}
+                                {% if review.user != user %}
+                                    <a class="waves-effect btn white red-text text-darken-1" href="{% url 'review-delete' that_one_product.id review.id %}" ><i class="material-icons left">delete</i>Delete</a>
+                                {% endif %}
+                                <a class="waves-effect btn white red-text text-darken-1" href="{% url 'report-list' that_one_product.id review.id %}" ><i class="material-icons left">info</i>Reports</a>
+                            {% elif user.is_authenticated %}
+                                <a class="waves-effect btn red darken-1" href="{% url 'report-create' that_one_product.id review.id %}" ><i class="material-icons left">report_problem</i>Report</a>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
             {% endfor %}
