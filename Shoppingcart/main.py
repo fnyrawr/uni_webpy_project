@@ -6,7 +6,7 @@ from django.conf import settings
 class PDF(FPDF):
     def __init__(self, *args, data=[], user="", email="", payment="", payment_id=0):
         super().__init__(*args)
-        self.set_auto_page_break(auto=True, margin=15)
+        self.set_auto_page_break(auto=True, margin=85)
         self.alias_nb_pages()
         self.set_font('helvetica', 'BIU', 16)
         self.set_font('Arial', '', 12)

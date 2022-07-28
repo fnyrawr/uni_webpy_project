@@ -8,7 +8,7 @@
         <h3>Payment</h3>
         {% if paid %}
             Thank you for your payment.<br><br>
-            <a class="waves-effect waves-light btn red darken-1" href="{{ payment.pdf.url }}"><i class="material-icons left">remove_red_eye</i> Product Info PDF</a>
+            <a class="waves-effect waves-light btn lime darken-1" href="{{ payment.pdf.url }}"><i class="material-icons left">receipt</i> View invoice</a>
             <a class="waves-effect waves-light btn red darken-1 white-text" href="{% url 'home' %}"><i class="material-icons left">home</i>Back to home</a>
         {% elif shopping_cart_is_empty %}
             Your shopping cart is empty. There is nothing to pay for.<br><br>
