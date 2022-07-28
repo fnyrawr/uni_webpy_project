@@ -31,12 +31,10 @@ def product_list(request):
             else:
                 products_found = products_found.filter(price__lt=price)
         stars = data['stars']
-        print(stars)
         if stars and int(stars) > 0:
             products_found = products_found.annotate(avg_stars=Avg('review__stars'))
-            if data['sortPriceBy'] == "MIN":
+            if data['sortStarsBy'] == "MIN":
                 products_found = products_found.filter(avg_stars__gte=stars)
-                print(products_found.average_stars)
             else:
                 products_found = products_found.filter(avg_stars__lte=stars)
     else:    

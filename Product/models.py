@@ -18,7 +18,7 @@ class Product(models.Model):
         return self.name + ' (' + str(self.price) + ')'
 
     def __repr__(self):
-        return self.name + ' / ' + self.description + ' / ' + str(self.price) + '/'
+        return self.name + ' / ' + str(self.price) + '/'
 
     def first_image(self):
         image = ProductImage.objects.filter(product=self)
