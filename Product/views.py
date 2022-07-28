@@ -36,6 +36,7 @@ def product_list(request):
             products_found = products_found.annotate(avg_stars=Avg('review__stars'))
             if data['sortPriceBy'] == "MIN":
                 products_found = products_found.filter(avg_stars__gte=stars)
+                print(products_found.average_stars)
             else:
                 products_found = products_found.filter(avg_stars__lte=stars)
     else:    
@@ -108,7 +109,6 @@ def product_detail(request, **kwargs):
     if not user.is_anonymous:
         is_authorized = user.is_authorized()
     avg_stars = Review.objects.filter(product=product).aggregate(Avg('stars'))
-    print(avg_stars)
     context = {
         'that_one_product': product,
         'product_reviews': reviews,
