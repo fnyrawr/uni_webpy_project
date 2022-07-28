@@ -19,7 +19,6 @@ def product_list(request):
         search=True
         searchForm = SearchForm(request.POST)
         data = searchForm.data
-        print(data)
         name = data['name']
         products_found = Product.objects.filter(name__contains=name)
         description = data['description']
@@ -42,7 +41,6 @@ def product_list(request):
     else:    
         all_products = Product.objects.all()
 
-    print(products_found)
     context = {'all_products': all_products,
                 'products_found': products_found,
                 'search': search,
@@ -179,7 +177,6 @@ def product_edit(request, **kwargs):
             pdf = request.FILES.get('pdf')
             fs = FileSystemStorage(location=settings.PRODUCT_FILES_ROOT, base_url=settings.PRODUCT_FILES_URL)
             file = fs.save(pdf.name, pdf)
-            print("Pdf:" + str(pdf))
             Product.objects.filter(
                 id=product_id).update(name=data['name'], description=data['description'], price=data['price'], pdf=settings.PRODUCT_FILES + str(pdf))
         else:
