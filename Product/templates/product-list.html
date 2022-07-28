@@ -81,7 +81,7 @@
                                     {% endif %}
                                 {% endwith %}
                             </div>
-                            <div class="card-content" style="height: 12rem; overflow: auto;">
+                            <div class="card-content" style="height: 12rem; overflow-y: auto;">
                                 <span class="card-title activator black-text">{{ product.name }}</span>
                                 <div style="text-align: left;">
                                     {% if product.average_rating.stars__avg != null %}
@@ -122,7 +122,7 @@
                                     {% endif %}
                                 {% endwith %}
                             </div>
-                            <div class="card-content">
+                            <div class="card-content" style="height: 12rem; overflow-y: auto;">
                                 <span class="card-title activator black-text">{{ product.name }}</span>
                                 <div style="text-align: left;">
                                     {% if product.average_rating.stars__avg != null %}
