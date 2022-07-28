@@ -10,6 +10,7 @@ Follow all steps by order:
 - .venv\scripts\activate
 - pip install django
 - pip install Pillow
+- pip install fpdf2
 - python manage.py makemigrations
 - python manage.py migrate
 - python manage.py createsuperuser
@@ -48,16 +49,16 @@ Since not every code change will be pushed immideately this would make it easier
 - [X] Product List: Check why search results are not displayed `Done` `Eric` `23.07.2022`
 - [x] First product image in result set in Product List `Done` `Eric` `23.07.2022`
 - [X] Check implementation of average rating in Product Detail and Product List `Done` `Eric` `23.07.2022`
-- [ ] Shopping Cart: Remove items, Change quantity, total per item `WIP` `Eric` `25.07.2022`
-- [ ] E-Mail verification needed for comments `Testing` `Eric` `23.07.2022`
+- [X] Shopping Cart: Remove items, Change quantity, total per item `Done` `Eric` `25.07.2022`
+- [X] E-Mail verification needed for comments `Done` `Eric` `23.07.2022`
 - [X] Styling of Product Details, Product Create, Product Edit `Done` `Florian` `23.07.2022`
-- [X] Styling of User List `ToDo` `Florian` `n/A`
-- [x] Styling of Reports `ToDo` `Florian` `n/A`
-- [x] Product Pictures and Product Details for real world data `ToDo` `Erdio` `n/A`
-- [ ] General application testing (also testing for mobile) `ToDo` `Erdio` `n/A`
-- [ ] PDF generation `ToDo` `Michael` `n/A`
-- [ ] Fix CSS colors for inputs `ToDo` `tba` `n/A`
-- [ ] Implement profile picture in sidebar and userlist `ToDo` `tba` `n/A`
+- [X] Styling of User List `Done` `Florian` `n/A`
+- [x] Styling of Reports `Done` `Florian` `n/A`
+- [x] Product Pictures and Product Details for real world data `Done` `Erdenay` `n/A`
+- [X] General application testing (also testing for mobile) `Done` `Erdenay` `n/A`
+- [X] PDF generation `Done` `Michael` `n/A`
+- [X] Fix CSS colors for inputs `Done` `Erdenay` `n/A`
+- [X] Implement profile picture in sidebar and userlist `Done` `Florian` `n/A`
 
 ## Database
 ### Products
@@ -160,20 +161,9 @@ Product PDF and ean should be auto generated
 - [x] ShoppingCart
     - [x] Orders
 
-### Extra
-- [ ] Registration
-    - [x] send mail for Verification
-    - [ ] send mail for password reset
-- [ ] Product
-    - [ ] Comment Search by filters
-        - [ ] filter by commenttitle
-        - [ ] filter by commentRatings
-- [ ] ShoppingCart
-    - [ ] user can see last 3 orders
-    - [x] fake payment
 ## Frontend
-- [ ] Edit
-    - [ ] use Javascript to only edit part of the page not the full page 
+- [X] Edit
+    - [X] use Javascript to only edit part of the page not the full page 
             e.g. delete product pdf in product edit view
 ## Process descriptions
 ### Verification process
@@ -182,11 +172,12 @@ Link in the registered e-mail directs back to a verification route. Here the use
 ## ToDo:
 - [x] implementing database
     - [x] migrating database
-- [ ] implement views (see above)
+- [X] implement views (see above)
     - [x] implement file uploads
     - [x] implement file downloads
-    - [ ] implement some extras
-- [ ] styling
+    - [X] implement some extras
+- [X] styling
+- [X] creating userdata
+- [X] testing functionalities
 - [ ] hosting
-    - [ ] creating userdata
-    - [ ] testing functionalities
+    
