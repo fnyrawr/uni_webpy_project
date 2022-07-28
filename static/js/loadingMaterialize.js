@@ -23,7 +23,9 @@ $(document).ready(function(){
     .on("rateyo.set", function (e, data) {
         if(data.rating < 1) data.rating = 1;
         if(data.rating > 5) data.rating = 5;
-        document.getElementById("id_sortStarsBy").value = data.rating;
+        console.log(data.rating);
+        console.log(document.getElementById("id_stars").value);
+        document.getElementById("id_stars").value = data.rating;
     })
     .on("rateyo.change", function (e, data) {
         if(data.rating < 1) data.rating = 1;

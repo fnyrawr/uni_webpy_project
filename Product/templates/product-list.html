@@ -53,7 +53,7 @@
                             <div class="col s6">
                                 <span class="chip red darken-1 white-text" id="chip_stars">Stars</span>
                                 <span id="rateyo_stars" class="rateYo" data-rateyo-rating="0" data-rateyo-num-stars="5" data-rateyo-score="4" data-rateyo-multi-color="true" data-rateyo-full-star="true"></span>
-                                <input type="number" name="stars" required id="id_sortStarsBy" value="0" min="0" max="5" hidden>
+                                <input type="number" name="stars" required id="{{ form.stars.id_for_label }}" value="0" min="0" max="5" hidden>
                             </div>
                         </div>
                         <button class="waves-effect btn red darken-1 white-text" type="submit"><i class="material-icons left">search</i>Search</button>
