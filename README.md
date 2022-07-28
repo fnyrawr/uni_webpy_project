@@ -52,13 +52,13 @@ Since not every code change will be pushed immideately this would make it easier
 - [X] Shopping Cart: Remove items, Change quantity, total per item `Done` `Eric` `25.07.2022`
 - [X] E-Mail verification needed for comments `Done` `Eric` `23.07.2022`
 - [X] Styling of Product Details, Product Create, Product Edit `Done` `Florian` `23.07.2022`
-- [X] Styling of User List `Done` `Florian` `n/A`
-- [x] Styling of Reports `Done` `Florian` `n/A`
-- [x] Product Pictures and Product Details for real world data `Done` `Erdenay` `n/A`
-- [X] General application testing (also testing for mobile) `Done` `Erdenay` `n/A`
-- [X] PDF generation `Done` `Michael` `n/A`
-- [X] Fix CSS colors for inputs `Done` `Erdenay` `n/A`
-- [X] Implement profile picture in sidebar and userlist `Done` `Florian` `n/A`
+- [X] Styling of User List `Done` `Florian` `28.07.2022`
+- [x] Styling of Reports `Done` `Florian` `28.07.2022`
+- [x] Product Pictures and Product Details for real world data `Done` `Erdenay` `28.07.2022`
+- [X] General application testing (also testing for mobile) `Done` `Erdenay` `28.07.2022`
+- [X] PDF generation `Done` `Michael` `28.07.2022`
+- [X] Fix CSS colors for inputs `Done` `Erdenay` `28.07.2022`
+- [X] Implement profile picture in sidebar and userlist `Done` `Florian` `28.07.2022`
 
 ## Database
 ### Products
