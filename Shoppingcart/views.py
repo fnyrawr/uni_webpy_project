@@ -58,7 +58,6 @@ def pay(request, **kwargs):
                 payment_method = "C"
                 payment_type_form = CreditCardForm(request.POST)
             else:
-                print(request.POST)
                 payment_method = "G"
                 payment_type_form = GiroCardForm(request.POST)
             
@@ -108,7 +107,6 @@ def delete_item(request, **kwargs):
         ShoppingCartItem.objects.filter(id=item_id).delete()
         shopping_cart = ShoppingCart.objects.filter(user = request.user).first()
         cart_items = ShoppingCartItem.objects.filter(shopping_cart=shopping_cart)
-        print(len(cart_items))
         if not cart_items:
             shopping_cart.delete()
         return redirect('shopping-cart-show')

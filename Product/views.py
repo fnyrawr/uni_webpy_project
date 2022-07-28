@@ -27,9 +27,9 @@ def product_list(request):
         price = data['price']
         if price:
             if data['sortPriceBy'] == "MIN":
-                products_found = products_found.filter(price__gt=price)
+                products_found = products_found.filter(price__gte=price)
             else:
-                products_found = products_found.filter(price__lt=price)
+                products_found = products_found.filter(price__lte=price)
         stars = data['stars']
         if stars and int(stars) > 0:
             products_found = products_found.annotate(avg_stars=Avg('review__stars'))
