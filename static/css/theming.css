@@ -3,6 +3,11 @@ input:focus {
   box-shadow: 0 1px 0 0 #E53935 !important;
 }
 
+textarea:focus {
+  border-bottom: 1px solid #E53935 !important;
+  box-shadow: 0 1px 0 0 #E53935 !important;
+}
+
 label.active {
   color: #E53935 !important;
 }
